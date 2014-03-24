@@ -24,6 +24,7 @@
         <tr th:each="item : ${items}">
             <td th:text="${item.name}"></td>
             <td><img th:src="${item.image}" class="thumbnail" /></td>
+            <td><a href="javascript:void(0);" th:onclick="${'deletePic(' + item.id + ')'}">Delete</a></td>
         </tr>
     </table>
 
