@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring-A-Gram</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="/webjars/jquery/2.0.3/jquery.js"></script>
+    <!--<script src="/jsclient/jquery"></script>-->
+    <style>
+        .thumbnail {
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <form action="/" id="upload">
+        <p>File to upload: <input type="file" id="file" /></p>
+        <p><input type="submit" value="Upload" /></p>
+    </form>
+
+    <table>
+        <tr><th>Filename</th><th>Image</th></tr>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.name}"></td>
+            <td><img th:src="${item.image}" class="thumbnail" /></td>
+        </tr>
+    </table>
+
+    <script type="application/javascript">
+        //<![CDATA[
+        var name, bytes;
+
+        function readImage(input) {
+            if (input.files && input.files[0]) {
+                var FR = new FileReader();
+                FR.onloadend = function() {
+                    name = input.files[0].name;
+                    bytes = FR.result;
+                    console.log(input.files[0]);
+                }
+                FR.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $('#file').change(function(){
+            readImage(this);
+        });
+
+        $('#upload').submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/items',
+                data: JSON.stringify({
+                    name: name,
+                    image: bytes
+                }),
+                contentType: 'application/json'
+            }).done(function(data) {
+                console.log(data);
+                window.location.reload();
+            })
+        });
+        //]]>
+    </script>
+
+</body>
+</html>

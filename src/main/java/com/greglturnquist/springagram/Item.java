@@ -17,7 +17,7 @@ public class Item {
 	private String name;
 
 	@Lob
-	private byte[] image;
+	private String image;
 
 	public String getName() {
 		return name;
@@ -27,11 +27,11 @@ public class Item {
 		this.name = name;
 	}
 
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 }
