@@ -163,6 +163,6 @@ To dial up the visual appeal and show easy Spring Data REST makes it to build yo
 It's pretty simple. It contains a form where you can pick a picture and submit it for upload. Following that is a table to display a thumbnail-sized version of each picture.
 
 * This app is using webjars to fetch a copy of http://jquery.com[jQuery]
-* This app also uses Spring Data REST's jquery support library, provided directly from `/jsclient/jquery`.
+* This app also uses Spring Data REST's https://github.com/gregturn/spring-data-rest/tree/dynamic-javascript[experimental dynamic javascript library], provided directly from `/jsclient/jquery`.
 
 In encourage you to skim through all the code to see how it readily demonstrates the power and simplicity of having a complete, RESTful service.
