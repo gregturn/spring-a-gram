@@ -1,0 +1,168 @@
+:source-highlighter: prettify
+
+Spring-a-Gram is a demonstration of the Spring stack used to upload and view pictures.
+
+* http://projects.spring.io/spring-data-rest[Spring Data REST]
+* http://projects.spring.io/spring-framework[Spring MVC]
+* http://projects.spring.io/spring-boot[Spring Boot]
+
+Spring Data REST makes it incredibly simple to define and export data store entities. What does this mean?
+You declare the POJOs that are stored in your database. You then define a related respository interface.
+Spring Data REST takes it from there to create a hypermedia-driven, RESTful interface using Spring MVC
+that lets you create, read, update, and delete data.
+
+This sample application demonstrations how declaring a backend aimed at storing image data can make it
+as simple as possible to upload pictures and then turn around and display them on a website. This opens
+the door to other front ends, like an iOS or Android app.
+
+Let's explore.
+
+== Defining an item to store
+
+`src/main/java/com/greglturnquist/springagram/Item.java`
+[source,java]
+----
+package com.greglturnquist.springagram;
+
+import org.springframework.hateoas.ResourceSupport;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+
+@Entity
+public class Item {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	
+	private String name;
+
+	@Lob
+	private String image;
+
+	....
+}
+----
+
+The core piece of this app are the **Items**. It contains an auto-generated **id**, a **name**, and a raw **image** (stored in the format of a `String`).
+
+NOTE: Java strings a wide and generally unicode based. To store the raw data of a picture in the database, it has been tagged with http://docs.oracle.com/javaee/6/api/javax/persistence/Lob.html[@Lob],
+an annotation used to signal this a **Large Object**.
+
+== Create the simplest repository interface possible
+
+`src/main/java/com/greglturnquist/springagram/ItemRepository.java`
+[source,java]
+----
+package com.greglturnquist.springagram;
+
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+@RepositoryRestResource()
+public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
+}
+----
+
+All of the http://projects.spring.io/spring-data[Spring Data projects] are based on this similar concept: define an interface that extends either `CrudRepository` or `PagingAndSortingRepository` and then let Spring Data create a proxied concrete implementation. You get a handful of built in operations. You can add custom queries, but we aren't doing that right now.
+
+This interface comes with an extra annotation: `RepositoryRestResource`. This annotation provides the means to change parts of the URLs and hypermedia, but we aren't using that here. 
+
+NOTE: If you notice the end of the declaration where it says `<Item, Long>`, that indicates the entity type and the type of its keys.
+
+== Spinning up a RESTful server app
+
+One last piece remains.
+
+`src/main/java/com/greglturnquist/springagram/Application.java`
+[source,java]
+----
+package com.greglturnquist.springagram;
+
+import java.io.IOException;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
+
+@Configuration
+@EnableJpaRepositories
+@Import(RepositoryRestMvcConfiguration.class)
+@EnableAutoConfiguration
+@ComponentScan
+public class Application {
+
+	public static void main(String[] args) throws IOException {
+		SpringApplication.run(Application.class, args);
+	}
+}
+----
+
+This is mostly boilerplate. It contains key annotations to declare and launch an application.
+
+* @Configuration means this class is the source of beans for a Spring app
+* @EnableJpaRepositories turns on the ability to scan and detect JPA entities and repository interfaces
+* @Import(RepositoryRestMvcConfiguration.class) pulls in a handful of beans needed to launch Spring Data REST, which is really a specialized Spring MVC app
+* @EnableAutoConfiguration tells Spring Boot to autoconfigure as much as possible
+* @ComponentScan tells Spring to look for any other classes in the same package that are configurable, such as @Component's, @Service's, and @Controller's
+
+This code, by itself, it enough to spin up a http://spring.io/guides/gs/accessing-data-rest/[RESTful, hypermedia based] app. There is no visual element here. You only have access to tools like **curl** or whatever REST client you wish to use. But you can perform all the CRUD operations you want.
+
+At the root, you can see what links are available.
+```
+$ curl localhost:8080
+{
+  "_links" : {
+    "items" : {
+      "href" : "http://localhost:8080/items{?page,size,sort}",
+      "templated" : true
+    },
+    "jsclient" : {
+      "href" : "http://localhost:8080/jsclient"
+    }
+  }
+}
+```
+
+* /items is where individual items are stored.
+* /jsclient is a collection of prebuilt Javascript libraries designed to speed up building a rich front end.
+
+```
+$ curl localhost:8080/items
+{
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/items{?page,size,sort}",
+      "templated" : true
+    }
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 0,
+    "totalPages" : 0,
+    "number" : 0
+  }
+}
+```
+
+Here you can see there are no entries yet.
+
+== Building a rich front end
+
+To dial up the visual appeal and show easy Spring Data REST makes it to build your own picture sharing service, I added a web page.
+
+It's pretty simple. It contains a form where you can pick a picture and submit it for upload. Following that is a table to display a thumbnail-sized version of each picture.
+
+* This app is using webjars to fetch a copy of http://jquery.com[jQuery]
+* This app also uses Spring Data REST's jquery support library, provided directly from `/jsclient/jquery`.
+
+In encourage you to skim through all the code to see how it readily demonstrates the power and simplicity of having a complete, RESTful service.

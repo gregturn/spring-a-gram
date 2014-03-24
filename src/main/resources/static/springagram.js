@@ -4,12 +4,14 @@
 
     function readImage(input) {
         if (input.files && input.files[0]) {
-            var FR = new FileReader();
-            FR.onloadend = function () {
-                name = input.files[0].name;
-                bytes = FR.result;
+            if (input.files[0].type.indexOf('image') != -1) {
+                var FR = new FileReader();
+                FR.onloadend = function () {
+                    name = input.files[0].name;
+                    bytes = FR.result;
+                }
+                FR.readAsDataURL(input.files[0]);
             }
-            FR.readAsDataURL(input.files[0]);
         }
     }
 
@@ -27,11 +29,4 @@
         })
     });
 
-//    $('button').onclick(function(e) {
-//        var item = $(this);
-//        e.preventDefault();
-//        var path = "/items/" + item.value;
-//        console.log("Deleting " + path);
-//        itemRepository.delete(path);
-//    })
 })();
