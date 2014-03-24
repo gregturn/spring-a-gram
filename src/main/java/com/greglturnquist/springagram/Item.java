@@ -1,5 +1,7 @@
 package com.greglturnquist.springagram;
 
+import org.springframework.hateoas.ResourceSupport;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +20,10 @@ public class Item {
 
 	@Lob
 	private String image;
+
+	public long getId() {
+		return id;
+	}
 
 	public String getName() {
 		return name;
