@@ -1,5 +1,5 @@
 var name, bytes;
-var itemRepository = sdr.repositoriesFactory(null).itemRepository;
+var itemRepository = sdr.createRepositories().itemRepository;
 
 function readImage(input) {
     if (input.files && input.files[0]) {
