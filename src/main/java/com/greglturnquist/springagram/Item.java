@@ -1,8 +1,5 @@
 package com.greglturnquist.springagram;
 
-import org.springframework.hateoas.ResourceSupport;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
