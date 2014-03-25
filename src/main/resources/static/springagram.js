@@ -29,8 +29,7 @@ $('#upload').submit(function(e) {
 });
 
 function deletePic(id) {
-    itemRepository.delete("/items/" + id)
-        .done(function() {
-            window.location.reload(true);
-        });
+    itemRepository.delete(id).done(function() {
+        window.location.reload();
+    });
 }
