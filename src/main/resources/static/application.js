@@ -1,5 +1,6 @@
-var name, bytes;
+var name, bytes, currentGallery;
 var itemRepository = sdr.createRepositories().itemRepository;
+var galleryRepository = sdr.createRepositories().galleryRepository;
 
 function readImage(input) {
     if (input.files && input.files[0]) {
@@ -28,8 +29,25 @@ $('#upload').submit(function(e) {
     })
 });
 
+function pickGallery(id) {
+    currentGallery = id;
+}
+
 function deletePic(id) {
     itemRepository.delete(id).done(function() {
         window.location.reload();
     });
+}
+
+function addTo(id) {
+    var item = itemRepository.findOne(id);
+    var gallery = galleryRepository.findOne(currentGallery);
+
+    galleryRepository.addToItems(gallery, item).done(function() {
+        window.location.reload();
+    });
+}
+
+function removePic(itemId, galleryId) {
+    console.log("Remove item " + itemId + " from gallery " + galleryId);
 }

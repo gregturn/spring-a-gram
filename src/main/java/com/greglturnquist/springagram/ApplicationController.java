@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ApplicationController {
 
 	@Autowired
-	ItemRepository repository;
+	ItemRepository itemRepository;
+
+	@Autowired
+	GalleryRepository galleryRepository;
 
 	/**
 	 * Serve up the home page
@@ -24,7 +27,8 @@ public class ApplicationController {
 	@RequestMapping("/index")
 	public String index(Model model) {
 
-		model.addAttribute("items", repository.findAll());
+		model.addAttribute("items", itemRepository.findAll());
+		model.addAttribute("galleries", galleryRepository.findAll());
 		return "index";
 	}
 
@@ -36,6 +40,6 @@ public class ApplicationController {
 	@ResponseBody
 	@RequestMapping("/image/{id}")
 	public String image(@PathVariable Long id) {
-		return repository.findOne(id).getImage();
+		return itemRepository.findOne(id).getImage();
 	}
 }

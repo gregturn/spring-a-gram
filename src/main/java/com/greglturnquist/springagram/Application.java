@@ -2,9 +2,13 @@ package com.greglturnquist.springagram;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.bind.DatatypeConverter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.ApplicationContext;
@@ -15,6 +19,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 import org.springframework.util.FileCopyUtils;
+import org.thymeleaf.util.ListUtils;
 
 @Configuration
 @EnableJpaRepositories
@@ -26,16 +31,25 @@ public class Application {
 	public static void main(String[] args) throws IOException {
 		ApplicationContext ctx = SpringApplication.run(Application.class, args);
 
-		// No demo is complete without pre-loading a cat!
-		ItemRepository repository = ctx.getBean(ItemRepository.class);
-		Resource cat = ctx.getResource("classpath:cat.jpg");
+		// No demo is complete without pre-loading some cats
 
+		ItemRepository itemRepository = ctx.getBean(ItemRepository.class);
+		itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg")));
+		itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg")));
+
+		GalleryRepository galleryRepository = ctx.getBean(GalleryRepository.class);
+		Gallery gallery = new Gallery();
+		gallery.setDescription("Collection of cats");
+		galleryRepository.save(gallery);
+	}
+
+	private static Item createItem(Resource cat) throws IOException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		FileCopyUtils.copy(cat.getInputStream(), output);
 		Item item = new Item();
-		item.setName("cat.jpg");
+		item.setName(cat.getFilename());
 		item.setImage("data:image/png;base64," +
 				DatatypeConverter.printBase64Binary(output.toByteArray()));
-		repository.save(item);
+		return item;
 	}
 }
