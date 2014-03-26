@@ -1,6 +1,7 @@
 var name, bytes, currentGallery;
-var itemRepository = sdr.createRepositories().itemRepository;
-var galleryRepository = sdr.createRepositories().galleryRepository;
+var repositories = sdr.createRepositories();
+var itemRepository = repositories.itemRepository;
+var galleryRepository = repositories.galleryRepository;
 
 function readImage(input) {
     if (input.files && input.files[0]) {
@@ -43,8 +44,10 @@ function addTo(id) {
     var item = itemRepository.findOne(id);
     var gallery = galleryRepository.findOne(currentGallery);
 
-    galleryRepository.addToItems(gallery, item).done(function() {
-        window.location.reload();
+    $.when(item, gallery).then(function(itemData, galleryData){
+        galleryRepository.addItems(galleryData[0], itemData[0]).done(function(){
+            window.location.reload();
+        });
     });
 }
 
