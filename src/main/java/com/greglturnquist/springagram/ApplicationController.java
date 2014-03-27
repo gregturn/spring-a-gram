@@ -27,7 +27,7 @@ public class ApplicationController {
 	@RequestMapping("/index")
 	public String index(Model model) {
 
-		model.addAttribute("items", itemRepository.findAll());
+		model.addAttribute("items", itemRepository.findByGalleryIsNull());
 		model.addAttribute("galleries", galleryRepository.findAll());
 		return "index";
 	}

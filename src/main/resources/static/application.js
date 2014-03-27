@@ -45,12 +45,15 @@ function addTo(id) {
     var gallery = galleryRepository.findOne(currentGallery);
 
     $.when(item, gallery).then(function(itemData, galleryData){
-        galleryRepository.addItems(galleryData[0], itemData[0]).done(function(){
+        var addItems = galleryRepository.addItems(galleryData[0], itemData[0]);
+        var setGallery = itemRepository.setGallery(itemData[0], galleryData[0]);
+
+        $.when(addItems, setGallery).then(function(){
             window.location.reload();
         });
     });
 }
 
 function removePic(itemId, galleryId) {
-    console.log("Remove item " + itemId + " from gallery " + galleryId);
+    console.log("Working on ability to remove item " + itemId + " from gallery " + galleryId);
 }
