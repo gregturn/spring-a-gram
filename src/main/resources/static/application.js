@@ -55,5 +55,15 @@ function addTo(id) {
 }
 
 function removePic(itemId, galleryId) {
-    console.log("Working on ability to remove item " + itemId + " from gallery " + galleryId);
+    var item = itemRepository.findOne(itemId);
+    var gallery = galleryRepository.findOne(galleryId);
+
+    $.when(item, gallery).then(function(itemData, galleryData){
+        var removeItems = galleryRepository.removeItems(galleryData[0], itemId);
+        var deleteGallery = itemRepository.deleteGallery(itemData[0]);
+
+        $.when(deleteGallery, removeItems).then(function(){
+            window.location.reload();
+        });
+    });
 }
