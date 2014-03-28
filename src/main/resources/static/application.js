@@ -57,7 +57,6 @@
                 row.append($('<td></td>').append(
                     $('<input type="radio" name="gallery">').click(function () {
                         currentGallery = gallery;
-                        console.log(currentGallery);
                     })
                 ));
 
@@ -129,8 +128,6 @@
 
         $('#upload').submit(function (e) {
             e.preventDefault();
-            console.log(name);
-            console.log(bytes);
             itemRepository.create({
                 name: name,
                 image: bytes
