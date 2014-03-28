@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="/webjars/jquery/2.0.3/jquery.js"></script>
     <script src="/jsclient/jquery"></script>
+    <script src="application.js" type="application/javascript"></script>
     <style>
         .thumbnail {
             width: 100px;
@@ -20,40 +21,14 @@
 <body>
     <h2>Spring-A-Gram: Upload your favorite pictures!</h2>
 
-    <form action="/" id="upload">
+    <form action="#" id="upload">
         <p>File to upload: <input type="file" id="file" /></p>
         <p><input type="submit" value="Upload" /></p>
     </form>
 
-    <table>
-        <tr><th></th><th>Name</th><th>Collection</th></tr>
-        <tr th:each="gallery : ${galleries}">
-            <td><input type="radio" name="gallery" th:onclick="${'pickGallery(' + gallery.id + ')'}" /></td>
-            <td th:text="${gallery.description}"></td>
-            <td>
-                <table>
-                    <tr><th>Filename</th><th>Image</th></tr>
-                    <tr th:each="item : ${gallery.items}">
-                        <td th:text="${item.name}"></td>
-                        <td><img th:src="${item.image}" class="thumbnail" /></td>
-                        <td><button th:onclick="${'removePic(' + item.id + ',' + gallery.id + ')'}">Remove</button></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+    <div id="gallery"></div>
 
-    <table>
-        <tr><th>Filename</th><th>Image</th><th></th><th></th></tr>
-        <tr th:each="item : ${items}">
-            <td th:text="${item.name}"></td>
-            <td><img th:src="${item.image}" class="thumbnail" /></td>
-            <td><button name="delete" th:onclick="${'deletePic(' + item.id + ')'}">Delete</button></td>
-            <td><button name="add" th:onclick="${'addTo(' + item.id + ')'}">Add To</button></td>
-        </tr>
-    </table>
-
-    <script src="application.js" type="application/javascript"></script>
+    <div id="images"></div>
 
 </body>
 </html>

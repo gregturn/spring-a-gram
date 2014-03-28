@@ -16,9 +16,6 @@ public class ApplicationController {
 	@Autowired
 	ItemRepository itemRepository;
 
-	@Autowired
-	GalleryRepository galleryRepository;
-
 	/**
 	 * Serve up the home page
 	 * @param model
@@ -26,9 +23,6 @@ public class ApplicationController {
 	 */
 	@RequestMapping("/index")
 	public String index(Model model) {
-
-		model.addAttribute("items", itemRepository.findByGalleryIsNull());
-		model.addAttribute("galleries", galleryRepository.findAll());
 		return "index";
 	}
 
