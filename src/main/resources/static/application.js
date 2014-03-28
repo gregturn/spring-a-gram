@@ -24,7 +24,7 @@
         });
     }
 
-    function addTo(item) {
+    function addToSelectedGallery(item) {
         var addItems = galleryRepository.addItems(currentGallery, item);
         var setGallery = itemRepository.setGallery(item, currentGallery);
 
@@ -97,24 +97,25 @@
         if (data._embedded) {
             data._embedded.items.forEach(function (item) {
                 var row = $('<tr></tr>').attr('data-uri', item._links.self.href);
-                var nameCell = $('<td></td>').text(item.name);
-                var imgCell = $('<td></td>').append(
+
+                row.append($('<td></td>').text(item.name));
+
+                row.append($('<td></td>').append(
                     $('<img>').addClass('thumbnail').attr('src', item.image)
-                );
-                var deleteCell = $('<td></td>').append(
+                ));
+
+                row.append($('<td></td>').append(
                     $('<button>Delete</button>').click(function () {
                         deletePic(item);
                     })
-                );
-                var addToCell = $('<td></td>').append(
-                    $('<button>Add To</button>').click(function () {
-                        addTo(item);
+                ));
+
+                row.append($('<td></td>').append(
+                    $('<button>Add To Gallery</button>').click(function () {
+                        addToSelectedGallery(item);
                     })
-                );
-                row.append(nameCell);
-                row.append(imgCell);
-                row.append(deleteCell);
-                row.append(addToCell);
+                ));
+
                 table.append(row);
             });
         }
