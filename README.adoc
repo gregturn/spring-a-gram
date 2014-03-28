@@ -24,14 +24,7 @@ Let's explore.
 ----
 package com.greglturnquist.springagram;
 
-import org.springframework.hateoas.ResourceSupport;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+/* some import statements */
 
 @Entity
 public class Item {
@@ -39,20 +32,48 @@ public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	private String name;
 
 	@Lob
 	private String image;
 
-	....
-}
+	@OneToOne
+	private Gallery gallery;
+	...
 ----
 
-The core piece of this app are the **Items**. It contains an auto-generated **id**, a **name**, and a raw **image** (stored in the format of a `String`).
+The core piece of this app are the **Items**. Each one contains an auto-generated **id**, a **name**, a raw **image** (stored in the format of a `String`) and an optional **Gallery**.
 
 NOTE: Java strings a wide and generally unicode based. To store the raw data of a picture in the database, it has been tagged with http://docs.oracle.com/javaee/6/api/javax/persistence/Lob.html[@Lob],
 an annotation used to signal this a **Large Object**.
+
+== Creating a place to gather items
+
+We declared up above that **Items** can be put in **Galleries**. This gives us the opportunity to define a relationship and see to manage it through the RESTful endpoints later on.
+
+`src/main/java/com/greglturnquist/springagram/Gallery.java`
+[source,java]
+----
+package com.greglturnquist.springagram;
+
+/* import statements */
+
+@Entity
+public class Gallery {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+
+	private String description;
+
+	@OneToMany
+	private List<Item> items;
+	...
+----
+
+A **Gallery** has an **id**, a **description**, and can contain zero or more **Items**.
 
 == Create the simplest repository interface possible
 
@@ -64,16 +85,37 @@ package com.greglturnquist.springagram;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import java.util.List;
+
 @RepositoryRestResource()
 public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
+
+	List<Item> findByGalleryIsNull();
+
 }
 ----
 
+`ItemRepository` has one custom finder method, and that's to get a listing of items that are NOT assigned to a gallery.
+
+`src/main/java/com/greglturnquist/springagram/GalleryRepository.java`
+[source,java]
+----
+package com.greglturnquist.springagram;
+
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+@RepositoryRestResource
+public interface GalleryRepository extends PagingAndSortingRepository<Gallery, Long> {
+}
+----
+
+
 All of the http://projects.spring.io/spring-data[Spring Data projects] are based on this similar concept: define an interface that extends either `CrudRepository` or `PagingAndSortingRepository` and then let Spring Data create a proxied concrete implementation. You get a handful of built in operations. You can add custom queries, but we aren't doing that right now.
 
-This interface comes with an extra annotation: `RepositoryRestResource`. This annotation provides the means to change parts of the URLs and hypermedia, but we aren't using that here. 
+Both of these interfaces have an extra annotation: `RepositoryRestResource`. This annotation provides the means to change parts of the URLs and hypermedia, but we aren't using that here. 
 
-NOTE: If you notice the end of the declaration where it says `<Item, Long>`, that indicates the entity type and the type of its keys.
+NOTE: If you notice the end of the declaration where it says `<Item, Long>` and `<Gallery, Long>`, that indicates the entity type and the type of its keys.
 
 == Spinning up a RESTful server app
 
@@ -86,13 +128,7 @@ package com.greglturnquist.springagram;
 
 import java.io.IOException;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
+/* import statements */
 
 @Configuration
 @EnableJpaRepositories
@@ -122,6 +158,10 @@ At the root, you can see what links are available.
 $ curl localhost:8080
 {
   "_links" : {
+    "galleries" : {
+      "href" : "http://localhost:8080/galleries{?page,size,sort}",
+      "templated" : true
+    },
     "items" : {
       "href" : "http://localhost:8080/items{?page,size,sort}",
       "templated" : true
@@ -133,8 +173,9 @@ $ curl localhost:8080
 }
 ```
 
-* /items is where individual items are stored.
-* /jsclient is a collection of prebuilt Javascript libraries designed to speed up building a rich front end.
+* **/items** is where individual items are stored.
+* **/galleries** is where the galleries are stored.
+* **/jsclient** is a collection of prebuilt Javascript libraries designed to speed up building a rich front end.
 
 ```
 $ curl localhost:8080/items
@@ -143,6 +184,9 @@ $ curl localhost:8080/items
     "self" : {
       "href" : "http://localhost:8080/items{?page,size,sort}",
       "templated" : true
+    },
+    "search" : {
+      "href" : "http://localhost:8080/items/search"
     }
   },
   "page" : {
@@ -154,7 +198,7 @@ $ curl localhost:8080/items
 }
 ```
 
-Here you can see there are no entries yet.
+Here you can see there are no entries yet. You can go on and explore the other links to get a feel for things.
 
 == Building a rich front end
 
