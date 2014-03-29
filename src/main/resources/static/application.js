@@ -68,15 +68,19 @@
                     if (data._embedded) {
                         data._embedded.items.forEach(function (item) {
                             var row = $('<tr></tr>').attr('data-uri', item._links.self.href);
+
                             row.append($('<td></td>').text(item.name));
+
                             row.append($('<td></td>').append(
                                 $('<img>').addClass('thumbnail').attr('src', item.image)
                             ));
+
                             row.append($('<td></td>').append(
                                 $('<button>Remove</button>').click(function () {
                                     removePicByResource(item, gallery);
                                 })
                             ));
+
                             nestedTable.append(row);
                         });
                     }
