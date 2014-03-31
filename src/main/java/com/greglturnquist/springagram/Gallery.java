@@ -17,7 +17,7 @@ public class Gallery {
 
 	private String description;
 
-	@OneToMany
+	@OneToMany(mappedBy = "gallery")
 	private List<Item> items;
 
 	public long getId() {

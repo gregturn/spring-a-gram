@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Item {
@@ -19,7 +19,7 @@ public class Item {
 	@Lob
 	private String image;
 
-	@OneToOne
+	@ManyToOne
 	private Gallery gallery;
 
 	public long getId() {
