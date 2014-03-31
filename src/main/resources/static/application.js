@@ -20,10 +20,17 @@
         }
     }
 
+    /* Search for a given item in the table of unlinked images */
     function findUnlinkedItem(item) {
         return $('#images tr[data-uri="' + item._links.self.href + '"]');
     }
 
+    /* Search for a given item in the gallery's table */
+    function findLinkedItem(item) {
+        return $('#gallery tr[data-uri="' + item._links.self.href + '"]');
+    }
+
+    /* Delete the picture from storage and remove from the screen */
     function deletePic(item) {
         itemRepository.delete(id(item)).done(function () {
             findUnlinkedItem(item).remove();
@@ -31,6 +38,7 @@
         });
     }
 
+    /* Move the picture from table of unlinked items to its gallery's table */
     function addToSelectedGallery(item) {
         var addItems = galleryRepository.addItems(currentGallery, item);
         var setGallery = itemRepository.setGallery(item, currentGallery);
@@ -41,6 +49,7 @@
         });
     }
 
+    /* Take either a JSON or URI version of a resource, and extract it's ID */
     function id(resource) {
         if (typeof resource === "string") {
             var parts = resource.split("/");
@@ -50,10 +59,7 @@
         return parts[parts.length - 1];
     }
 
-    function findLinkedItem(item) {
-        return $('#gallery tr[data-uri="' + item._links.self.href + '"]');
-    }
-
+    /* Unlink an item from it's gallery, and move it to the table of unlinked items */
     function removePicByResource(item, gallery) {
         var removeItems = galleryRepository.removeItems(gallery, id(item));
         var deleteGallery = itemRepository.deleteGallery(item);
@@ -64,6 +70,7 @@
         });
     }
 
+    /* Create a new table row for a item based on its gallery */
     function createItemRowForGallery(item, gallery) {
         var row = $('<tr></tr>').attr('data-uri', item._links.self.href);
 
@@ -81,6 +88,7 @@
         return row;
     }
 
+    /* Draw the gallery table from scratch */
     function drawGalleryTable(data) {
         var table = $('<table></table>');
         table.append('<tr><th></th><th>Name</th><th>Collection</th></tr>')
@@ -114,6 +122,7 @@
         $('#gallery').append(table);
     }
 
+    /* Create a new table row for an unlinked item */
     function createItemRow(item) {
         var row = $('<tr></tr>').attr('data-uri', item._links.self.href);
 
@@ -137,10 +146,12 @@
         return row;
     }
 
+    /* Append an item's table row to the image table */
     function addItemRow(item) {
         $('#images table').append(createItemRow(item));
     }
 
+    /* When the page is loaded, run/register this set of code */
     $(function () {
         $('#file').change(function () {
             readImage(this);
