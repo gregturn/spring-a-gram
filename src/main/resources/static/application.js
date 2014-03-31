@@ -137,15 +137,8 @@
         return row;
     }
 
-    function drawImageTable(data) {
-        var table = $('<table></table>');
-        table.append('<tr><th>Filename</th><th>Image</th><th></th><th></th></tr>');
-        if (data._embedded) {
-            data._embedded.items.forEach(function (item) {
-                table.append(createItemRow(item));
-            });
-        }
-        $('#images').append(table);
+    function addItemRow(item) {
+        $('#images table').append(createItemRow(item));
     }
 
     $(function () {
@@ -162,7 +155,7 @@
             response.done(function () {
                 itemRepository.findOne(id(response.getResponseHeader("Location"))).done(function(item) {
                     items[item._links.self.href] = item;
-                    $('#images table').append(createItemRow(item));
+                    addItemRow(item);
                 });
             })
         });
@@ -177,12 +170,15 @@
         });
 
         itemRepository.findByGalleryIsNull().done(function(data) {
+            var table = $('<table></table>');
+            table.append('<tr><th>Filename</th><th>Image</th><th></th><th></th></tr>');
+            $('#images').append(table);
             if (data._embedded) {
                 data._embedded.items.forEach(function(item) {
                     items[item._links.self.href] = item;
+                    addItemRow(item);
                 })
             }
-            drawImageTable(data);
         });
 
     });
