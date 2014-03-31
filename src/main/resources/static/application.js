@@ -4,6 +4,8 @@
     var repositories = sdr.createRepositories();
     var itemRepository = repositories.itemRepository;
     var galleryRepository = repositories.galleryRepository;
+    var items = {};
+    var galleries = {};
 
     function readImage(input) {
         if (input.files && input.files[0]) {
@@ -18,9 +20,14 @@
         }
     }
 
+    function findUnlinkedItem(item) {
+        return $('#images tr[data-uri="' + item._links.self.href + '"]');
+    }
+
     function deletePic(item) {
         itemRepository.delete(id(item)).done(function () {
-            window.location.reload();
+            findUnlinkedItem(item).remove();
+            delete items[item._links.self.href];
         });
     }
 
@@ -29,13 +36,22 @@
         var setGallery = itemRepository.setGallery(item, currentGallery);
 
         $.when(addItems, setGallery).then(function () {
-            window.location.reload();
+            $('#gallery table table').append(createItemRowForGallery(item, currentGallery));
+            findUnlinkedItem(item).remove();
         });
     }
 
     function id(resource) {
-        var parts = resource._links.self.href.split("/");
+        if (typeof resource === "string") {
+            var parts = resource.split("/");
+        } else {
+            var parts = resource._links.self.href.split("/");
+        }
         return parts[parts.length - 1];
+    }
+
+    function findLinkedItem(item) {
+        return $('#gallery tr[data-uri="' + item._links.self.href + '"]');
     }
 
     function removePicByResource(item, gallery) {
@@ -43,8 +59,26 @@
         var deleteGallery = itemRepository.deleteGallery(item);
 
         $.when(removeItems, deleteGallery).then(function () {
-            window.location.reload();
+            findLinkedItem(item).remove();
+            $('#images table').append(createItemRow(item));
         });
+    }
+
+    function createItemRowForGallery(item, gallery) {
+        var row = $('<tr></tr>').attr('data-uri', item._links.self.href);
+
+        row.append($('<td></td>').text(item.name));
+
+        row.append($('<td></td>').append(
+            $('<img>').addClass('thumbnail').attr('src', item.image)
+        ));
+
+        row.append($('<td></td>').append(
+            $('<button>Remove</button>').click(function () {
+                removePicByResource(item, gallery);
+            })
+        ));
+        return row;
     }
 
     function drawGalleryTable(data) {
@@ -67,21 +101,7 @@
                 galleryRepository.getItems(gallery).done(function (data) {
                     if (data._embedded) {
                         data._embedded.items.forEach(function (item) {
-                            var row = $('<tr></tr>').attr('data-uri', item._links.self.href);
-
-                            row.append($('<td></td>').text(item.name));
-
-                            row.append($('<td></td>').append(
-                                $('<img>').addClass('thumbnail').attr('src', item.image)
-                            ));
-
-                            row.append($('<td></td>').append(
-                                $('<button>Remove</button>').click(function () {
-                                    removePicByResource(item, gallery);
-                                })
-                            ));
-
-                            nestedTable.append(row);
+                            nestedTable.append(createItemRowForGallery(item, gallery));
                         });
                     }
                 });
@@ -94,32 +114,35 @@
         $('#gallery').append(table);
     }
 
+    function createItemRow(item) {
+        var row = $('<tr></tr>').attr('data-uri', item._links.self.href);
+
+        row.append($('<td></td>').text(item.name));
+
+        row.append($('<td></td>').append(
+            $('<img>').addClass('thumbnail').attr('src', item.image)
+        ));
+
+        row.append($('<td></td>').append(
+            $('<button>Delete</button>').click(function () {
+                deletePic(item);
+            })
+        ));
+
+        row.append($('<td></td>').append(
+            $('<button>Add To Gallery</button>').click(function () {
+                addToSelectedGallery(item);
+            })
+        ));
+        return row;
+    }
+
     function drawImageTable(data) {
         var table = $('<table></table>');
         table.append('<tr><th>Filename</th><th>Image</th><th></th><th></th></tr>');
         if (data._embedded) {
             data._embedded.items.forEach(function (item) {
-                var row = $('<tr></tr>').attr('data-uri', item._links.self.href);
-
-                row.append($('<td></td>').text(item.name));
-
-                row.append($('<td></td>').append(
-                    $('<img>').addClass('thumbnail').attr('src', item.image)
-                ));
-
-                row.append($('<td></td>').append(
-                    $('<button>Delete</button>').click(function () {
-                        deletePic(item);
-                    })
-                ));
-
-                row.append($('<td></td>').append(
-                    $('<button>Add To Gallery</button>').click(function () {
-                        addToSelectedGallery(item);
-                    })
-                ));
-
-                table.append(row);
+                table.append(createItemRow(item));
             });
         }
         $('#images').append(table);
@@ -132,17 +155,35 @@
 
         $('#upload').submit(function (e) {
             e.preventDefault();
-            itemRepository.create({
+            var response = itemRepository.create({
                 name: name,
                 image: bytes
-            }).done(function () {
-                window.location.reload();
+            });
+            response.done(function () {
+                itemRepository.findOne(id(response.getResponseHeader("Location"))).done(function(item) {
+                    items[item._links.self.href] = item;
+                    $('#images table').append(createItemRow(item));
+                });
             })
         });
 
-        galleryRepository.findAll().done(drawGalleryTable);
+        galleryRepository.findAll().done(function(data) {
+            if (data._embedded) {
+                data._embedded.galleries.forEach(function(gallery) {
+                    galleries[gallery._links.self.href] = gallery;
+                });
+            }
+            drawGalleryTable(data);
+        });
 
-        itemRepository.findByGalleryIsNull().done(drawImageTable);
+        itemRepository.findByGalleryIsNull().done(function(data) {
+            if (data._embedded) {
+                data._embedded.items.forEach(function(item) {
+                    items[item._links.self.href] = item;
+                })
+            }
+            drawImageTable(data);
+        });
 
     });
 
