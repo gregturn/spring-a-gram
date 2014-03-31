@@ -72,7 +72,8 @@
 
     /* Create a new table row for a item based on its gallery */
     function createItemRowForGallery(item, gallery) {
-        var row = $('<tr></tr>').attr('data-uri', item._links.self.href);
+        var row = $('<tr></tr>')
+            .attr('data-uri', item._links.self.href);
 
         row.append($('<td></td>').text(item.name));
 
@@ -81,9 +82,9 @@
         ));
 
         row.append($('<td></td>').append(
-            $('<button>Remove</button>').click(function () {
-                removePicByResource(item, gallery);
-            })
+            $('<button>Remove</button>')
+                .attr('data-gallery-uri', gallery._links.self.href)
+                .attr('data-uri', item._links.self.href)
         ));
         return row;
     }
@@ -133,16 +134,13 @@
         ));
 
         row.append($('<td></td>').append(
-            $('<button>Delete</button>').click(function () {
-                deletePic(item);
-            })
+            $('<button>Delete</button>')
         ));
 
         row.append($('<td></td>').append(
-            $('<button>Add To Gallery</button>').click(function () {
-                addToSelectedGallery(item);
-            })
+            $('<button>Add To Gallery</button>')
         ));
+
         return row;
     }
 
@@ -153,10 +151,13 @@
 
     /* When the page is loaded, run/register this set of code */
     $(function () {
+
+        /* Listen for picking a file */
         $('#file').change(function () {
             readImage(this);
         });
 
+        /* When upload is clicked, upload the file, store it, and then add to list of unlinked items */
         $('#upload').submit(function (e) {
             e.preventDefault();
             var response = itemRepository.create({
@@ -169,6 +170,30 @@
                     addItemRow(item);
                 });
             })
+        });
+
+        /* Listen for clicks on the gallery */
+        $('#gallery').on('click', function(e) {
+            if (e.target.localName === 'button') {
+                if (e.target.innerText === 'Remove') {
+                    var itemUri = e.target.dataset['uri'];
+                    var galleryUri = e.target.dataset['galleryUri'];
+                    removePicByResource(items[itemUri], galleries[galleryUri]);
+                }
+            }
+        });
+
+        /* Listen for clicks on the list of images */
+        $('#images').on('click', function(e) {
+            if (e.target.localName === 'button') {
+                if (e.target.innerText === 'Delete') {
+                    var itemUri = e.target.parentNode.parentNode.dataset['uri'];
+                    deletePic(items[itemUri]);
+                } else if (e.target.innerText === 'Add To Gallery') {
+                    var itemUri = e.target.parentNode.parentNode.dataset['uri'];
+                    addToSelectedGallery(items[itemUri]);
+                }
+            }
         });
 
         galleryRepository.findAll().done(function(data) {
