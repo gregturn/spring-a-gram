@@ -32,7 +32,7 @@
 
     /* Delete the picture from storage and remove from the screen */
     function deletePic(item) {
-        itemRepository.delete(id(item)).done(function () {
+        itemRepository.delete(item).done(function () {
             findUnlinkedItem(item).remove();
             delete items[item._links.self.href];
         });
@@ -165,7 +165,7 @@
                 image: bytes
             });
             response.done(function () {
-                itemRepository.findOne(id(response.getResponseHeader("Location"))).done(function(item) {
+                itemRepository.findOne(response.getResponseHeader("Location")).done(function(item) {
                     items[item._links.self.href] = item;
                     addItemRow(item);
                 });
