@@ -1,0 +1,26 @@
+{
+  "name": "rest",
+  "version": "1.0.3",
+  "main": "./rest.js",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "dependencies": {
+    "when": "~2"
+  },
+  "ignore": [
+    "docs",
+    "test"
+  ],
+  "homepage": "https://github.com/cujojs/rest",
+  "_release": "1.0.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.3",
+    "commit": "988fad5da758d9b4baa6974b23fe01fbb0fff481"
+  },
+  "_source": "git://github.com/cujojs/rest.git",
+  "_target": "~1.0.3",
+  "_originalSource": "rest"
+}

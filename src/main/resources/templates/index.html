@@ -3,9 +3,17 @@
 <head>
     <title>Spring-A-Gram :: Upload your fav pics</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <script src="/webjars/jquery/2.0.3/jquery.js"></script>
-    <script src="/jsclient/jquery"></script>
-    <script src="application.js"></script>
+    <script src="curl/src/curl.js"></script>
+    <script>
+        curl(
+            {
+                paths: {
+                    'jquery': 'jquery/dist/jquery.js'
+                }
+            },
+            [ 'main.js' ]
+        );
+    </script>
     <style>
         .thumbnail {
             width: 100px;
