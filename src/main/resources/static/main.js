@@ -62,20 +62,12 @@
                 return;
             }
 
-            // TODO Rip out one of these ops, since JPA now has this as a bi-directional relationship
-            var addItems = api({
-                method: 'PATCH',
-                path: currentGallery._links.items.href,
-                entity: item,
-                headers: {'Content-Type': 'text/uri-list'}});
-            var setGallery = api({
+            api({
                 method: 'PUT',
                 path: item._links.gallery.href,
                 entity: currentGallery,
                 headers: {'Content-Type': 'text/uri-list'}
-            });
-
-            when.join(addItems, setGallery).then(function () {
+            }).then(function() {
                 $('#gallery table table').append(createItemRowForGallery(item, currentGallery));
                 findUnlinkedItem(item).remove();
             });
