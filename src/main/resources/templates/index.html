@@ -3,12 +3,14 @@
 <head>
     <title>Spring-A-Gram :: Upload your fav pics</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="/jsclient/jquery"></script>
     <script src="curl/src/curl.js"></script>
     <script>
         curl(
             {
                 paths: {
-                    'jquery': 'jquery/dist/jquery.js'
+                    'jquery': 'jquery/dist/jquery.js',
+                    'when': 'when/when.js'
                 }
             },
             [ 'main.js' ]
