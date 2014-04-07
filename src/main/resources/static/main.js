@@ -89,19 +89,13 @@
                 return;
             }
 
-            var removeItems = api({
-                method: 'DELETE',
-                path: gallery._links.items.href + '/' + id(item)
-            });
-            var deleteGallery = api({
+            api({
                 method: 'DELETE',
                 path: item._links.gallery.href
-            });
-
-            when.join(removeItems, deleteGallery).then(function() {
+            }).then(function(response) {
                 findLinkedItem(item).remove();
                 $('#images table').append(createItemRow(item));
-            })
+            });
         }
 
         /* Create a new table row for a item based on its gallery */
