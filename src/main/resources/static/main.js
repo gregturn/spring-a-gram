@@ -4,13 +4,17 @@
         var $ = require('jquery');
         var rest = require('rest');
         var when = require('when');
+        var defaultRequest = require('rest/interceptor/defaultRequest');
         var mime = require('rest/interceptor/mime');
         var hateoas = require('rest/interceptor/hateoas');
         var hal = require('rest/mime/type/application/hal');
         var registry = require('rest/mime/registry');
 
         var name, bytes, currentGallery;
-        var api = rest.chain(mime).chain(hateoas);
+        var api = rest
+            .chain(mime)
+            .chain(hateoas)
+            .chain(defaultRequest, {headers: {'Accept': 'application/hal+json'}});
         var items = {};
         var galleries = {};
 
@@ -130,7 +134,6 @@
             var table = $('<table></table>');
             table.append('<tr><th></th><th>Name</th><th>Collection</th></tr>')
             data.forEach(function (gallery) {
-                console.log(gallery);
                 var row = $('<tr></tr>').attr('data-uri', gallery._links.self.href);
 
                 row.append($('<td></td>').append(
@@ -191,15 +194,14 @@
         function follow(relArray) {
             var root = api({
                 method: 'GET',
-                path: '/',
-                headers: {'Accept': 'application/hal+json'}
+                path: '/'
             });
             relArray.forEach(function(rel) {
                 root = root.then(function (response) {
                     if (response.entity._embedded && response.entity._embedded.hasOwnProperty(rel)) {
                         return response.entity[rel];
                     } else {
-                        return response.entity.clientFor(rel)({headers: {'Accept': 'application/hal+json'}});
+                        return response.entity.clientFor(rel)({});
                     }
                 });
             });
