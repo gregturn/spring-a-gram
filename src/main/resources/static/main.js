@@ -1,6 +1,13 @@
 (function(define) { 'use strict';
-    define(['jquery', 'rest/rest', 'when', 'rest/interceptor/mime', 'rest/mime/registry',
-        'rest/interceptor/hateoas'], function($, rest, when, mime, registry, hateoas) {
+    define(function(require) {
+
+        var $ = require('jquery');
+        var rest = require('rest');
+        var when = require('when');
+        var mime = require('rest/interceptor/mime');
+        var hateoas = require('rest/interceptor/hateoas');
+        var hal = require('rest/mime/type/application/hal');
+        var registry = require('rest/mime/registry');
 
         var name, bytes, currentGallery;
         var api = rest.chain(mime).chain(hateoas);
@@ -24,6 +31,7 @@
             }
         };
         registry.register('text/uri-list', uriListConverter);
+        registry.register('application/hal+json', hal);
 
         function readImage(input) {
             if (input.files && input.files[0]) {
@@ -121,37 +129,36 @@
         function drawGalleryTable(data) {
             var table = $('<table></table>');
             table.append('<tr><th></th><th>Name</th><th>Collection</th></tr>')
-            if (data._embedded) {
-                data._embedded.galleries.forEach(function (gallery) {
-                    var row = $('<tr></tr>').attr('data-uri', gallery._links.self.href);
+            data.forEach(function (gallery) {
+                console.log(gallery);
+                var row = $('<tr></tr>').attr('data-uri', gallery._links.self.href);
 
-                    row.append($('<td></td>').append(
-                        $('<input type="radio" name="gallery">').click(function () {
-                            currentGallery = gallery;
-                        })
-                    ));
+                row.append($('<td></td>').append(
+                    $('<input type="radio" name="gallery">').click(function () {
+                        currentGallery = gallery;
+                    })
+                ));
 
-                    row.append($('<td></td>').text(gallery.description));
+                row.append($('<td></td>').text(gallery.description));
 
-                    var nestedTable = $('<table></table>');
-                    nestedTable.append('<tr><th>Filename</th><th>Image</th></tr>');
-                    api({
-                        method: 'GET',
-                        path: gallery._links.items.href
-                    }).then(function(response) {
-                        if (response.entity._embedded) {
-                            response.entity._embedded.items.forEach(function (item) {
-                                items[item._links.self.href] = item;
-                                nestedTable.append(createItemRowForGallery(item, gallery));
-                            });
-                        }
-                    });
-
-                    row.append($('<td></td>').append(nestedTable));
-
-                    table.append(row);
+                var nestedTable = $('<table></table>');
+                nestedTable.append('<tr><th>Filename</th><th>Image</th></tr>');
+                api({
+                    method: 'GET',
+                    path: gallery._links.items.href
+                }).then(function(response) {
+                    if (response.entity._embedded) {
+                        response.entity._embedded.items.forEach(function (item) {
+                            items[item._links.self.href] = item;
+                            nestedTable.append(createItemRowForGallery(item, gallery));
+                        });
+                    }
                 });
-            }
+
+                row.append($('<td></td>').append(nestedTable));
+
+                table.append(row);
+            });
             $('#gallery').append(table);
         }
 
@@ -179,6 +186,24 @@
         /* Append an item's table row to the image table */
         function addItemRow(item) {
             $('#images table').append(createItemRow(item));
+        }
+
+        function follow(relArray) {
+            var root = api({
+                method: 'GET',
+                path: '/',
+                headers: {'Accept': 'application/hal+json'}
+            });
+            relArray.forEach(function(rel) {
+                root = root.then(function (response) {
+                    if (response.entity._embedded && response.entity._embedded.hasOwnProperty(rel)) {
+                        return response.entity[rel];
+                    } else {
+                        return response.entity.clientFor(rel)({headers: {'Accept': 'application/hal+json'}});
+                    }
+                });
+            });
+            return root;
         }
 
         /* When the page is loaded, run/register this set of code */
@@ -235,31 +260,21 @@
                 }
             });
 
-            api({
-                method: 'GET',
-                path: '/galleries'
-            }).then(function (response) {
-                if (response.entity._embedded) {
-                    response.entity._embedded.galleries.forEach(function(gallery) {
-                        galleries[gallery._links.self.href] = gallery;
-                    });
-                }
-                drawGalleryTable(response.entity);
-            });
+            follow(['galleries', 'galleries']).then(function(response) {
+                response.forEach(function(gallery) {
+                    galleries[gallery._links.self.href] = gallery;
+                });
+                drawGalleryTable(response);
+            })
 
-            api({
-                method: 'GET',
-                path: '/items/search/findByGalleryIsNull'
-            }).then(function (response) {
+            follow(['items', 'search', 'findByGalleryIsNull', 'items']).then(function(response) {
                 var table = $('<table></table>');
                 table.append('<tr><th>Filename</th><th>Image</th><th></th><th></th></tr>');
                 $('#images').append(table);
-                if (response.entity._embedded) {
-                    response.entity._embedded.items.forEach(function(item) {
-                        items[item._links.self.href] = item;
-                        addItemRow(item);
-                    })
-                }
+                response.forEach(function(item) {
+                    items[item._links.self.href] = item;
+                    addItemRow(item);
+                })
             });
         })
 
