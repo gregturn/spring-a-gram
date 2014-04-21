@@ -33,9 +33,14 @@ public class Application {
 		itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg")));
 
 		GalleryRepository galleryRepository = ctx.getBean(GalleryRepository.class);
-		Gallery gallery = new Gallery();
-		gallery.setDescription("Collection of cats");
-		galleryRepository.save(gallery);
+
+		Gallery catGallery = new Gallery();
+		catGallery.setDescription("Collection of cats");
+		galleryRepository.save(catGallery);
+
+        Gallery truckGallery = new Gallery();
+        truckGallery.setDescription("Collection of trucks");
+        galleryRepository.save(truckGallery);
 	}
 
 	private static Item createItem(Resource cat) throws IOException {

@@ -1,6 +1,7 @@
 package com.greglturnquist.springagram;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mobile.device.Device;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,11 @@ public class ApplicationController {
 	 * @return
 	 */
 	@RequestMapping("/index")
-	public String index() {
+	public String index(Device device) {
+        if (device.isMobile()) {
+            return "mobile";
+        }
+        // Fallback to normal
 		return "index";
 	}
 
