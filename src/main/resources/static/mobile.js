@@ -96,11 +96,14 @@
 
                     var collection = response.entity._embedded.items.reduce(
                         function(combined, item) {
-                            var row = $('<li></li>').append(
-                                $('<a href="#galleryOps" data-rel="popup" data-transition="flow"></a>').append(
-                                    $('<img />').attr('src', item.image)
+                            var row = $('<li></li>')
+                                .attr('data-uri', item._links.self.href)
+                                .append(
+                                    $('<a href="#galleryOps" data-rel="popup" data-transition="flow"></a>').append(
+                                        $('<img />').attr('src', item.image)
+                                    )
                                 )
-                            )
+                            items[item._links.self.href] = item;
                             return combined.append(row);
                         },
                         $('<ul data-role="listview"></ul>')
@@ -159,6 +162,29 @@
                     });
                 });
             });
+
+            $('#gallerylist').on('click', function(e) {
+                console.log("Removing...");
+                console.log(e);
+                if (e.target.tagName === 'IMG') {
+                    currentItem = items[e.target.parentNode.parentNode.dataset['uri']];
+                    $('#remove').attr('data-uri', currentItem);
+                }
+                if (e.target.tagName === 'A') {
+                    currentItem = items[e.target.parentNode.dataset['uri']];
+                }
+                console.log(currentItem);
+            });
+
+            $('#remove').on('click', function(e) {
+                console.log("Removing " + JSON.stringify(currentItem) + " from it's current gallery");
+                api({ method: 'DELETE', path: currentItem._links.gallery.href }).then(function(response) {
+                    $('#gallerylist li[data-uri="' + currentItem._links.self.href + '"]').remove();
+                    when($('#piclist').append(addItemRow(currentItem))).then(function() {
+                        $('#piclist').listview('refresh');
+                    });
+                });
+            })
 
             $('#piclist').on('click', function(e) {
                 console.log(e);
