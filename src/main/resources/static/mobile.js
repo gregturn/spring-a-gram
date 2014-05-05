@@ -92,20 +92,24 @@
                     $('<h4></h4>').text(gallery.description)
                 );
 
-                var collection = $('<ul data-role="listview"></ul>');
-
                 if (response.entity._embedded) {
-                    response.entity._embedded.items.forEach(function (item) {
-                        var row = $('<li></li>').append(
-                            $('<a href="#galleryOps" data-rel="popup" data-transition="flow"></a>').append(
-                                $('<img />').attr('src', item.image)
+
+                    var collection = response.entity._embedded.items.reduce(
+                        function(combined, item) {
+                            var row = $('<li></li>').append(
+                                $('<a href="#galleryOps" data-rel="popup" data-transition="flow"></a>').append(
+                                    $('<img />').attr('src', item.image)
+                                )
                             )
-                        )
-                        collection.append(row);
-                    });
+                            return combined.append(row);
+                        },
+                        $('<ul data-role="listview"></ul>')
+                    );
+
+                    collection.listview().enhanceWithin();
+                    collapsible.append(collection);
+
                 }
-                collection.listview().enhanceWithin();
-                collapsible.append(collection);
                 collapsible.collapsible().enhanceWithin();
 
                 return collapsible;
