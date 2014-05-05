@@ -41,4 +41,12 @@ public class Item {
 	public void setImage(String image) {
 		this.image = image;
 	}
+
+	public Gallery getGallery() {
+		return gallery;
+	}
+
+	public void setGallery(Gallery gallery) {
+		this.gallery = gallery;
+	}
 }

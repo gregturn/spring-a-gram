@@ -29,18 +29,24 @@ public class Application {
 		// No demo is complete without pre-loading some cats
 
 		ItemRepository itemRepository = ctx.getBean(ItemRepository.class);
-		itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg")));
-		itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg")));
+		Item cat = itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg")));
+		Item caterpillar = itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg")));
 
 		GalleryRepository galleryRepository = ctx.getBean(GalleryRepository.class);
 
 		Gallery catGallery = new Gallery();
 		catGallery.setDescription("Collection of cats");
-		galleryRepository.save(catGallery);
+		catGallery = galleryRepository.save(catGallery);
 
-        Gallery truckGallery = new Gallery();
-        truckGallery.setDescription("Collection of trucks");
-        galleryRepository.save(truckGallery);
+		Gallery truckGallery = new Gallery();
+		truckGallery.setDescription("Collection of trucks");
+		truckGallery = galleryRepository.save(truckGallery);
+
+		cat.setGallery(catGallery);
+		itemRepository.save(cat);
+
+		caterpillar.setGallery(truckGallery);
+		itemRepository.save(caterpillar);
 	}
 
 	private static Item createItem(Resource cat) throws IOException {
@@ -48,8 +54,7 @@ public class Application {
 		FileCopyUtils.copy(cat.getInputStream(), output);
 		Item item = new Item();
 		item.setName(cat.getFilename());
-		item.setImage("data:image/png;base64," +
-				DatatypeConverter.printBase64Binary(output.toByteArray()));
+		item.setImage("data:image/png;base64," + DatatypeConverter.printBase64Binary(output.toByteArray()));
 		return item;
 	}
 }

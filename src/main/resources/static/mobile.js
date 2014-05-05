@@ -81,6 +81,37 @@
             return root;
         }
 
+        function addGalleryRow(gallery) {
+            return api({
+                method: 'GET',
+                path: gallery._links.items.href
+            }).then(function(response) {
+                var collapsible = $('<div data-role="collapsible" data-mini="true" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"></div>');
+
+                collapsible.append(
+                    $('<h4></h4>').text(gallery.description)
+                );
+
+                var collection = $('<ul data-role="listview"></ul>');
+
+                if (response.entity._embedded) {
+                    response.entity._embedded.items.forEach(function (item) {
+                        var row = $('<li></li>').append(
+                            $('<a href="#galleryOps" data-rel="popup" data-transition="flow"></a>').append(
+                                $('<img />').attr('src', item.image)
+                            )
+                        )
+                        collection.append(row);
+                    });
+                }
+                collection.listview().enhanceWithin();
+                collapsible.append(collection);
+                collapsible.collapsible().enhanceWithin();
+
+                return collapsible;
+            });
+        }
+
         /* When the page is loaded, run/register this set of code */
         function addItemRow(item) {
             var list = $('<li></li>').attr('data-uri', item._links.self.href);
@@ -125,30 +156,6 @@
                 });
             });
 
-            /* Listen for clicks on the gallery */
-            $('#gallery').on('click', function(e) {
-                if (e.target.localName === 'button') {
-                    if (e.target.innerText === 'Remove') {
-                        var itemUri = e.target.dataset['uri'];
-                        var galleryUri = e.target.dataset['galleryUri'];
-                        removePicByResource(items[itemUri], galleries[galleryUri]);
-                    }
-                }
-            });
-
-            /* Listen for clicks on the list of images */
-            $('#images').on('click', function(e) {
-                if (e.target.localName === 'button') {
-                    if (e.target.innerText === 'Delete') {
-                        var itemUri = e.target.parentNode.parentNode.dataset['uri'];
-                        deletePic(items[itemUri]);
-                    } else if (e.target.innerText === 'Add To Gallery') {
-                        var itemUri = e.target.parentNode.parentNode.dataset['uri'];
-                        addToSelectedGallery(items[itemUri]);
-                    }
-                }
-            });
-
             $('#piclist').on('click', function(e) {
                 console.log(e);
                 console.log(e.target);
@@ -170,12 +177,16 @@
                 });
             })
 
-//            follow(['galleries', 'galleries']).then(function(response) {
-//                response.forEach(function(gallery) {
-//                    galleries[gallery._links.self.href] = gallery;
-//                });
-//                drawGalleryTable(response);
-//            })
+            follow(['galleries', 'galleries']).then(function(response) {
+                var gallerylist = $('#gallerylist');
+                response.forEach(function(gallery) {
+                    galleries[gallery._links.self.href] = gallery;
+                    addGalleryRow(gallery).then(function(response) {
+                        gallerylist.append(response);
+                    })
+
+                });
+            });
 
             follow(['items', 'search', 'findByGalleryIsNull', 'items']).then(function(response) {
                 var piclist = $('#piclist');
@@ -184,13 +195,6 @@
                     piclist.append(addItemRow(item));
                 });
                 piclist.listview('refresh');
-//                var list = $('<ul data-role="listview" data-split-icon="delete"></ul>');
-//                $('#images').append(list);
-//                response.forEach(function(item) {
-//                    items[item._links.self.href] = item;
-//                    addItemRow(item);
-//                });
-//                $('#images').trigger('create');
             });
         })
 
