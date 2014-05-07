@@ -81,6 +81,16 @@
             return root;
         }
 
+        function createGalleryItemRow(item) {
+            return $('<li></li>')
+                .attr('data-uri', item._links.self.href)
+                .append(
+                $('<a href="#galleryOps" data-rel="popup" data-transition="flow"></a>').append(
+                    $('<img />').attr('src', item.image)
+                )
+            );
+        }
+
         function addGalleryRow(gallery) {
             return api({
                 method: 'GET',
@@ -92,27 +102,21 @@
                     $('<h4></h4>').text(gallery.description)
                 );
 
+                // Start with an empty collection
+                var collection = $('<ul data-role="listview"></ul>').attr('data-gallery-uri', gallery._links.self.href);
+
+                // If there are any items, add them
                 if (response.entity._embedded) {
-
-                    var collection = response.entity._embedded.items.reduce(
+                    collection = response.entity._embedded.items.reduce(
                         function(combined, item) {
-                            var row = $('<li></li>')
-                                .attr('data-uri', item._links.self.href)
-                                .append(
-                                    $('<a href="#galleryOps" data-rel="popup" data-transition="flow"></a>').append(
-                                        $('<img />').attr('src', item.image)
-                                    )
-                                )
                             items[item._links.self.href] = item;
-                            return combined.append(row);
+                            return combined.append(createGalleryItemRow(item));
                         },
-                        $('<ul data-role="listview"></ul>')
+                        collection
                     );
-
-                    collection.listview().enhanceWithin();
-                    collapsible.append(collection);
-
                 }
+                collection.listview().enhanceWithin();
+                collapsible.append(collection);
                 collapsible.collapsible().enhanceWithin();
 
                 return collapsible;
@@ -132,6 +136,18 @@
             list.append($('<a href="#pic_ops" data-rel="popup" data-transition="flow" data-icon="gear"></a>'));
 
             return list;
+        }
+
+        function addGalleryOption(gallery) {
+            var radioButton = $('<input type="radio" name="gallery" />').attr("id", gallery._links.self.href);
+            var label = $('<label />')
+                .attr('for', gallery._links.self.href)
+                .text(gallery.description);
+            radioButton.enhanceWithin();
+            label.enhanceWithin();
+            var fieldset = $('#addToGallery fieldset');
+            fieldset.append(radioButton).append(label);
+            //fieldset.controlgroup('refresh').enhanceWithin();
         }
 
         $(function() {
@@ -164,20 +180,17 @@
             });
 
             $('#gallerylist').on('click', function(e) {
-                console.log("Removing...");
-                console.log(e);
                 if (e.target.tagName === 'IMG') {
                     currentItem = items[e.target.parentNode.parentNode.dataset['uri']];
                     $('#remove').attr('data-uri', currentItem);
                 }
                 if (e.target.tagName === 'A') {
                     currentItem = items[e.target.parentNode.dataset['uri']];
+                    $('#remove').attr('data-uri', currentItem);
                 }
-                console.log(currentItem);
             });
 
             $('#remove').on('click', function(e) {
-                console.log("Removing " + JSON.stringify(currentItem) + " from it's current gallery");
                 api({ method: 'DELETE', path: currentItem._links.gallery.href }).then(function(response) {
                     $('#gallerylist li[data-uri="' + currentItem._links.self.href + '"]').remove();
                     when($('#piclist').append(addItemRow(currentItem))).then(function() {
@@ -187,9 +200,6 @@
             })
 
             $('#piclist').on('click', function(e) {
-                console.log(e);
-                console.log(e.target);
-                console.log(e.target.parentNode);
                 if (e.target.tagName === 'IMG') {
                     currentItem = items[e.target.parentNode.parentNode.dataset['uri']];
                 }
@@ -205,7 +215,36 @@
                     delete items[currentItem._links.self.href];
                     currentItem = undefined;
                 });
-            })
+            });
+
+            $('#addToGallery').on('change', function(e) {
+                currentGallery = galleries[e.target.id];
+            });
+
+            $('#addToGallery').on('click', function(e) {
+                if (e.target.tagName === 'INPUT') {
+                    if (currentGallery === undefined) {
+                        return;
+                    }
+
+                    api({
+                        method: 'PUT',
+                        path: currentItem._links.gallery.href,
+                        entity: currentGallery,
+                        headers: {'Content-Type': 'text/uri-list'}
+                    }).then(function() {
+                        var collection = $('#gallerylist ul[data-gallery-uri="' + currentGallery._links.self.href + '"]');
+                        when(
+                            collection.append(createGalleryItemRow(currentItem)),
+                            $('#piclist li[data-uri="' + currentItem._links.self.href + '"]').remove()
+                        ).then(function() {
+                            collection.listview('refresh');
+                            $('#piclist').listview('refresh');
+                            $('body').pagecontainer('change', '#home');
+                        });
+                    })
+                }
+            });
 
             follow(['galleries', 'galleries']).then(function(response) {
                 var gallerylist = $('#gallerylist');
@@ -214,7 +253,7 @@
                     addGalleryRow(gallery).then(function(response) {
                         gallerylist.append(response);
                     })
-
+                    addGalleryOption(gallery);
                 });
             });
 

@@ -45,8 +45,8 @@ public class Application {
 		cat.setGallery(catGallery);
 		itemRepository.save(cat);
 
-		caterpillar.setGallery(truckGallery);
-		itemRepository.save(caterpillar);
+//		caterpillar.setGallery(truckGallery);
+//		itemRepository.save(caterpillar);
 	}
 
 	private static Item createItem(Resource cat) throws IOException {
