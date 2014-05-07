@@ -210,10 +210,16 @@
             });
 
             $('#deleteConfirmed').on('click', function(e) {
-                api({ method: 'DELETE', path: currentItem._links.self.href }).then(function(response) {
-                    $('#piclist li[data-uri="' + currentItem._links.self.href + '"').remove();
+                api({
+                    method: 'DELETE',
+                    path: currentItem._links.self.href
+                }).then(function() {
+                    $('#piclist li[data-uri="' + currentItem._links.self.href + '"]').remove();
                     delete items[currentItem._links.self.href];
+                }).then(function() {
+                    $('#piclist').listview('refresh');
                     currentItem = undefined;
+                    $('body').pagecontainer('change', '#pictures');
                 });
             });
 
