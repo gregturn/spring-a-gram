@@ -41,13 +41,33 @@
         registry.register('text/uri-list', uriListConverter);
         registry.register('application/hal+json', hal);
 
-        function readImage(input) {
+        function readAndUploadImage(input) {
             if (input.files && input.files[0]) {
                 if (input.files[0].type.indexOf('image') != -1) {
                     var FR = new FileReader();
                     FR.onloadend = function () {
                         name = input.files[0].name;
                         bytes = FR.result;
+                        api({
+                            method: 'POST',
+                            path: '/items',
+                            entity: {
+                                name: name,
+                                image: bytes
+                            },
+                            headers: {'Content-Type': 'application/json'}
+                        }).then(function(response) {
+                            api({
+                                method: 'GET',
+                                path: response.headers.Location
+                            }).then(function(response) {
+                                var item = response.entity;
+                                items[item._links.self.href] = item;
+                                when($('#piclist').append(addItemRow(item))).then(function() {
+                                    $('#piclist').listview('refresh');
+                                });
+                            });
+                        });
                     }
                     FR.readAsDataURL(input.files[0]);
                 }
@@ -151,32 +171,10 @@
         }
 
         $(function() {
-            /* Listen for picking a file */
-            $('#file').change(function () {
-                readImage(this);
-            });
 
-            /* When upload is clicked, upload the file, store it, and then add to list of unlinked items */
-            $('#upload').submit(function (e) {
-                e.preventDefault();
-                api({
-                    method: 'POST',
-                    path: '/items',
-                    entity: {
-                        name: name,
-                        image: bytes
-                    },
-                    headers: {'Content-Type': 'application/json'}
-                }).then(function(response) {
-                    api({
-                        method: 'GET',
-                        path: response.headers.Location
-                    }).then(function(response) {
-                        var item = response.entity;
-                        items[item._links.self.href] = item;
-                        addItemRow(item);
-                    });
-                });
+            /* Listen for picking a file */
+            $('input[type="file"]').on('change', function () {
+                readAndUploadImage(this);
             });
 
             $('#gallerylist').on('click', function(e) {
