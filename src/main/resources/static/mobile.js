@@ -48,6 +48,10 @@
                     FR.onloadend = function () {
                         name = input.files[0].name;
                         bytes = FR.result;
+                        $.mobile.loading('show', {
+                            text: 'Uploading ' + name,
+                            textVisible: true
+                        });
                         api({
                             method: 'POST',
                             path: '/items',
@@ -65,6 +69,7 @@
                                 items[item._links.self.href] = item;
                                 when($('#piclist').append(addItemRow(item))).then(function() {
                                     $('#piclist').listview('refresh');
+                                    $.mobile.loading('hide');
                                 });
                             });
                         });
@@ -102,13 +107,21 @@
         }
 
         function createGalleryItemRow(item) {
-            return $('<li></li>')
-                .attr('data-uri', item._links.self.href)
-                .append(
-                $('<a href="#galleryOps" data-rel="popup" data-transition="flow"></a>').append(
+            var list = $('<li></li>').attr('data-uri', item._links.self.href);
+
+            list.append(
+                $('<a data-rel="popup" data-transition="fade" data-position-to="window"></a>')
+                    .attr('href', '#view-gallery-pic')
+                    .append($('<img />').attr('src', item.image))
+            );
+
+            list.append(
+                $('<a href="#galleryOps" data-rel="popup" data-transition="flow" data-icon="gear"></a>').append(
                     $('<img />').attr('src', item.image)
                 )
             );
+
+            return list;
         }
 
         function addGalleryRow(gallery) {
@@ -186,6 +199,7 @@
                     currentItem = items[e.target.parentNode.dataset['uri']];
                     $('#remove').attr('data-uri', currentItem);
                 }
+                $('#view-gallery-pic img').attr('src', currentItem.image);
             });
 
             $('#remove').on('click', function(e) {
