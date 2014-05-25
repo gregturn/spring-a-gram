@@ -19,7 +19,7 @@ public class ApplicationController {
 	 * Serve up the home page
 	 * @return
 	 */
-	@RequestMapping("/index")
+	@RequestMapping("/")
 	public String index() {
 		return "index";
 	}

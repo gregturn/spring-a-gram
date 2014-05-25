@@ -17,6 +17,7 @@
             .chain(defaultRequest, {headers: {'Accept': 'application/hal+json'}});
         var items = {};
         var galleries = {};
+        var root = '/api';
 
         /* Convert a single or array of resources into "URI1\nURI2\nURI3..." */
         var uriListConverter = {
@@ -80,7 +81,7 @@
                 entity: currentGallery,
                 headers: {'Content-Type': 'text/uri-list'}
             }).then(function() {
-                $('#gallery table table').append(createItemRowForGallery(item, currentGallery));
+                $('#gallery table tr[data-uri="' + currentGallery._links.self.href +'"] table').append(createItemRowForGallery(item, currentGallery));
                 findUnlinkedItem(item).remove();
             });
         }
@@ -191,10 +192,10 @@
             $('#images table').append(createItemRow(item));
         }
 
-        function follow(relArray) {
+        function follow(root, relArray) {
             var root = api({
                 method: 'GET',
-                path: '/'
+                path: root
             });
             relArray.forEach(function(rel) {
                 root = root.then(function (response) {
@@ -220,7 +221,7 @@
                 e.preventDefault();
                 api({
                     method: 'POST',
-                    path: '/items',
+                    path: root + '/items',
                     entity: {
                         name: name,
                         image: bytes
@@ -262,14 +263,14 @@
                 }
             });
 
-            follow(['galleries', 'galleries']).then(function(response) {
+            follow(root, ['galleries', 'galleries']).then(function(response) {
                 response.forEach(function(gallery) {
                     galleries[gallery._links.self.href] = gallery;
                 });
                 drawGalleryTable(response);
             })
 
-            follow(['items', 'search', 'findByGalleryIsNull', 'items']).then(function(response) {
+            follow(root, ['items', 'search', 'findByGalleryIsNull', 'items']).then(function(response) {
                 var table = $('<table></table>');
                 table.append('<tr><th>Filename</th><th>Image</th><th></th><th></th></tr>');
                 $('#images').append(table);

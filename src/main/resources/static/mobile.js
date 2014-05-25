@@ -21,6 +21,7 @@
         var items = {};
         var galleries = {};
         var currentItem;
+        var root = '/api';
 
         /* Convert a single or array of resources into "URI1\nURI2\nURI3..." */
         var uriListConverter = {
@@ -54,7 +55,7 @@
                         });
                         api({
                             method: 'POST',
-                            path: '/items',
+                            path: root + '/items',
                             entity: {
                                 name: name,
                                 image: bytes
@@ -89,10 +90,10 @@
             return parts[parts.length - 1];
         }
 
-        function follow(relArray) {
+        function follow(root, relArray) {
             var root = api({
                 method: 'GET',
-                path: '/'
+                path: root
             });
             relArray.forEach(function(rel) {
                 root = root.then(function (response) {
@@ -264,7 +265,7 @@
                 }
             });
 
-            follow(['galleries', 'galleries']).then(function(response) {
+            follow(root, ['galleries', 'galleries']).then(function(response) {
                 var gallerylist = $('#gallerylist');
                 response.forEach(function(gallery) {
                     galleries[gallery._links.self.href] = gallery;
@@ -275,7 +276,7 @@
                 });
             });
 
-            follow(['items', 'search', 'findByGalleryIsNull', 'items']).then(function(response) {
+            follow(root, ['items', 'search', 'findByGalleryIsNull', 'items']).then(function(response) {
                 var piclist = $('#piclist');
                 response.forEach(function(item) {
                     items[item._links.self.href] = item;

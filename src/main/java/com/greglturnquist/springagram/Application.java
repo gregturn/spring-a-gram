@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 import org.springframework.mobile.device.view.LiteDeviceDelegatingViewResolver;
 import org.springframework.util.FileCopyUtils;
 import org.thymeleaf.spring4.SpringTemplateEngine;
@@ -23,7 +22,7 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 
 @Configuration
 @EnableJpaRepositories
-@Import(RepositoryRestMvcConfiguration.class)
+@Import(CustomizedRestMvcConfiguration.class)
 @EnableAutoConfiguration
 @ComponentScan
 public class Application {
