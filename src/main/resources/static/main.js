@@ -77,7 +77,7 @@
 
         /* Delete the picture from storage and remove from the screen */
         function deletePic(item) {
-            api({ method: 'DELETE', path: item._links.self.href }).then(function(response) {
+            api({ method: 'DELETE', path: item._links.self.href }).done(function(response) {
                 findUnlinkedItem(item).remove();
                 delete items[item._links.self.href];
             });
@@ -94,7 +94,7 @@
                 path: item._links.gallery.href,
                 entity: currentGallery,
                 headers: {'Content-Type': 'text/uri-list'}
-            }).then(function() {
+            }).done(function() {
                 $('#gallery table tr[data-uri="' + currentGallery._links.self.href +'"] table').append(createItemRowForGallery(item, currentGallery));
                 findUnlinkedItem(item).remove();
             });
@@ -119,7 +119,7 @@
             api({
                 method: 'DELETE',
                 path: item._links.gallery.href
-            }).then(function(response) {
+            }).done(function(response) {
                 findLinkedItem(item).remove();
                 $('#images table').append(createItemRow(item));
             });
@@ -164,7 +164,7 @@
                 api({
                     method: 'GET',
                     path: gallery._links.items.href
-                }).then(function(response) {
+                }).done(function(response) {
                     if (response.entity._embedded) {
                         response.entity._embedded.items.forEach(function (item) {
                             items[item._links.self.href] = item;
@@ -260,11 +260,11 @@
                         image: bytes
                     },
                     headers: {'Content-Type': 'application/json'}
-                }).then(function(response) {
+                }).done(function(response) {
                     api({
                         method: 'GET',
                         path: response.headers.Location
-                    }).then(function(response) {
+                    }).done(function(response) {
                         var item = response.entity;
                         items[item._links.self.href] = item;
                         addItemRow(item);
