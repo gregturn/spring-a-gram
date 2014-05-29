@@ -17,6 +17,21 @@ This sample application demonstrations how declaring a backend aimed at storing 
 as simple as possible to upload pictures and then turn around and display them on a website. This opens
 the door to other front ends, like an iOS or Android app.
 
+If you want to run it right now, you need:
+
+* Java 1.6+
+* Maven 3.0+ (http://maven.apache.org)
+* Bower 1.3+ (http://bower.io)
+
+To install:
+
+. `bower install` to pull down javascript libraries. If you get prompted about jQuery, accept the version specified in bower.json
+. `mvn clean spring-boot:run`
+
+* From the command line, interrogate the API with `curl localhost:8080/api`. Navigate to the other links.
+* From the desktop, visit http://localhost:8080 to see the Desktop version of the web experience.
+* From a mobile device, visit http://localhost:8080 and see a different flow, optimized for the smaller real estate.
+
 Let's explore.
 
 == Defining an item to store
