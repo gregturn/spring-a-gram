@@ -163,7 +163,8 @@ public class CustomizedRestMvcConfiguration extends RepositoryRestMvcConfigurati
 }
 ----
 
-This class sets the `baseUri` to `/api`.
+This class sets the `baseUri` to `/api`. Why would you want to do this? So when you point your browser at http://localhost:8080, you see
+the web page not the JSON served up by the hypermedia.
 
 `src/main/java/com/greglturnquist/springagram/Application.java`
 [source,java]
