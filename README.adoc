@@ -28,6 +28,8 @@ To install:
 . `bower install` to pull down javascript libraries. If you get prompted about jQuery, accept the version specified in bower.json
 . `mvn clean spring-boot:run`
 
+This should get the app started courtesy of Spring Boot. Now you can traverse the app from different view points.
+
 * From the command line, interrogate the API with `curl localhost:8080/api`. Navigate to the other links.
 * From the desktop, visit http://localhost:8080 to see the Desktop version of the web experience.
 * From a mobile device, visit http://localhost:8080 and see a different flow, optimized for the smaller real estate.
