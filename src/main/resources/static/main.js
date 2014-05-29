@@ -163,12 +163,15 @@
                 nestedTable.append('<tr><th>Filename</th><th>Image</th></tr>');
                 api({
                     method: 'GET',
-                    path: gallery._links.items.href
+                    path: gallery._links.items.href,
+                    params: {projection: "noImages"}
                 }).done(function(response) {
                     if (response.entity._embedded) {
-                        response.entity._embedded.items.forEach(function (item) {
-                            items[item._links.self.href] = item;
-                            nestedTable.append(createItemRowForGallery(item, gallery));
+                        response.entity._embedded.items.forEach(function (itemWithoutImage) {
+                            api({path: itemWithoutImage._links.self.href}).done(function(item) {
+                                items[itemWithoutImage._links.self.href] = item.entity;
+                                nestedTable.append(createItemRowForGallery(item.entity, gallery));
+                            })
                         });
                     }
                 });
