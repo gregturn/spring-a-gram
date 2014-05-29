@@ -75,14 +75,14 @@
                                 image: bytes
                             },
                             headers: {'Content-Type': 'application/json'}
-                        }).then(function(response) {
+                        }).done(function(response) {
                             api({
                                 method: 'GET',
                                 path: response.headers.Location
-                            }).then(function(response) {
+                            }).done(function(response) {
                                 var item = response.entity;
                                 items[item._links.self.href] = item;
-                                when($('#piclist').append(addItemRow(item))).then(function() {
+                                when($('#piclist').append(addItemRow(item))).done(function() {
                                     $('#piclist').listview('refresh');
                                     $.mobile.loading('hide');
                                 });
@@ -237,9 +237,9 @@
             });
 
             $('#remove').on('click', function(e) {
-                api({ method: 'DELETE', path: currentItem._links.gallery.href }).then(function(response) {
+                api({ method: 'DELETE', path: currentItem._links.gallery.href }).done(function(response) {
                     $('#gallerylist li[data-uri="' + currentItem._links.self.href + '"]').remove();
-                    when($('#piclist').append(addItemRow(currentItem))).then(function() {
+                    when($('#piclist').append(addItemRow(currentItem))).done(function() {
                         $('#piclist').listview('refresh');
                     });
                 });
@@ -259,10 +259,10 @@
                 api({
                     method: 'DELETE',
                     path: currentItem._links.self.href
-                }).then(function() {
+                }).done(function() {
                     $('#piclist li[data-uri="' + currentItem._links.self.href + '"]').remove();
                     delete items[currentItem._links.self.href];
-                }).then(function() {
+                }).done(function() {
                     $('#piclist').listview('refresh');
                     currentItem = undefined;
                     $('body').pagecontainer('change', '#pictures');
@@ -284,12 +284,12 @@
                         path: currentItem._links.gallery.href,
                         entity: currentGallery,
                         headers: {'Content-Type': 'text/uri-list'}
-                    }).then(function() {
+                    }).done(function() {
                         var collection = $('#gallerylist ul[data-gallery-uri="' + currentGallery._links.self.href + '"]');
                         when(
                             collection.append(createGalleryItemRow(currentItem)),
                             $('#piclist li[data-uri="' + currentItem._links.self.href + '"]').remove()
-                        ).then(function() {
+                        ).done(function() {
                             collection.listview('refresh');
                             $('#piclist').listview('refresh');
                             $('body').pagecontainer('change', '#home');
@@ -302,7 +302,7 @@
                 var gallerylist = $('#gallerylist');
                 response.forEach(function(gallery) {
                     galleries[gallery._links.self.href] = gallery;
-                    addGalleryRow(gallery).then(function(response) {
+                    addGalleryRow(gallery).done(function(response) {
                         gallerylist.append(response);
                     })
                     addGalleryOption(gallery);
@@ -313,7 +313,7 @@
                 { rel: 'items', params: { projection: "noImages"} },
                 'search',
                 { rel: 'findByGalleryIsNull', params: { projection: "noImages" } },
-                'items']).then(function(response) {
+                'items']).done(function(response) {
                 var piclist = $('#piclist');
                 response.forEach(function(itemWithoutImage) {
                     api({path: itemWithoutImage._links. self.href}).done(function(item) {
