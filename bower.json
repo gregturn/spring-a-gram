@@ -27,8 +27,8 @@
   ],
   "dependencies": {
     "curl": "~0.8.10",
-    "rest": "~1.0.3",
     "jquery": "~2.1.0",
-    "jquery-mobile-bower": "~1.4.2"
+    "jquery-mobile-bower": "~1.4.2",
+    "rest": "1.1.0"
   }
 }

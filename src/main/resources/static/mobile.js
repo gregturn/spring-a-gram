@@ -12,12 +12,26 @@
         var hateoas = require('rest/interceptor/hateoas');
         var hal = require('rest/mime/type/application/hal');
         var registry = require('rest/mime/registry');
+        var interceptor = require('rest/interceptor');
+
+        var uriTemplateInterceptor = interceptor({
+            request: function (request, config, meta) {
+                /* If the URI is a URI Template per RFC 6570 (http://tools.ietf.org/html/rfc6570), trim out the template part */
+                if (request.path.indexOf('{') === -1) {
+                    return request;
+                } else {
+                    request.path = request.path.split('{')[0];
+                    return request;
+                }
+            }
+        })
 
         var name, bytes, currentGallery;
         var api = rest
-            .chain(mime)
-            .chain(hateoas)
-            .chain(defaultRequest, {headers: {'Accept': 'application/hal+json'}});
+            .wrap(mime)
+            .wrap(hateoas)
+            .wrap(defaultRequest, {headers: {'Accept': 'application/hal+json'}})
+            .wrap(uriTemplateInterceptor);
         var items = {};
         var galleries = {};
         var currentItem;
@@ -95,12 +109,31 @@
                 method: 'GET',
                 path: root
             });
-            relArray.forEach(function(rel) {
+            relArray.forEach(function(arrayItem) {
+                var rel;
+                if (typeof arrayItem === 'string') {
+                    var rel = arrayItem
+                } else {
+                    var rel = arrayItem.rel;
+
+                }
+
                 root = root.then(function (response) {
                     if (response.entity._embedded && response.entity._embedded.hasOwnProperty(rel)) {
-                        return response.entity[rel];
+                        return response.entity._embedded[rel];
                     } else {
-                        return response.entity.clientFor(rel)({});
+                        if (typeof arrayItem === 'string') {
+                            return api({
+                                method: 'GET',
+                                path: response.entity._links[rel].href
+                            });
+                        } else {
+                            return api({
+                                method: 'GET',
+                                path: response.entity._links[rel].href,
+                                params: arrayItem.params
+                            });
+                        }
                     }
                 });
             });
@@ -276,13 +309,19 @@
                 });
             });
 
-            follow(root, ['items', 'search', 'findByGalleryIsNull', 'items']).then(function(response) {
+            follow(root, [
+                { rel: 'items', params: { projection: "noImages"} },
+                'search',
+                { rel: 'findByGalleryIsNull', params: { projection: "noImages" } },
+                'items']).then(function(response) {
                 var piclist = $('#piclist');
-                response.forEach(function(item) {
-                    items[item._links.self.href] = item;
-                    piclist.append(addItemRow(item));
+                response.forEach(function(itemWithoutImage) {
+                    api({path: itemWithoutImage._links. self.href}).done(function(item) {
+                        items[item.entity._links.self.href] = item.entity;
+                        piclist.append(addItemRow(item.entity));
+                        piclist.listview('refresh');
+                    });
                 });
-                piclist.listview('refresh');
             });
         })
 
