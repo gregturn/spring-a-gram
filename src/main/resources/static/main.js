@@ -161,26 +161,31 @@
 
                 var nestedTable = $('<table></table>');
                 nestedTable.append('<tr><th>Filename</th><th>Image</th></tr>');
-                api({
+                row.append($('<td></td>').append(nestedTable));
+                table.append(row);
+                $('#gallery').append(table);
+
+                /* Now that the table is configured, start adding items to the nested table */
+                when.all(api({
                     method: 'GET',
                     path: gallery._links.items.href,
                     params: {projection: "noImages"}
-                }).done(function(response) {
+                }).then(function (response) {
                     if (response.entity._embedded) {
-                        response.entity._embedded.items.forEach(function (itemWithoutImage) {
-                            api({path: itemWithoutImage._links.self.href}).done(function(item) {
-                                items[itemWithoutImage._links.self.href] = item.entity;
-                                nestedTable.append(createItemRowForGallery(item.entity, gallery));
-                            })
-                        });
+                        return response.entity._embedded.items.map(function (itemWithoutImage) {
+                            return api({path: itemWithoutImage._links.self.href})
+                        })
+                    } else {
+                        return [];
                     }
-                });
+                })).done(function(itemsWithImages) {
+                    itemsWithImages.forEach(function(item) {
+                        items[item._links.self.href] = item.entity;
+                        nestedTable.append(createItemRowForGallery(item.entity, gallery));
+                    })
+                })
 
-                row.append($('<td></td>').append(nestedTable));
-
-                table.append(row);
             });
-            $('#gallery').append(table);
         }
 
         /* Create a new table row for an unlinked item */
