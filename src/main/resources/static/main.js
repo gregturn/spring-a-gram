@@ -166,7 +166,7 @@
                 $('#gallery').append(table);
 
                 /* Now that the table is configured, start adding items to the nested table */
-                when.all(api({
+                when.map(api({
                     method: 'GET',
                     path: gallery._links.items.href,
                     params: {projection: "noImages"}
@@ -178,12 +178,10 @@
                     } else {
                         return [];
                     }
-                })).done(function(itemsWithImages) {
-                    itemsWithImages.forEach(function(item) {
-                        items[item._links.self.href] = item.entity;
-                        nestedTable.append(createItemRowForGallery(item.entity, gallery));
-                    })
-                })
+                }), function(itemWithImage) {
+                    items[itemWithImage.entity._links.self.href] = itemWithImage.entity;
+                    nestedTable.append(createItemRowForGallery(itemWithImage.entity, gallery));
+                });
 
             });
         }
