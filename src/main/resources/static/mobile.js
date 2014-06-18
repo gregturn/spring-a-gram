@@ -1,8 +1,8 @@
 (function(define) { 'use strict';
     define(function(require) {
 
-        require('css!jquery-mobile-bower/css/jquery.mobile-1.4.2.css');
-        require('jquery-mobile-js');
+        require('css!jquery-mobile-bower/css/jquery.mobile-1.4.2.min.css');
+        require('jquery-mobile');
 
         var $ = require('jquery');
         var rest = require('rest');
