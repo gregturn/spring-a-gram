@@ -1,6 +1,6 @@
 {
 	"name": "rest",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "RESTful HTTP client library",
 	"keywords": ["rest", "http", "client", "rest-template", "spring", "cujojs"],
 	"licenses": [
@@ -44,7 +44,7 @@
 	"main": "./rest",
 	"scripts": {
 		"test": "jshint . && buster test --node",
-		"ci": "npm test && sauceme",
+		"ci": "npm test && sauceme -b test/browsers.json",
 		"start": "buster static -e browser",
 		"tunnel": "sauceme -m"
 	}

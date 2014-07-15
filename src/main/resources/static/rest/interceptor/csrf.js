@@ -17,7 +17,7 @@
 		/**
 		 * Applies a Cross-Site Request Forgery protection header to a request
 		 *
-		 * CSRF protection helps a server verify that a request came from a
+		 * CSRF protection helps a server verify that a request came from a 
 		 * trusted  client and not another client that was able to masquerade
 		 * as an authorized client. Sites that use cookie based authentication
 		 * are particularly vulnerable to request forgeries without extra

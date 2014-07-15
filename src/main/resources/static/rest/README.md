@@ -144,8 +144,8 @@ Tested environments:
 - Node.js (0.6, 0.8. 0.10)
 - Chrome (stable)
 - Firefox (stable, ESR, should work in earlier versions)
-- IE (6-10)
-- Safari (5, 6, iOS 4-6, should work in earlier versions)
+- IE (6-11)
+- Safari (5-7, iOS 4-7.1, should work in earlier versions)
 - Opera (11, 12, should work in earlier versions)
 
 Specific browser test are provided by [Travis CI](https://travis-ci.org/cujojs/rest) and [Sauce Labs' Open Sauce Plan](https://saucelabs.com/opensource). You can see [specific browser test results](https://saucelabs.com/u/cujojs-rest), although odds are they do not reference this specific release/branch/commit.
@@ -228,6 +228,11 @@ rest.js is made available under the MIT license.  See LICENSE.txt for details.
 
 Change Log
 ----------
+
+1.1.1
+- support for IE 11, Safari 7 and iOS 7 (no code changes required, now actively testing)
+- Node specific configuration options via request.mixin. Particularly useful for https clients. Thanks @wwwdata
+- basic support for Browserify. Note: Browserify is not yet a tested environment
 
 1.1.0
 - bump when.js version to ~3, 2.x is no longer supported

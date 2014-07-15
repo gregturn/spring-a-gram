@@ -7,7 +7,7 @@ module.exports = (function(){
    *
    * http://pegjs.majda.cz/
    */
-
+  
   function quote(s) {
     /*
      * ECMA-262, 5th ed., 7.8.4: All characters may appear literally in a
@@ -30,7 +30,7 @@ module.exports = (function(){
       .replace(/[\x00-\x07\x0B\x0E-\x1F\x80-\uFFFF]/g, escape)
       + '"';
   }
-
+  
   var result = {
     /*
      * Parses the input with a generated parser. If the parsing is successfull,
@@ -62,7 +62,7 @@ module.exports = (function(){
         "QDText": parse_QDText,
         "QuotedPair": parse_QuotedPair
       };
-
+      
       if (startRule !== undefined) {
         if (parseFunctions[startRule] === undefined) {
           throw new Error("Invalid rule name: " + quote(startRule) + ".");
@@ -70,28 +70,28 @@ module.exports = (function(){
       } else {
         startRule = "start";
       }
-
+      
       var pos = 0;
       var reportFailures = 0;
       var rightmostFailuresPos = 0;
       var rightmostFailuresExpected = [];
-
+      
       function padLeft(input, padding, length) {
         var result = input;
-
+        
         var padLength = length - input.length;
         for (var i = 0; i < padLength; i++) {
           result = padding + result;
         }
-
+        
         return result;
       }
-
+      
       function escape(ch) {
         var charCode = ch.charCodeAt(0);
         var escapeChar;
         var length;
-
+        
         if (charCode <= 0xFF) {
           escapeChar = 'x';
           length = 2;
@@ -99,27 +99,27 @@ module.exports = (function(){
           escapeChar = 'u';
           length = 4;
         }
-
+        
         return '\\' + escapeChar + padLeft(charCode.toString(16).toUpperCase(), '0', length);
       }
-
+      
       function matchFailed(failure) {
         if (pos < rightmostFailuresPos) {
           return;
         }
-
+        
         if (pos > rightmostFailuresPos) {
           rightmostFailuresPos = pos;
           rightmostFailuresExpected = [];
         }
-
+        
         rightmostFailuresExpected.push(failure);
       }
-
+      
       function parse_start() {
         var result0, result1, result2, result3, result4;
         var pos0, pos1, pos2, pos3;
-
+        
         pos0 = pos;
         pos1 = pos;
         result0 = [];
@@ -228,11 +228,11 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_LinkValue() {
         var result0, result1, result2, result3, result4, result5;
         var pos0, pos1;
-
+        
         pos0 = pos;
         pos1 = pos;
         if (input.charCodeAt(pos) === 60) {
@@ -302,11 +302,11 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_LinkParams() {
         var result0, result1, result2, result3;
         var pos0, pos1;
-
+        
         pos0 = pos;
         pos1 = pos;
         if (input.charCodeAt(pos) === 59) {
@@ -350,11 +350,11 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_URIReference() {
         var result0, result1;
         var pos0;
-
+        
         pos0 = pos;
         if (/^[^>]/.test(input.charAt(pos))) {
           result1 = input.charAt(pos);
@@ -390,11 +390,11 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_LinkParam() {
         var result0, result1;
         var pos0, pos1;
-
+        
         pos0 = pos;
         pos1 = pos;
         result0 = parse_LinkParamName();
@@ -419,11 +419,11 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_LinkParamName() {
         var result0, result1;
         var pos0;
-
+        
         pos0 = pos;
         if (/^[a-z]/.test(input.charAt(pos))) {
           result1 = input.charAt(pos);
@@ -459,11 +459,11 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_LinkParamValue() {
         var result0, result1;
         var pos0, pos1;
-
+        
         pos0 = pos;
         pos1 = pos;
         if (input.charCodeAt(pos) === 61) {
@@ -498,11 +498,11 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_PToken() {
         var result0, result1;
         var pos0;
-
+        
         pos0 = pos;
         result1 = parse_PTokenChar();
         if (result1 !== null) {
@@ -522,10 +522,10 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_PTokenChar() {
         var result0;
-
+        
         if (input.charCodeAt(pos) === 33) {
           result0 = "!";
           pos++;
@@ -840,10 +840,10 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_OptionalSP() {
         var result0, result1;
-
+        
         result0 = [];
         result1 = parse_SP();
         while (result1 !== null) {
@@ -852,11 +852,11 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_QuotedString() {
         var result0, result1, result2;
         var pos0, pos1;
-
+        
         pos0 = pos;
         pos1 = pos;
         result0 = parse_DQ();
@@ -886,11 +886,11 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_QuotedStringInternal() {
         var result0, result1;
         var pos0;
-
+        
         pos0 = pos;
         result0 = [];
         result1 = parse_QDText();
@@ -912,10 +912,10 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_Char() {
         var result0;
-
+        
         if (/^[\0-]/.test(input.charAt(pos))) {
           result0 = input.charAt(pos);
           pos++;
@@ -927,10 +927,10 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_UpAlpha() {
         var result0;
-
+        
         if (/^[A-Z]/.test(input.charAt(pos))) {
           result0 = input.charAt(pos);
           pos++;
@@ -942,10 +942,10 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_LoAlpha() {
         var result0;
-
+        
         if (/^[a-z]/.test(input.charAt(pos))) {
           result0 = input.charAt(pos);
           pos++;
@@ -957,20 +957,20 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_Alpha() {
         var result0;
-
+        
         result0 = parse_UpAlpha();
         if (result0 === null) {
           result0 = parse_LoAlpha();
         }
         return result0;
       }
-
+      
       function parse_Digit() {
         var result0;
-
+        
         if (/^[0-9]/.test(input.charAt(pos))) {
           result0 = input.charAt(pos);
           pos++;
@@ -982,10 +982,10 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_SP() {
         var result0;
-
+        
         if (/^[ ]/.test(input.charAt(pos))) {
           result0 = input.charAt(pos);
           pos++;
@@ -997,10 +997,10 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_DQ() {
         var result0;
-
+        
         if (/^["]/.test(input.charAt(pos))) {
           result0 = input.charAt(pos);
           pos++;
@@ -1012,10 +1012,10 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_QDText() {
         var result0;
-
+        
         if (/^[^"]/.test(input.charAt(pos))) {
           result0 = input.charAt(pos);
           pos++;
@@ -1027,11 +1027,11 @@ module.exports = (function(){
         }
         return result0;
       }
-
+      
       function parse_QuotedPair() {
         var result0, result1;
         var pos0;
-
+        
         pos0 = pos;
         if (/^[\\]/.test(input.charAt(pos))) {
           result0 = input.charAt(pos);
@@ -1056,11 +1056,11 @@ module.exports = (function(){
         }
         return result0;
       }
-
-
+      
+      
       function cleanupExpected(expected) {
         expected.sort();
-
+        
         var lastExpected = null;
         var cleanExpected = [];
         for (var i = 0; i < expected.length; i++) {
@@ -1071,7 +1071,7 @@ module.exports = (function(){
         }
         return cleanExpected;
       }
-
+      
       function computeErrorPosition() {
         /*
          * The first idea was to use |String.split| to break the input up to the
@@ -1079,11 +1079,11 @@ module.exports = (function(){
          * there. However IE's |split| implementation is so broken that it was
          * enough to prevent it.
          */
-
+        
         var line = 1;
         var column = 1;
         var seenCR = false;
-
+        
         for (var i = 0; i < Math.max(pos, rightmostFailuresPos); i++) {
           var ch = input.charAt(i);
           if (ch === "\n") {
@@ -1099,13 +1099,13 @@ module.exports = (function(){
             seenCR = false;
           }
         }
-
+        
         return { line: line, column: column };
       }
-
-
+      
+      
       var result = parseFunctions[startRule]();
-
+      
       /*
        * The parser is now in one of the following three states:
        *
@@ -1134,7 +1134,7 @@ module.exports = (function(){
         var offset = Math.max(pos, rightmostFailuresPos);
         var found = offset < input.length ? input.charAt(offset) : null;
         var errorPosition = computeErrorPosition();
-
+        
         throw new this.SyntaxError(
           cleanupExpected(rightmostFailuresExpected),
           found,
@@ -1143,20 +1143,20 @@ module.exports = (function(){
           errorPosition.column
         );
       }
-
+      
       return result;
     },
-
+    
     /* Returns the parser source code. */
     toSource: function() { return this._source; }
   };
-
+  
   /* Thrown when a parser encounters a syntax error. */
-
+  
   result.SyntaxError = function(expected, found, offset, line, column) {
     function buildMessage(expected, found) {
       var expectedHumanized, foundHumanized;
-
+      
       switch (expected.length) {
         case 0:
           expectedHumanized = "end of input";
@@ -1169,12 +1169,12 @@ module.exports = (function(){
             + " or "
             + expected[expected.length - 1];
       }
-
+      
       foundHumanized = found ? quote(found) : "end of input";
-
+      
       return "Expected " + expectedHumanized + " but " + foundHumanized + " found.";
     }
-
+    
     this.name = "SyntaxError";
     this.expected = expected;
     this.found = found;
@@ -1183,9 +1183,9 @@ module.exports = (function(){
     this.line = line;
     this.column = column;
   };
-
+  
   result.SyntaxError.prototype = Error.prototype;
-
+  
   return result;
 })();
 

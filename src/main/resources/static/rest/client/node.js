@@ -11,13 +11,14 @@
 
 	define(function (require) {
 
-		var parser, http, https, when, UrlBuilder, normalizeHeaderName, responsePromise, client, httpsExp;
+		var parser, http, https, when, UrlBuilder, mixin, normalizeHeaderName, responsePromise, client, httpsExp;
 
 		parser = envRequire('url');
 		http = envRequire('http');
 		https = envRequire('https');
 		when = require('when');
 		UrlBuilder = require('../UrlBuilder');
+		mixin = require('../util/mixin');
 		normalizeHeaderName = require('../util/normalizeHeaderName');
 		responsePromise = require('../util/responsePromise');
 		client = require('../client');
@@ -73,7 +74,8 @@
 				url = new UrlBuilder(request.path || '', request.params).build();
 				client = url.match(httpsExp) ? https : http;
 
-				options = parser.parse(url);
+				options = mixin({}, request.mixin, parser.parse(url));
+
 				entity = request.entity;
 				request.method = request.method || (entity ? 'POST' : 'GET');
 				options.method = request.method;

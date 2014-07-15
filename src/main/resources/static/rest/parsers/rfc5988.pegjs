@@ -20,7 +20,7 @@ LinkValue =
     return link;
   }
 
-LinkParams =
+LinkParams = 
   ';' OptionalSP param:LinkParam OptionalSP
   { return param }
 
@@ -29,7 +29,7 @@ URIReference =
   url:[^>]+
   { return url.join('') }
 
-LinkParam =
+LinkParam = 
   name:LinkParamName value:LinkParamValue?
   { return [name, value] }
 
