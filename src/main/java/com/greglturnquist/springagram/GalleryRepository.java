@@ -1,8 +1,6 @@
 package com.greglturnquist.springagram;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-@RepositoryRestResource
-public interface GalleryRepository extends CrudRepository<Gallery, Long> {
+public interface GalleryRepository extends PagingAndSortingRepository<Gallery, Long> {
 }
