@@ -3,26 +3,30 @@
 <head>
     <title>Spring-a-Gram</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="curl/dist/curl-kitchen-sink/curl.js"></script>
+    <script src="requirejs/require.js"></script>
     <script>
-        curl.config({
+        requirejs.config({
             paths: {
-                'jquery': 'jquery/dist/jquery.js',
-                'jquery-mobile': {
-                    location: 'jquery-mobile-bower/js/jquery.mobile-1.4.2.js',
-                    config: {
-                        load: 'curl/loader/legacy',
-                        requires: ['jquery'],
-                        exports: '$'
-                    }
+                'jquery': 'jquery/dist/jquery',
+                'jquery-mobile': 'jquery-mobile-bower/js/jquery.mobile-1.4.2'
+            },
+            packages: [
+                { name: 'when', location: 'when', main: 'when' },
+                { name: 'rest', location: 'rest', main: 'rest' }
+            ],
+            map: {
+                '*': {
+                    'css': 'require-css/css'
                 }
             },
-            packages: {
-                when: { location: 'when', main: 'when' },
-                rest: { location: 'rest', main: 'rest' }
-            },
-            'main': 'mobile'
+            shim: {
+                'jquery-mobile': {
+                    deps: [ 'jquery' ],
+                    exports: '$'
+                }
+            }
         });
+        requirejs([ 'mobile' ]);
     </script>
 
 </head>
