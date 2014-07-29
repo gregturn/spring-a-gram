@@ -3,18 +3,30 @@
 <head>
     <title>Spring-A-Gram :: Upload your fav pics</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <script src="curl/dist/curl-kitchen-sink/curl.js"></script>
+    <script src="requirejs/require.js"></script>
     <script>
-        curl.config({
+        requirejs.config({
             paths: {
-                'jquery': 'jquery/dist/jquery.js'
+                'jquery': 'jquery/dist/jquery',
+                'jquery-mobile': 'jquery-mobile-bower/js/jquery.mobile-1.4.2'
             },
-            packages: {
-                when: { location: 'when', main: 'when' },
-                rest: { location: 'rest', main: 'rest' }
+            packages: [
+                { name: 'when', location: 'when', main: 'when' },
+                { name: 'rest', location: 'rest', main: 'rest' }
+            ],
+            map: {
+                '*': {
+                    'css': 'require-css/css'
+                }
             },
-            'main': 'main'
+            shim: {
+                'jquery-mobile': {
+                    deps: [ 'jquery' ],
+                    exports: '$'
+                }
+            }
         });
+        requirejs([ 'main' ]);
     </script>
     <style>
         .thumbnail {

@@ -6,7 +6,6 @@
     "Greg Turnquist <gturnquist@gopivotal.com>"
   ],
   "description": "Upload your fav pics",
-  "main": "?",
   "moduleType": [
     "amd"
   ],
@@ -26,7 +25,8 @@
     "tests"
   ],
   "dependencies": {
-    "curl": "~0.8.10",
+    "requirejs": "~2.1",
+    "require-css": "~0.1",
     "jquery": "~2.1.1",
     "jquery-mobile-bower": "~1.4.2",
     "rest": "1.1.1"
