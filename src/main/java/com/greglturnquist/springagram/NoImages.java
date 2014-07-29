@@ -1,6 +1,7 @@
 package com.greglturnquist.springagram;
 
 import org.springframework.data.rest.core.config.Projection;
+import org.springframework.hateoas.Link;
 
 /**
  * This interface defines a projection of the {@link Item} class. The annotation tags it, provides it a name and the
@@ -13,5 +14,7 @@ import org.springframework.data.rest.core.config.Projection;
 public interface NoImages {
 
 	public String getName();
+
+	public Link getHtmlUrl();
 
 }

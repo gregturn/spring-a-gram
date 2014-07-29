@@ -1,9 +1,8 @@
 package com.greglturnquist.springagram;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
-import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

@@ -137,6 +137,10 @@
             ));
 
             row.append($('<td></td>').append(
+                tweetButton(item)
+            ));
+
+            row.append($('<td></td>').append(
                 $('<button>Remove</button>')
                     .attr('data-gallery-uri', gallery._links.self.href)
                     .attr('data-uri', item._links.self.href)
@@ -160,7 +164,7 @@
                 row.append($('<td></td>').text(gallery.description));
 
                 var nestedTable = $('<table></table>');
-                nestedTable.append('<tr><th>Filename</th><th>Image</th></tr>');
+                nestedTable.append('<tr><th>Filename</th><th>Image</th><th>Share</th></tr>');
                 row.append($('<td></td>').append(nestedTable));
                 table.append(row);
                 $('#gallery').append(table);
@@ -194,6 +198,10 @@
 
             row.append($('<td></td>').append(
                 $('<img>').addClass('thumbnail').attr('src', item.image)
+            ));
+
+            row.append($('<td></td>').append(
+                tweetButton(item)
             ));
 
             row.append($('<td></td>').append(
@@ -246,6 +254,29 @@
                 });
             });
             return root;
+        }
+
+        function tweetButton(item) {
+            return $('<a>Tweet me!</a>')
+                .attr('href', 'https://twitter.com/share')
+                .addClass('twitter-share-button')
+                .attr('data-text', item.htmlUrl.href + ' was uploaded by Spring-a-Gram.')
+                .attr('data-url', 'https://2014.event.springone2gx.com/schedule/sczbpf')
+                .attr('data-hashtags', 's2gx,rest,hypermedia')
+                .attr('data-related', 'springcentral,springone2gx')
+                .attr('target', '_blank');
+        }
+
+        function tweetPic() {
+            !function(d,s,id) {
+                var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+                if(!d.getElementById(id)){
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = p+'://platform.twitter.com/widgets.js';
+                    fjs.parentNode.insertBefore(js,fjs);
+                }
+            }(document, 'script', 'twitter-wjs');
         }
 
         /* When the page is loaded, run/register this set of code */
@@ -307,6 +338,7 @@
                     galleries[gallery._links.self.href] = gallery;
                 });
                 drawGalleryTable(response);
+                tweetPic();
             })
 
             follow(root, [
@@ -316,13 +348,14 @@
                 'items']).done(function(response) {
 
                 var table = $('<table></table>');
-                table.append('<tr><th>Filename</th><th>Image</th><th></th><th></th></tr>');
+                table.append('<tr><th>Filename</th><th>Image</th><th>Share</th><th></th><th></th></tr>');
                 $('#images').append(table);
                 response.forEach(function(itemWithoutImage) {
                     api({path: itemWithoutImage._links.self.href}).done(function(item) {
                         items[item.entity._links.self.href] = item.entity;
                         addItemRow(item.entity);
                     });
+                    tweetPic();
                 })
             });
         })

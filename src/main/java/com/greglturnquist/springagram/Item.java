@@ -1,11 +1,18 @@
 package com.greglturnquist.springagram;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
+
+import org.springframework.hateoas.Link;
+import org.springframework.ui.Model;
 
 @Entity
 public class Item {
@@ -24,6 +31,10 @@ public class Item {
 
 	public long getId() {
 		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -49,4 +60,10 @@ public class Item {
 	public void setGallery(Gallery gallery) {
 		this.gallery = gallery;
 	}
+
+	public Link getHtmlUrl() throws NoSuchMethodException {
+		Method method = ApplicationController.class.getMethod("image", Long.class, Model.class, HttpServletRequest.class);
+		return linkTo(ApplicationController.class, method, id).withRel("htmlUrl");
+	}
+
 }
