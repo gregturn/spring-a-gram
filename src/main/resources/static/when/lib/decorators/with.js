@@ -21,11 +21,17 @@ define(function() {
 		 *  the returned promise.
 		 * @returns {Promise}
 		 */
-		Promise.prototype['with'] = Promise.prototype.withThis
-			= Promise.prototype._bindContext;
+		Promise.prototype['with'] = Promise.prototype.withThis = function(receiver) {
+			var p = this._beget();
+			var child = p._handler;
+			child.receiver = receiver;
+			this._handler.chain(child, receiver);
+			return p;
+		};
 
 		return Promise;
 	};
 
 });
 }(typeof define === 'function' && define.amd ? define : function(factory) { module.exports = factory(); }));
+

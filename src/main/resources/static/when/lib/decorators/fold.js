@@ -8,9 +8,15 @@ define(function() {
 
 	return function fold(Promise) {
 
-		Promise.prototype.fold = function(fn, arg) {
+		Promise.prototype.fold = function(f, z) {
 			var promise = this._beget();
-			this._handler.fold(promise._handler, fn, arg);
+
+			this._handler.fold(function(z, x, to) {
+				Promise._handler(z).fold(function(x, z, to) {
+					to.resolve(f.call(this, z, x));
+				}, x, this, to);
+			}, z, promise._handler.receiver, promise._handler);
+
 			return promise;
 		};
 

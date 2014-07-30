@@ -20,10 +20,7 @@ define(function() {
 		 * @returns {undefined}
 		 */
 		Promise.prototype.done = function(onResult, onError) {
-			var h = this._handler;
-			h.when({ resolve: this._maybeFatal, notify: noop, context: this,
-				receiver: h.receiver, fulfilled: onResult, rejected: onError,
-				progress: void 0 });
+			this._handler.visit(this._handler.receiver, onResult, onError);
 		};
 
 		/**
@@ -73,12 +70,11 @@ define(function() {
 		 */
 		Promise.prototype['finally'] = Promise.prototype.ensure = function(handler) {
 			if(typeof handler !== 'function') {
-				// Optimization: result will not change, return same promise
 				return this;
 			}
 
-			handler = isolate(handler, this);
-			return this.then(handler, handler);
+			var isolated = isolate(handler);
+			return this.then(isolated, isolated)['yield'](this);
 		};
 
 		/**
@@ -135,15 +131,11 @@ define(function() {
 			|| (predicate != null && predicate.prototype instanceof Error);
 	}
 
-	// prevent argument passing to f and ignore return value
-	function isolate(f, x) {
+	function isolate(f) {
 		return function() {
-			f.call(this);
-			return x;
+			return f.call(this);
 		};
 	}
-
-	function noop() {}
 
 });
 }(typeof define === 'function' && define.amd ? define : function(factory) { module.exports = factory(); }));
