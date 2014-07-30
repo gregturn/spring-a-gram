@@ -24,7 +24,8 @@ requirejs.config({
 });
 
 function isMobile () {
-	return window.sagDeviceType === 'mobile';
+	var html = document.documentElement;
+	return html.getAttribute('data-device') === 'mobile';
 }
 
 }());
