@@ -3,32 +3,8 @@
 <head>
     <title>Spring-a-Gram</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="requirejs/require.js"></script>
-    <script>
-        requirejs.config({
-            paths: {
-                'jquery': 'jquery/dist/jquery',
-                'jquery-mobile': 'jquery-mobile-bower/js/jquery.mobile-1.4.2'
-            },
-            packages: [
-                { name: 'when', location: 'when', main: 'when' },
-                { name: 'rest', location: 'rest', main: 'rest' }
-            ],
-            map: {
-                '*': {
-                    'css': 'require-css/css'
-                }
-            },
-            shim: {
-                'jquery-mobile': {
-                    deps: [ 'jquery' ],
-                    exports: '$'
-                }
-            },
-            deps: [ 'mobile' ]
-        });
-    </script>
-
+    <script th:inline="javascript">var sagDeviceType = 'mobile';</script>
+    <script data-main="run.js" src="requirejs/require.js"></script>
 </head>
 <body>
     <div data-role="page" id="home">
