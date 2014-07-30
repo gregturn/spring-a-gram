@@ -3,31 +3,7 @@
 <head>
     <title>Spring-A-Gram :: Upload your fav pics</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <script src="requirejs/require.js"></script>
-    <script>
-        requirejs.config({
-            paths: {
-                'jquery': 'jquery/dist/jquery',
-                'jquery-mobile': 'jquery-mobile-bower/js/jquery.mobile-1.4.2'
-            },
-            packages: [
-                { name: 'when', location: 'when', main: 'when' },
-                { name: 'rest', location: 'rest', main: 'rest' }
-            ],
-            map: {
-                '*': {
-                    'css': 'require-css/css'
-                }
-            },
-            shim: {
-                'jquery-mobile': {
-                    deps: [ 'jquery' ],
-                    exports: '$'
-                }
-            },
-            deps: [ 'main' ]
-        });
-    </script>
+    <script data-main="run.js" src="requirejs/require.js"></script>
     <style>
         .thumbnail {
             width: 100px;
