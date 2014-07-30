@@ -3,19 +3,7 @@
 <head>
     <title>Spring-A-Gram :: Upload your fav pics</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <script src="curl/dist/curl-kitchen-sink/curl.js"></script>
-    <script>
-        curl.config({
-            paths: {
-                'jquery': 'jquery/dist/jquery.js'
-            },
-            packages: {
-                when: { location: 'when', main: 'when' },
-                rest: { location: 'rest', main: 'rest' }
-            },
-            'main': 'main'
-        });
-    </script>
+    <script data-main="../run.js" src="../requirejs/require.js"></script>
     <style>
         .thumbnail {
             width: 100px;
