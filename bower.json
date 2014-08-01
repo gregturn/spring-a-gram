@@ -29,7 +29,8 @@
     "require-css": "~0.1",
     "jquery": "~2.1.1",
     "jquery-mobile-bower": "~1.4.2",
-    "rest": "1.1.1"
+    "rest": "1.1.1",
+    "when": "3.4.2"
   },
   "resolutions": {
     "jquery": "~2.1.1"
