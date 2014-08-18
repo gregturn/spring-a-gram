@@ -1,15 +1,17 @@
 package com.greglturnquist.springagram;
 
-import javax.servlet.http.HttpServletRequest;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * This is the web controller that contains web pages and other custom end points.
@@ -30,8 +32,8 @@ public class ApplicationController {
 	 * @return
 	 */
 	@RequestMapping("/")
-	public String index() {
-		return "index";
+	public ModelAndView index() {
+		return new ModelAndView("index");
 	}
 
 	/**
@@ -40,9 +42,13 @@ public class ApplicationController {
 	 * @return
 	 */
 	@RequestMapping("/image/{id}")
-	public String image(@PathVariable Long id, Model model, HttpServletRequest request) {
-		model.addAttribute("item", itemRepository.findOne(id));
-		model.addAttribute("hashtag", hashtag);
-		return "oneImage";
+	public ModelAndView image(@PathVariable Long id) {
+		ModelAndView modelAndView = new ModelAndView("oneImage");
+		modelAndView.addObject("item", itemRepository.findOne(id));
+		modelAndView.addObject("hashtag", hashtag);
+		modelAndView.addObject("links", Arrays.asList(
+			linkTo(methodOn(ApplicationController.class).index()).withRel("All Images")
+		));
+		return modelAndView;
 	}
 }
