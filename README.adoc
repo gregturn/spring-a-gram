@@ -19,7 +19,7 @@ the door to other front ends, like an iOS or Android app.
 
 If you want to run it right now, you need:
 
-* Java 1.6+
+* Java 8+
 * Maven 3.0+ (http://maven.apache.org)
 * Bower 1.3+ (http://bower.io)
 
