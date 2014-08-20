@@ -60,7 +60,7 @@ public class Item {
 		this.gallery = gallery;
 	}
 
-	public Link getHtmlUrl() throws NoSuchMethodException {
+	public Link getHtmlUrl() {
 		if (htmlUrl == null) {
 			htmlUrl = linkTo(methodOn(ApplicationController.class).image(this.id)).withRel("htmlUrl");
 		}
