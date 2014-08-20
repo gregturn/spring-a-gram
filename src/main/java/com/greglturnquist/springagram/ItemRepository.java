@@ -2,11 +2,9 @@ package com.greglturnquist.springagram;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-@RepositoryRestResource()
-public interface ItemRepository extends CrudRepository<Item, Long> {
+public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
 
 	List<Item> findByGalleryIsNull();
 
