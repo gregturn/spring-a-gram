@@ -47,11 +47,11 @@ public class Application {
 //		itemRepository.save(caterpillar);
 	}
 
-	private static Item createItem(Resource cat) throws IOException {
+	private static Item createItem(Resource file) throws IOException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		FileCopyUtils.copy(cat.getInputStream(), output);
+		FileCopyUtils.copy(file.getInputStream(), output);
 		Item item = new Item();
-		item.setName(cat.getFilename());
+		item.setName(file.getFilename());
 		item.setImage("data:image/png;base64," + DatatypeConverter.printBase64Binary(output.toByteArray()));
 		return item;
 	}
