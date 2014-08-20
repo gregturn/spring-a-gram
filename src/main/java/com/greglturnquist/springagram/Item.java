@@ -8,11 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
 
 import org.springframework.hateoas.Link;
-import org.springframework.ui.Model;
 
 @Entity
 public class Item {
@@ -28,6 +25,8 @@ public class Item {
 
 	@ManyToOne
 	private Gallery gallery;
+
+	private Link htmlUrl;
 
 	public long getId() {
 		return id;
@@ -61,9 +60,11 @@ public class Item {
 		this.gallery = gallery;
 	}
 
-	public Link getHtmlUrl() throws NoSuchMethodException {
-		Method method = ApplicationController.class.getMethod("image", Long.class, Model.class, HttpServletRequest.class);
-		return linkTo(ApplicationController.class, method, id).withRel("htmlUrl");
+	public Link getHtmlUrl() {
+		if (htmlUrl == null) {
+			htmlUrl = linkTo(methodOn(ApplicationController.class).image(this.id)).withRel("htmlUrl");
+		}
+		return htmlUrl;
 	}
 
 }
