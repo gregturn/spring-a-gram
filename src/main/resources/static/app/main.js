@@ -51,7 +51,6 @@ define(function(require) {
 		});
 	}
 
-	/* Take either a JSON or URI version of a resource, and extract it's ID */
 	/* Unlink an item from it's gallery, and move it to the table of unlinked items */
 	function removePicByResource(item, gallery) {
 		if (gallery === undefined || item === undefined) {
