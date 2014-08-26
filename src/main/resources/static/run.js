@@ -20,7 +20,7 @@ requirejs.config({
 			exports: '$'
 		}
 	},
-	deps: isMobile() ? [ 'mobile' ] : [ 'app/main' ]
+	deps: isMobile() ? [ 'app/mobile' ] : [ 'app/main' ]
 });
 
 function isMobile () {
