@@ -6,7 +6,8 @@ define(function(require) {
 
 	return {
 		tweetButton: tweetButton,
-		tweetPic: tweetPic
+		tweetPic: tweetPic,
+		tweetIntent: tweetIntent
 	};
 
 	function tweetButton(href) {
@@ -30,6 +31,12 @@ define(function(require) {
 				fjs.parentNode.insertBefore(js,fjs);
 			}
 		}(document, 'script', 'twitter-wjs');
+	}
+
+	function tweetIntent(item, talk, tags) {
+		return "https://twitter.com/intent/tweet?text=" +
+			encodeURIComponent(item.htmlUrl.href + " was uploaded by Spring-a-Gram. See how at " + talk) +
+			"&hashtags=" + tags.join(',');
 	}
 
 });
