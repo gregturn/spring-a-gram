@@ -216,6 +216,13 @@ define(function(require) {
 			});
 		});
 
+        $('#newGallery').submit(function (e) {
+            e.preventDefault();
+
+            console.log(e);
+            console.log($('#description')[0].value);
+        });
+
 		/* Listen for clicks on the gallery */
 		$('#gallery').on('click', '.remove', function(e) {
 			var itemUri = e.target.dataset['uri'];

@@ -19,9 +19,14 @@
 <body>
     <h2><a href="/">Spring-A-Gram: Upload your favorite pictures!</a></h2>
 
-    <form action="#" id="upload">
+    <form id="upload">
         <p>File to upload: <input type="file" id="file" /></p>
         <p><input type="submit" value="Upload" /></p>
+    </form>
+
+    <form th:action="${newGallery.href}" th:object="${gallery}" method="post">
+        <input type="text" th:field="*{description}" />
+        <input type="submit" />
     </form>
 
     <div id="gallery"></div>
