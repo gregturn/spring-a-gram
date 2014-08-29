@@ -29,6 +29,8 @@ To download and run:
 . `bower install` to pull down javascript libraries. If you get prompted about jQuery, accept the version specified in bower.json
 . `mvn clean spring-boot:run`
 
+NOTE: To deploy a copy to PWS, you need a Java 8 build pack. Execute `cf push spring-a-gram -p target/spring-a-gram-0.1.0.jar -b https://github.com/spring-io/java-buildpack.git` and you'll be set.
+
 This should get the app started courtesy of Spring Boot. Now you can traverse the app from different view points.
 
 * From the command line, interrogate the API with `curl localhost:8080/api`. Navigate to the other links.
