@@ -4,6 +4,7 @@
     <title>Spring-a-Gram</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script data-main="run.js" src="requirejs/require.js"></script>
+    <script src="//platform.twitter.com/widgets.js"></script>
 </head>
 <body>
     <div data-role="page" id="home">
@@ -41,13 +42,15 @@
         <div data-role="content" id="gallerylist"></div>
 
         <div data-role="popup" id="view-gallery-pic" data-overlay-theme="b" data-theme="b" data-corners="false">
-            <a href="#galleries" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <a href="#galleries" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+            <a id="galleryPopupTweet" href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-action ui-btn-icon-notext ui-btn-right">Close</a>
             <img src="#" class="popphoto" style="max-height:512px;"/>
         </div>
 
         <div data-role="popup" id="galleryOps">
             <ul data-role="listview" data-inset="true">
                 <li data-role="list-divider">Choose an action</li>
+                <li ><a id="galleryTweet" href="#">Tweet</a></li>
                 <li id="remove"><a href="#galleries">Remove</a></li>
             </ul>
         </div>
@@ -69,13 +72,15 @@
         </div>
 
         <div data-role="popup" id="view" data-overlay-theme="b" data-theme="b" data-corners="false">
-            <a href="#pictures" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <a href="#pictures" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+            <a id="popupTweet" href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-action ui-btn-icon-notext ui-btn-right">Tweet</a>
             <img src="#" class="popphoto" style="max-height:512px;"/>
         </div>
 
         <div data-role="popup" id="pic_ops">
             <ul data-role="listview" data-inset="true">
                 <li data-role="list-divider">Choose an action</li>
+                <li><a id="picTweet" href="#">Tweet</a></li>
                 <li><a href="#delete">Delete</a></li>
                 <li><a href="#addToGallery">Add to Gallery</a></li>
             </ul>

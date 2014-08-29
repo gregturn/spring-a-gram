@@ -16,6 +16,8 @@ define(function(require) {
     var galleries = {};
     var currentItem;
     var root = '/api';
+    var talk = "https://2014.event.springone2gx.com/schedule/sessions/spring_data_rest_data_meets_hypermedia.html";
+    var tags = ['s2gx', 'REST'];
 
     function readAndUploadImage(input) {
         if (input.files && input.files[0]) {
@@ -148,6 +150,8 @@ define(function(require) {
                 currentItem = items[e.target.parentNode.dataset['uri']];
                 $('#remove').attr('data-uri', currentItem);
             }
+            $('#galleryTweet').attr('href', twitter.tweetIntent(currentItem, talk, tags));
+			$('#galleryPopupTweet').attr('href', twitter.tweetIntent(currentItem, talk, tags));
             $('#view-gallery-pic img').attr('src', currentItem.image);
         });
 
@@ -167,8 +171,14 @@ define(function(require) {
             if (e.target.tagName === 'A') {
                 currentItem = items[e.target.parentNode.dataset['uri']];
             }
+            $('#picTweet').attr('href', twitter.tweetIntent(currentItem, talk, tags));
+			$('#popupTweet').attr('href', twitter.tweetIntent(currentItem, talk, tags));
             $('#view img').attr('src', currentItem.image);
         });
+
+		$('#popupTweet').on('click', function(e) {
+			$('#popupTweet').attr('href', twitter.tweetIntent(currentItem, talk, tags));
+		})
 
         $('#deleteConfirmed').on('click', function(e) {
             api({
