@@ -486,10 +486,12 @@ define(function() {
 		 */
 		Promise.prototype.then = function(onFulfilled, onRejected) {
 			var parent = this._handler;
+			var state = parent.join().state();
 
-			if (typeof onFulfilled !== 'function' && parent.join().state() > 0) {
+			if ((typeof onFulfilled !== 'function' && state > 0) ||
+				(typeof onRejected !== 'function' && state < 0)) {
 				// Short circuit: value will not change, simply share handler
-				return new Promise(Handler, parent);
+				return new this.constructor(Handler, parent);
 			}
 
 			var p = this._beget();
@@ -550,9 +552,7 @@ define(function() {
 				}
 
 				if (maybeThenable(x)) {
-					h = isPromise(x)
-						? x._handler.join()
-						: getHandlerUntrusted(x);
+					h = getHandlerMaybeThenable(x);
 
 					s = h.state();
 					if (s === 0) {
@@ -561,6 +561,7 @@ define(function() {
 						results[i] = h.value;
 						--pending;
 					} else {
+						unreportRemaining(promises, i+1, h);
 						resolver.become(h);
 						break;
 					}
@@ -582,6 +583,20 @@ define(function() {
 				this[i] = x;
 				if(--pending === 0) {
 					resolver.become(new Fulfilled(this));
+				}
+			}
+		}
+
+		function unreportRemaining(promises, start, rejectedHandler) {
+			var i, h, x;
+			for(i=start; i<promises.length; ++i) {
+				x = promises[i];
+				if(maybeThenable(x)) {
+					h = getHandlerMaybeThenable(x);
+
+					if(h !== rejectedHandler) {
+						h.visit(h, void 0, h._unreport);
+					}
 				}
 			}
 		}
@@ -631,6 +646,16 @@ define(function() {
 				return x._handler.join();
 			}
 			return maybeThenable(x) ? getHandlerUntrusted(x) : new Fulfilled(x);
+		}
+
+		/**
+		 * Get a handler for thenable x.
+		 * NOTE: You must only call this if maybeThenable(x) == true
+		 * @param {object|function|Promise} x
+		 * @returns {object} handler
+		 */
+		function getHandlerMaybeThenable(x) {
+			return isPromise(x) ? x._handler.join() : getHandlerUntrusted(x);
 		}
 
 		/**
@@ -820,37 +845,26 @@ define(function() {
 		};
 
 		/**
-		 * Abstract base for handler that delegates to another handler
-		 * @param {object} handler
-		 * @constructor
-		 */
-		function Delegating(handler) {
-			this.handler = handler;
-		}
-
-		inherit(Handler, Delegating);
-
-		Delegating.prototype._report = function(context) {
-			this.join()._report(context);
-		};
-
-		Delegating.prototype._unreport = function() {
-			this.join()._unreport();
-		};
-
-		/**
 		 * Wrap another handler and force it into a future stack
 		 * @param {object} handler
 		 * @constructor
 		 */
 		function Async(handler) {
-			Delegating.call(this, handler);
+			this.handler = handler;
 		}
 
-		inherit(Delegating, Async);
+		inherit(Handler, Async);
 
 		Async.prototype.when = function(continuation) {
 			tasks.enqueue(new ContinuationTask(continuation, this));
+		};
+
+		Async.prototype._report = function(context) {
+			this.join()._report(context);
+		};
+
+		Async.prototype._unreport = function() {
+			this.join()._unreport();
 		};
 
 		/**
@@ -1156,7 +1170,9 @@ define(function(require) {
 		setTimer = function (f, ms) { return vertx.setTimer(ms, f); };
 		clearTimer = vertx.cancelTimer;
 	} catch (e) {
-		setTimer = function(f, ms) { return setTimeout(f, ms); };
+		// NOTE: Truncate decimals to workaround node 0.10.30 bug:
+		// https://github.com/joyent/node/issues/8167
+		setTimer = function(f, ms) { return setTimeout(f, ms|0); };
 		clearTimer = function(t) { return clearTimeout(t); };
 	}
 
