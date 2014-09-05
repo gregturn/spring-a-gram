@@ -13,6 +13,9 @@ define(function(require) {
 	var galleries = {};
 	var root = '/api';
 
+	var talk = "https://2014.event.springone2gx.com/schedule/sessions/spring_data_rest_data_meets_hypermedia.html";
+	var tags = ['s2gx', 'REST'];
+
 	var emptyImageTable = '<table><tr><th>Filename</th><th>Image</th><th>Share</th><th></th><th></th></tr></table>';
 
 	/* Search for a given item in the table of unlinked images */
@@ -74,11 +77,14 @@ define(function(require) {
 		row.append($('<td></td>').text(item.name));
 
 		row.append($('<td></td>').append(
-			$('<img>').addClass('thumbnail').attr('src', item.image)
+			$('<a></a>').attr('href', item.htmlUrl.href).append(
+				$('<img>').addClass('thumbnail').attr('src', item.image)
+			)
 		));
 
 		row.append($('<td></td>').append(
-			twitter.tweetButton(item.htmlUrl.href)
+			$('<a>Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags))
+				.attr('target', '_blank')
 		));
 
 		row.append($('<td></td>').append(
@@ -150,11 +156,14 @@ define(function(require) {
 		row.append($('<td></td>').text(item.name));
 
 		row.append($('<td></td>').append(
-			$('<img>').addClass('thumbnail').attr('src', item.image)
+			$('<a></a>').attr('href', item.htmlUrl.href).append(
+				$('<img>').addClass('thumbnail').attr('src', item.image)
+			)
 		));
 
 		row.append($('<td></td>').append(
-			twitter.tweetButton(item.htmlUrl.href)
+			$('<a>Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags))
+				.attr('target', '_blank')
 		));
 
 		row.append($('<td></td>').append(
@@ -251,7 +260,5 @@ define(function(require) {
 					});
 				});
 			});
-
-		when.join(galleriesReady, itemsReady).done(twitter.tweetPic);
 	});
 });
