@@ -7,6 +7,7 @@ define(function(require) {
     var follow = require('./follow');
     var twitter = require('./twitter');
     var imageReader = require('./imageReader');
+    var hateoasHelper = require('./hateoasHelper');
 
     require('css!jquery-mobile-bower/css/jquery.mobile-1.4.2.min.css');
     require('jquery-mobile');
@@ -223,7 +224,13 @@ define(function(require) {
             }
         });
 
-        follow(api, root, ['galleries', 'galleries']).then(function(response) {
+        // If this is a single image page, then configure href for the anchor
+        var onePage = document.querySelector('#tweetOneImage');
+        if (onePage) {
+            onePage.href = twitter.tweetIntent(hateoasHelper.wrapHref(window.location.href), talk, tags);
+        }
+
+        follow(api, root, ['galleries', 'galleries']).then(function (response) {
             var gallerylist = $('#gallerylist');
             response.forEach(function(gallery) {
                 galleries[gallery._links.self.href] = gallery;
