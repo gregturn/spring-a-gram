@@ -1,9 +1,5 @@
 package com.greglturnquist.springagram;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
-
-import java.util.Arrays;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Arrays;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * This is the web controller that contains web pages and other custom end points.
@@ -52,7 +53,7 @@ public class ApplicationController {
 	@RequestMapping(value="/", method = RequestMethod.POST)
 	public ModelAndView newGallery(@ModelAttribute Gallery gallery) {
 		galleryRepository.save(gallery);
-		return index();
+        return index();
 	}
 
 	/**
