@@ -185,7 +185,7 @@ define(function(require) {
             api({
                 method: 'DELETE',
                 path: currentItem._links.self.href
-            }).done(function() {
+            }).then(function() {
                 $('#piclist li[data-uri="' + currentItem._links.self.href + '"]').remove();
                 delete items[currentItem._links.self.href];
             }).done(function() {
