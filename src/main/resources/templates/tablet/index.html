@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html data-device="mobile">
+<head>
+    <title>Spring-a-Gram</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script data-main="run.js" src="requirejs/require.js"></script>
+    <script src="//platform.twitter.com/widgets.js"></script>
+</head>
+<body>
+    <div data-role="page" id="home">
+
+        <div data-role="header" data-position="fixed">
+            <a href="/" data-icon="home" data-iconpos="notext"></a>
+            <h1>Spring-a-Gram</h1>
+            <span class="ui-btn-right">
+                <div class="ui-btn ui-input-btn ui-corner-all ui-shadow ui-icon-camera ui-btn-icon-notext">
+                    <input type="file" class="ui-btn ui-btn-right ui-icon-camera ui-btn-icon-notext ui-shadow ui-corner-all" data-icon="camera" data-iconpos="notext" />
+                </div>
+            </span>
+        </div>
+
+        <div data-role="content">
+            <ul data-role="listview">
+                <li><a href="#galleries">Galleries</a></li>
+                <li><a href="#pictures">Pictures</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div data-role="page" id="galleries">
+        <div data-role="header" data-position="fixed">
+            <a href="/" data-icon="home" data-iconpos="notext"></a>
+            <h1>Spring-a-Gram</h1>
+            <span class="ui-btn-right">
+                <div class="ui-btn ui-input-btn ui-corner-all ui-shadow ui-icon-camera ui-btn-icon-notext">
+                    <input type="file" class="ui-btn ui-btn-right ui-icon-camera ui-btn-icon-notext ui-shadow ui-corner-all" data-icon="camera" data-iconpos="notext" />
+                </div>
+            </span>
+        </div>
+
+        <div data-role="content" id="gallerylist"></div>
+
+        <div data-role="popup" id="view-gallery-pic" data-overlay-theme="b" data-theme="b" data-corners="false">
+            <a href="#galleries" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+            <a id="galleryPopupTweet" href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-action ui-btn-icon-notext ui-btn-right">Close</a>
+            <img src="#" class="popphoto" style="max-height:512px;"/>
+        </div>
+
+        <div data-role="popup" id="galleryOps">
+            <ul data-role="listview" data-inset="true">
+                <li data-role="list-divider">Choose an action</li>
+                <li ><a id="galleryTweet" href="#">Tweet</a></li>
+                <li id="remove"><a href="#galleries">Remove</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="page" id="pictures">
+        <div data-role="header" data-position="fixed">
+            <a href="/" data-icon="home" data-iconpos="notext"></a>
+            <h1>Spring-a-Gram</h1>
+            <span class="ui-btn-right">
+                <div class="ui-btn ui-input-btn ui-corner-all ui-shadow ui-icon-camera ui-btn-icon-notext">
+                    <input type="file" class="ui-btn ui-btn-right ui-icon-camera ui-btn-icon-notext ui-shadow ui-corner-all" data-icon="camera" data-iconpos="notext" />
+                </div>
+            </span>
+        </div>
+
+        <div data-role="content">
+            <ul id="piclist" data-role="listview"></ul>
+        </div>
+
+        <div data-role="popup" id="view" data-overlay-theme="b" data-theme="b" data-corners="false">
+            <a href="#pictures" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+            <a id="popupTweet" href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-action ui-btn-icon-notext ui-btn-right">Tweet</a>
+            <img src="#" class="popphoto" style="max-height:512px;"/>
+        </div>
+
+        <div data-role="popup" id="pic_ops">
+            <ul data-role="listview" data-inset="true">
+                <li data-role="list-divider">Choose an action</li>
+                <li><a id="picTweet" href="#">Tweet</a></li>
+                <li><a href="#delete">Delete</a></li>
+                <li><a href="#addToGallery">Add to Gallery</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div data-role="page" id="delete">
+        <div data-role="header" data-position="fixed">
+            <a href="/" data-icon="home" data-iconpos="notext"></a>
+            <h1>Spring-a-Gram</h1>
+            <span class="ui-btn-right">
+                <div class="ui-btn ui-input-btn ui-corner-all ui-shadow ui-icon-camera ui-btn-icon-notext">
+                    <input type="file" class="ui-btn ui-btn-right ui-icon-camera ui-btn-icon-notext ui-shadow ui-corner-all" data-icon="camera" data-iconpos="notext" />
+                </div>
+            </span>
+        </div>
+
+        <div data-role="content">
+            <h3>Are you sure you want to delete this picture?</h3>
+            <ul data-role="listview">
+                <li><a href="#" data-rel="back">Cancel</a></li>
+                <li id="deleteConfirmed"><a href="#">Delete</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="page" id="addToGallery">
+        <div data-role="header" data-position="fixed">
+            <a href="/" data-icon="home" data-iconpos="notext"></a>
+            <h1>Spring-a-Gram</h1>
+            <span class="ui-btn-right">
+                <div class="ui-btn ui-input-btn ui-corner-all ui-shadow ui-icon-camera ui-btn-icon-notext">
+                    <input type="file" class="ui-btn ui-btn-right ui-icon-camera ui-btn-icon-notext ui-shadow ui-corner-all" data-icon="camera" data-iconpos="notext" />
+                </div>
+            </span>
+        </div>
+
+        <div data-role="content">
+            <h3>Pick the gallery</h3>
+            <fieldset data-role="controlgroup"></fieldset>
+            <input type="button" value="Add" />
+        </div>
+    </div>
+
+</body>
+</html>
