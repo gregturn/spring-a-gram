@@ -7,6 +7,7 @@ define(function(require) {
 	var follow = require('./follow');
 	var twitter = require('./twitter');
 	var imageReader = require('./imageReader');
+	var hateoasHelper = require('./hateoasHelper');
 
 	var currentGallery;
 	var items = {};
@@ -232,6 +233,12 @@ define(function(require) {
 			var itemUri = e.target.parentNode.parentNode.dataset['uri'];
 			addToSelectedGallery(items[itemUri]);
 		});
+
+		// If this is a single image page, then configure href for the anchor
+		var onePage = document.querySelector('#tweetOneImage');
+		if (onePage) {
+			onePage.href = twitter.tweetIntent(hateoasHelper.wrapHref(window.location.href), talk, tags);
+		}
 
 		var galleriesReady = follow(api, root, ['galleries', 'galleries'])
 			.then(function(response) {
