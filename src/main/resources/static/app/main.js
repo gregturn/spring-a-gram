@@ -17,16 +17,16 @@ define(function(require) {
 	var talk = "https://2014.event.springone2gx.com/schedule/sessions/spring_data_rest_data_meets_hypermedia.html";
 	var tags = ['s2gx', 'REST'];
 
-	var emptyImageTable = '<table><tr><th>Filename</th><th>Image</th><th>Share</th><th></th><th></th></tr></table>';
+	var emptyImageTable = '<ul></ul>';
 
 	/* Search for a given item in the table of unlinked images */
 	function findUnlinkedItem(item) {
-		return $('#images tr[data-uri="' + item._links.self.href + '"]');
+		return $('#images li[data-uri="' + item._links.self.href + '"]');
 	}
 
 	/* Search for a given item in the gallery's table */
 	function findLinkedItem(item) {
-		return $('#gallery tr[data-uri="' + item._links.self.href + '"]');
+		return $('#gallery li[data-uri="' + item._links.self.href + '"]');
 	}
 
 	/* Delete the picture from storage and remove from the screen */
@@ -50,7 +50,7 @@ define(function(require) {
 			entity: currentGallery,
 			headers: {'Content-Type': 'text/uri-list'}
 		}).done(function() {
-			$('#gallery table tr[data-uri="' + currentGallery._links.self.href +'"] table').append(createItemRowForGallery(item, currentGallery));
+			$('#gallery ul li[data-uri="' + currentGallery._links.self.href +'"] ul').append(createItemRowForGallery(item, currentGallery));
 			findUnlinkedItem(item).remove();
 		});
 	}
@@ -66,29 +66,27 @@ define(function(require) {
 			path: item._links.gallery.href
 		}).done(function() {
 			findLinkedItem(item).remove();
-			$('#images table').append(createItemRow(item));
+			$('#images ul').append(createItemRow(item));
 		});
 	}
 
 	/* Create a new table row for a item based on its gallery */
 	function createItemRowForGallery(item, gallery) {
-		var row = $('<tr></tr>')
+		var row = $('<li></li>')
 			.attr('data-uri', item._links.self.href);
 
-		row.append($('<td></td>').text(item.name));
-
-		row.append($('<td></td>').append(
+		row.append($('<span></span>').append(
 			$('<a></a>').attr('href', item.htmlUrl.href).append(
 				$('<img>').addClass('thumbnail').attr('src', item.image)
 			)
 		));
 
-		row.append($('<td></td>').append(
+		row.append($('<span></span>').append(
 			$('<a>Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags))
 				.attr('target', '_blank')
 		));
 
-		row.append($('<td></td>').append(
+		row.append($('<span></span>').append(
 			$('<button class="remove">Remove</button>')
 				.attr('data-gallery-uri', gallery._links.self.href)
 				.attr('data-uri', item._links.self.href)
@@ -98,23 +96,21 @@ define(function(require) {
 
 	/* Draw the gallery table from scratch */
 	function drawGalleryTable(data) {
-		var table = $('<table></table>');
-		table.append('<tr><th></th><th>Name</th><th>Collection</th></tr>');
+		var table = $('<ul></ul>');
 
 		return when.map(data, function (gallery) {
-			var row = $('<tr></tr>').attr('data-uri', gallery._links.self.href);
+			var row = $('<li></li>').attr('data-uri', gallery._links.self.href);
 
-			row.append($('<td></td>').append(
+			row.append($('<span></span>').append(
 				$('<input type="radio" name="gallery">').click(function () {
 					currentGallery = gallery;
 				})
 			));
 
-			row.append($('<td></td>').text(gallery.description));
+			row.append($('<span></span>').text(gallery.description));
 
-			var nestedTable = $('<table></table>');
-			nestedTable.append('<tr><th>Filename</th><th>Image</th><th>Share</th></tr>');
-			row.append($('<td></td>').append(nestedTable));
+			var nestedTable = $('<ul></ul>');
+			row.append($('<span></span>').append(nestedTable));
 			table.append(row);
 			$('#gallery').append(table);
 
@@ -152,26 +148,24 @@ define(function(require) {
 
 	/* Create a new table row for an unlinked item */
 	function createItemRow(item) {
-		var row = $('<tr></tr>').attr('data-uri', item._links.self.href);
+		var row = $('<li></li>').attr('data-uri', item._links.self.href);
 
-		row.append($('<td></td>').text(item.name));
-
-		row.append($('<td></td>').append(
+		row.append($('<span></span>').append(
 			$('<a></a>').attr('href', item.htmlUrl.href).append(
 				$('<img>').addClass('thumbnail').attr('src', item.image)
 			)
 		));
 
-		row.append($('<td></td>').append(
+		row.append($('<span></span>').append(
 			$('<a>Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags))
 				.attr('target', '_blank')
 		));
 
-		row.append($('<td></td>').append(
+		row.append($('<span></span>').append(
 			$('<button class="delete">Delete</button>')
 		));
 
-		row.append($('<td></td>').append(
+		row.append($('<span></span>').append(
 			$('<button class="add-to-gallery">Add To Gallery</button>')
 		));
 
@@ -180,7 +174,7 @@ define(function(require) {
 
 	/* Append an item's table row to the image table */
 	function addItemRow(item) {
-		$('#images table').append(createItemRow(item));
+		$('#images ul').append(createItemRow(item));
 	}
 
 	/* When the page is loaded, run/register this set of code */
