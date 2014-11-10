@@ -1,0 +1,36 @@
+{
+  "name": "spring-a-gram",
+  "version": "0.1.0",
+  "homepage": "https://github.com/gregturn/spring-a-gram",
+  "authors": [
+    "Greg Turnquist <gturnquist@pivotal.io>"
+  ],
+  "description": "Upload your fav pics",
+  "main": "app/main.js",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "rest",
+    "hateoas",
+    "spring",
+    "data"
+  ],
+  "license": "ASL",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1",
+    "require-css": "~0.1",
+    "jquery": "~2.1.1",
+    "rest": "1.1.1",
+    "when": "~3.4.5",
+    "rave": "~0.4.3"
+  }
+}
