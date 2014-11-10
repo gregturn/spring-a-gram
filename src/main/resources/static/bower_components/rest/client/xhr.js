@@ -53,6 +53,7 @@
 
 		return client(function xhr(request) {
 			return new responsePromise.ResponsePromise(function (resolve, reject) {
+				/*jshint maxcomplexity:20 */
 
 				var client, method, url, headers, entity, headerName, response, XMLHttpRequest;
 
@@ -93,6 +94,12 @@
 					headers = request.headers;
 					for (headerName in headers) {
 						/*jshint forin:false */
+						if (headerName === 'Content-Type' && headers[headerName] === 'multipart/form-data') {
+							// XMLHttpRequest generates its own Content-Type header with the
+							// appropriate multipart boundary when sending multipart/form-data.
+							continue;
+						}
+
 						client.setRequestHeader(headerName, headers[headerName]);
 					}
 
@@ -116,6 +123,13 @@
 							if (response.status.code > 0) {
 								// check status code as readystatechange fires before error event
 								resolve(response);
+							}
+							else {
+								// give the error callback a chance to fire before resolving
+								// requests for file:// URLs do not have a status code
+								setTimeout(function () {
+									resolve(response);
+								}, 0);
 							}
 						}
 					};

@@ -214,6 +214,7 @@ Contributors
 - Scott Andrews <scothis@gmail.com>
 - Jeremy Grelle <jeremy.grelle@gmail.com>
 - John Hann <john@unscriptable.com>
+- Michael Jackson <mjijackson@gmail.com>
 
 Please see CONTRIBUTING.md for details on how to contribute to this project.
 
@@ -228,6 +229,16 @@ rest.js is made available under the MIT license.  See LICENSE.txt for details.
 
 Change Log
 ----------
+
+1.2.0
+- deprecated rest/interceptor/entity: instead use response.entity()
+- deprecated and removed wire.js reference resolves 'client!' and 'resource!', instead use the 'rest/wire' factory 
+- deprecated and removed Dojo store support
+- separate browser and node main modules, browser consumers should switch their main module from 'rest/rest' to 'rest/browser'. This allows tools such as browerify and webpack to more intelligently reason about the module structure.
+- Multipart requests for browsers that support FormData (sorry IE 6-9). Thanks @mjackson
+- mixin property support in defaultRequest interceptor. Thanks @jiangtyd
+- allow location interceptor to be applied based on the status code. Thanks @phillipj
+- better support for file:// URL via the XHR client
 
 1.1.1
 - support for IE 11, Safari 7 and iOS 7 (no code changes required, now actively testing)
