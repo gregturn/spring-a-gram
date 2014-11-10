@@ -5,20 +5,25 @@
 (function(define) { 'use strict';
 define(function(require) {
 
-	var timer = require('../timer');
+	var setTimer = require('../env').setTimer;
 
 	return function unhandledRejection(Promise) {
 		var logError = noop;
 		var logInfo = noop;
+		var localConsole;
 
 		if(typeof console !== 'undefined') {
-			logError = typeof console.error !== 'undefined'
-				? function (e) { console.error(e); }
-				: function (e) { console.log(e); };
+			// Alias console to prevent things like uglify's drop_console option from
+			// removing console.log/error. Unhandled rejections fall into the same
+			// category as uncaught exceptions, and build tools shouldn't silence them.
+			localConsole = console;
+			logError = typeof localConsole.error !== 'undefined'
+				? function (e) { localConsole.error(e); }
+				: function (e) { localConsole.log(e); };
 
-			logInfo = typeof console.info !== 'undefined'
-				? function (e) { console.info(e); }
-				: function (e) { console.log(e); };
+			logInfo = typeof localConsole.info !== 'undefined'
+				? function (e) { localConsole.info(e); }
+				: function (e) { localConsole.log(e); };
 		}
 
 		Promise.onPotentiallyUnhandledRejection = function(rejection) {
@@ -35,7 +40,7 @@ define(function(require) {
 
 		var tasks = [];
 		var reported = [];
-		var running = false;
+		var running = null;
 
 		function report(r) {
 			if(!r.handled) {
@@ -54,14 +59,13 @@ define(function(require) {
 
 		function enqueue(f, x) {
 			tasks.push(f, x);
-			if(!running) {
-				running = true;
-				running = timer.set(flush, 0);
+			if(running === null) {
+				running = setTimer(flush, 0);
 			}
 		}
 
 		function flush() {
-			running = false;
+			running = null;
 			while(tasks.length > 0) {
 				tasks.shift()(tasks.shift());
 			}

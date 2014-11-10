@@ -5,7 +5,7 @@
  * when is part of the cujoJS family of libraries (http://cujojs.com/)
  * @author Brian Cavalier
  * @author John Hann
- * @version 3.4.6
+ * @version 3.6.0
  */
 (function(define) { 'use strict';
 define(function (require) {
@@ -39,8 +39,8 @@ define(function (require) {
 	when['try']      = attempt;              // call a function and return a promise
 	when.attempt     = attempt;              // alias for when.try
 
-	when.iterate     = Promise.iterate;      // Generate a stream of promises
-	when.unfold      = Promise.unfold;       // Generate a stream of promises
+	when.iterate     = Promise.iterate;      // DEPRECATED (use cujojs/most streams) Generate a stream of promises
+	when.unfold      = Promise.unfold;       // DEPRECATED (use cujojs/most streams) Generate a stream of promises
 
 	when.join        = join;                 // Join 2 or more promises
 

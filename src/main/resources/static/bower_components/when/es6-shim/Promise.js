@@ -13,7 +13,7 @@ module.exports = typeof global != 'undefined' ? (global.Promise = PromiseConstru
 	           : typeof self   != 'undefined' ? (self.Promise   = PromiseConstructor)
 	           : PromiseConstructor;
 
-},{"../lib/Promise":2,"../lib/decorators/unhandledRejection":6}],2:[function(require,module,exports){
+},{"../lib/Promise":2,"../lib/decorators/unhandledRejection":4}],2:[function(require,module,exports){
 /** @license MIT License (c) copyright 2010-2014 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
@@ -23,7 +23,7 @@ define(function (require) {
 
 	var makePromise = require('./makePromise');
 	var Scheduler = require('./Scheduler');
-	var async = require('./async');
+	var async = require('./env').asap;
 
 	return makePromise({
 		scheduler: new Scheduler(async)
@@ -32,87 +32,13 @@ define(function (require) {
 });
 })(typeof define === 'function' && define.amd ? define : function (factory) { module.exports = factory(require); });
 
-},{"./Scheduler":4,"./async":5,"./makePromise":7}],3:[function(require,module,exports){
+},{"./Scheduler":3,"./env":5,"./makePromise":6}],3:[function(require,module,exports){
 /** @license MIT License (c) copyright 2010-2014 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
 
 (function(define) { 'use strict';
 define(function() {
-	/**
-	 * Circular queue
-	 * @param {number} capacityPow2 power of 2 to which this queue's capacity
-	 *  will be set initially. eg when capacityPow2 == 3, queue capacity
-	 *  will be 8.
-	 * @constructor
-	 */
-	function Queue(capacityPow2) {
-		this.head = this.tail = this.length = 0;
-		this.buffer = new Array(1 << capacityPow2);
-	}
-
-	Queue.prototype.push = function(x) {
-		if(this.length === this.buffer.length) {
-			this._ensureCapacity(this.length * 2);
-		}
-
-		this.buffer[this.tail] = x;
-		this.tail = (this.tail + 1) & (this.buffer.length - 1);
-		++this.length;
-		return this.length;
-	};
-
-	Queue.prototype.shift = function() {
-		var x = this.buffer[this.head];
-		this.buffer[this.head] = void 0;
-		this.head = (this.head + 1) & (this.buffer.length - 1);
-		--this.length;
-		return x;
-	};
-
-	Queue.prototype._ensureCapacity = function(capacity) {
-		var head = this.head;
-		var buffer = this.buffer;
-		var newBuffer = new Array(capacity);
-		var i = 0;
-		var len;
-
-		if(head === 0) {
-			len = this.length;
-			for(; i<len; ++i) {
-				newBuffer[i] = buffer[i];
-			}
-		} else {
-			capacity = buffer.length;
-			len = this.tail;
-			for(; head<capacity; ++i, ++head) {
-				newBuffer[i] = buffer[head];
-			}
-
-			for(head=0; head<len; ++i, ++head) {
-				newBuffer[i] = buffer[head];
-			}
-		}
-
-		this.buffer = newBuffer;
-		this.head = 0;
-		this.tail = this.length;
-	};
-
-	return Queue;
-
-});
-}(typeof define === 'function' && define.amd ? define : function(factory) { module.exports = factory(); }));
-
-},{}],4:[function(require,module,exports){
-/** @license MIT License (c) copyright 2010-2014 original author or authors */
-/** @author Brian Cavalier */
-/** @author John Hann */
-
-(function(define) { 'use strict';
-define(function(require) {
-
-	var Queue = require('./Queue');
 
 	// Credit to Twisol (https://github.com/Twisol) for suggesting
 	// this type of extensible queue + trampoline approach for next-tick conflation.
@@ -124,9 +50,12 @@ define(function(require) {
 	 */
 	function Scheduler(async) {
 		this._async = async;
-		this._queue = new Queue(15);
-		this._afterQueue = new Queue(5);
 		this._running = false;
+
+		this._queue = new Array(1<<16);
+		this._queueLen = 0;
+		this._afterQueue = new Array(1<<4);
+		this._afterQueueLen = 0;
 
 		var self = this;
 		this.drain = function() {
@@ -139,7 +68,8 @@ define(function(require) {
 	 * @param {{ run:function }} task
 	 */
 	Scheduler.prototype.enqueue = function(task) {
-		this._add(this._queue, task);
+		this._queue[this._queueLen++] = task;
+		this.run();
 	};
 
 	/**
@@ -147,48 +77,44 @@ define(function(require) {
 	 * @param {{ run:function }} task
 	 */
 	Scheduler.prototype.afterQueue = function(task) {
-		this._add(this._afterQueue, task);
+		this._afterQueue[this._afterQueueLen++] = task;
+		this.run();
 	};
 
-	/**
-	 * Drain the handler queue entirely, and then the after queue
-	 */
-	Scheduler.prototype._drain = function() {
-		runQueue(this._queue);
-		this._running = false;
-		runQueue(this._afterQueue);
-	};
-
-	/**
-	 * Add a task to the q, and schedule drain if not already scheduled
-	 * @param {Queue} queue
-	 * @param {{run:function}} task
-	 * @private
-	 */
-	Scheduler.prototype._add = function(queue, task) {
-		queue.push(task);
-		if(!this._running) {
+	Scheduler.prototype.run = function() {
+		if (!this._running) {
 			this._running = true;
 			this._async(this.drain);
 		}
 	};
 
 	/**
-	 * Run all the tasks in the q
-	 * @param queue
+	 * Drain the handler queue entirely, and then the after queue
 	 */
-	function runQueue(queue) {
-		while(queue.length > 0) {
-			queue.shift().run();
+	Scheduler.prototype._drain = function() {
+		var i = 0;
+		for (; i < this._queueLen; ++i) {
+			this._queue[i].run();
+			this._queue[i] = void 0;
 		}
-	}
+
+		this._queueLen = 0;
+		this._running = false;
+
+		for (i = 0; i < this._afterQueueLen; ++i) {
+			this._afterQueue[i].run();
+			this._afterQueue[i] = void 0;
+		}
+
+		this._afterQueueLen = 0;
+	};
 
 	return Scheduler;
 
 });
-}(typeof define === 'function' && define.amd ? define : function(factory) { module.exports = factory(require); }));
+}(typeof define === 'function' && define.amd ? define : function(factory) { module.exports = factory(); }));
 
-},{"./Queue":3}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /** @license MIT License (c) copyright 2010-2014 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
@@ -196,93 +122,25 @@ define(function(require) {
 (function(define) { 'use strict';
 define(function(require) {
 
-	// Sniff "best" async scheduling option
-	// Prefer process.nextTick or MutationObserver, then check for
-	// vertx and finally fall back to setTimeout
-
-	/*jshint maxcomplexity:6*/
-	/*global process,document,setTimeout,MutationObserver,WebKitMutationObserver*/
-	var nextTick, MutationObs;
-
-	if (typeof process !== 'undefined' && process !== null &&
-		typeof process.nextTick === 'function') {
-		nextTick = function(f) {
-			process.nextTick(f);
-		};
-
-	} else if (MutationObs =
-		(typeof MutationObserver === 'function' && MutationObserver) ||
-		(typeof WebKitMutationObserver === 'function' && WebKitMutationObserver)) {
-		nextTick = (function (document, MutationObserver) {
-			var scheduled;
-			var el = document.createElement('div');
-			var o = new MutationObserver(run);
-			o.observe(el, { attributes: true });
-
-			function run() {
-				var f = scheduled;
-				scheduled = void 0;
-				f();
-			}
-
-			return function (f) {
-				scheduled = f;
-				el.setAttribute('class', 'x');
-			};
-		}(document, MutationObs));
-
-	} else {
-		nextTick = (function(cjsRequire) {
-			var vertx;
-			try {
-				// vert.x 1.x || 2.x
-				vertx = cjsRequire('vertx');
-			} catch (ignore) {}
-
-			if (vertx) {
-				if (typeof vertx.runOnLoop === 'function') {
-					return vertx.runOnLoop;
-				}
-				if (typeof vertx.runOnContext === 'function') {
-					return vertx.runOnContext;
-				}
-			}
-
-			// capture setTimeout to avoid being caught by fake timers
-			// used in time based tests
-			var capturedSetTimeout = setTimeout;
-			return function (t) {
-				capturedSetTimeout(t, 0);
-			};
-		}(require));
-	}
-
-	return nextTick;
-});
-}(typeof define === 'function' && define.amd ? define : function(factory) { module.exports = factory(require); }));
-
-},{}],6:[function(require,module,exports){
-/** @license MIT License (c) copyright 2010-2014 original author or authors */
-/** @author Brian Cavalier */
-/** @author John Hann */
-
-(function(define) { 'use strict';
-define(function(require) {
-
-	var timer = require('../timer');
+	var setTimer = require('../env').setTimer;
 
 	return function unhandledRejection(Promise) {
 		var logError = noop;
 		var logInfo = noop;
+		var localConsole;
 
 		if(typeof console !== 'undefined') {
-			logError = typeof console.error !== 'undefined'
-				? function (e) { console.error(e); }
-				: function (e) { console.log(e); };
+			// Alias console to prevent things like uglify's drop_console option from
+			// removing console.log/error. Unhandled rejections fall into the same
+			// category as uncaught exceptions, and build tools shouldn't silence them.
+			localConsole = console;
+			logError = typeof localConsole.error !== 'undefined'
+				? function (e) { localConsole.error(e); }
+				: function (e) { localConsole.log(e); };
 
-			logInfo = typeof console.info !== 'undefined'
-				? function (e) { console.info(e); }
-				: function (e) { console.log(e); };
+			logInfo = typeof localConsole.info !== 'undefined'
+				? function (e) { localConsole.info(e); }
+				: function (e) { localConsole.log(e); };
 		}
 
 		Promise.onPotentiallyUnhandledRejection = function(rejection) {
@@ -299,7 +157,7 @@ define(function(require) {
 
 		var tasks = [];
 		var reported = [];
-		var running = false;
+		var running = null;
 
 		function report(r) {
 			if(!r.handled) {
@@ -318,14 +176,13 @@ define(function(require) {
 
 		function enqueue(f, x) {
 			tasks.push(f, x);
-			if(!running) {
-				running = true;
-				running = timer.set(flush, 0);
+			if(running === null) {
+				running = setTimer(flush, 0);
 			}
 		}
 
 		function flush() {
-			running = false;
+			running = null;
 			while(tasks.length > 0) {
 				tasks.shift()(tasks.shift());
 			}
@@ -365,7 +222,82 @@ define(function(require) {
 });
 }(typeof define === 'function' && define.amd ? define : function(factory) { module.exports = factory(require); }));
 
-},{"../timer":8}],7:[function(require,module,exports){
+},{"../env":5}],5:[function(require,module,exports){
+/** @license MIT License (c) copyright 2010-2014 original author or authors */
+/** @author Brian Cavalier */
+/** @author John Hann */
+
+/*global process,document,setTimeout,clearTimeout,MutationObserver,WebKitMutationObserver*/
+(function(define) { 'use strict';
+define(function(require) {
+	/*jshint maxcomplexity:6*/
+
+	// Sniff "best" async scheduling option
+	// Prefer process.nextTick or MutationObserver, then check for
+	// setTimeout, and finally vertx, since its the only env that doesn't
+	// have setTimeout
+
+	var MutationObs;
+	var capturedSetTimeout = typeof setTimeout !== 'undefined' && setTimeout;
+
+	// Default env
+	var setTimer = function(f, ms) { return setTimeout(f, ms); };
+	var clearTimer = function(t) { return clearTimeout(t); };
+	var asap = function (f) { return capturedSetTimeout(f, 0); };
+
+	// Detect specific env
+	if (isNode()) { // Node
+		asap = function (f) { return process.nextTick(f); };
+
+	} else if (MutationObs = hasMutationObserver()) { // Modern browser
+		asap = initMutationObserver(MutationObs);
+
+	} else if (!capturedSetTimeout) { // vert.x
+		var vertxRequire = require;
+		var vertx = vertxRequire('vertx');
+		setTimer = function (f, ms) { return vertx.setTimer(ms, f); };
+		clearTimer = vertx.cancelTimer;
+		asap = vertx.runOnLoop || vertx.runOnContext;
+	}
+
+	return {
+		setTimer: setTimer,
+		clearTimer: clearTimer,
+		asap: asap
+	};
+
+	function isNode () {
+		return typeof process !== 'undefined' && process !== null &&
+			typeof process.nextTick === 'function';
+	}
+
+	function hasMutationObserver () {
+		return (typeof MutationObserver === 'function' && MutationObserver) ||
+			(typeof WebKitMutationObserver === 'function' && WebKitMutationObserver);
+	}
+
+	function initMutationObserver(MutationObserver) {
+		var scheduled;
+		var node = document.createTextNode('');
+		var o = new MutationObserver(run);
+		o.observe(node, { characterData: true });
+
+		function run() {
+			var f = scheduled;
+			scheduled = void 0;
+			f();
+		}
+
+		var i = 0;
+		return function (f) {
+			scheduled = f;
+			node.data = (i ^= 1);
+		};
+	}
+});
+}(typeof define === 'function' && define.amd ? define : function(factory) { module.exports = factory(require); }));
+
+},{}],6:[function(require,module,exports){
 /** @license MIT License (c) copyright 2010-2014 original author or authors */
 /** @author Brian Cavalier */
 /** @author John Hann */
@@ -428,6 +360,7 @@ define(function() {
 			}
 
 			/**
+			 * @deprecated
 			 * Issue a progress event, notifying all progress listeners
 			 * @param {*} x progress event payload to pass to all listeners
 			 */
@@ -538,6 +471,7 @@ define(function() {
 
 		Promise.all = all;
 		Promise.race = race;
+		Promise._traverse = traverse;
 
 		/**
 		 * Return a promise that will fulfill when all promises in the
@@ -547,13 +481,28 @@ define(function() {
 		 * @returns {Promise} promise for array of fulfillment values
 		 */
 		function all(promises) {
-			/*jshint maxcomplexity:8*/
+			return traverseWith(snd, null, promises);
+		}
+
+		/**
+		 * Array<Promise<X>> -> Promise<Array<f(X)>>
+		 * @private
+		 * @param {function} f function to apply to each promise's value
+		 * @param {Array} promises array of promises
+		 * @returns {Promise} promise for transformed values
+		 */
+		function traverse(f, promises) {
+			return traverseWith(tryCatch2, f, promises);
+		}
+
+		function traverseWith(tryMap, f, promises) {
+			var handler = typeof f === 'function' ? mapAt : settleAt;
+
 			var resolver = new Pending();
 			var pending = promises.length >>> 0;
 			var results = new Array(pending);
 
-			var i, h, x, s;
-			for (i = 0; i < promises.length; ++i) {
+			for (var i = 0, x; i < promises.length; ++i) {
 				x = promises[i];
 
 				if (x === void 0 && !(i in promises)) {
@@ -561,25 +510,7 @@ define(function() {
 					continue;
 				}
 
-				if (maybeThenable(x)) {
-					h = getHandlerMaybeThenable(x);
-
-					s = h.state();
-					if (s === 0) {
-						h.fold(settleAt, i, results, resolver);
-					} else if (s > 0) {
-						results[i] = h.value;
-						--pending;
-					} else {
-						unreportRemaining(promises, i+1, h);
-						resolver.become(h);
-						break;
-					}
-
-				} else {
-					results[i] = x;
-					--pending;
-				}
+				traverseAt(promises, handler, i, x, resolver);
 			}
 
 			if(pending === 0) {
@@ -588,23 +519,45 @@ define(function() {
 
 			return new Promise(Handler, resolver);
 
+			function mapAt(i, x, resolver) {
+				traverseAt(promises, settleAt, i, tryMap(f, x, i), resolver);
+			}
+
 			function settleAt(i, x, resolver) {
-				/*jshint validthis:true*/
-				this[i] = x;
+				results[i] = x;
 				if(--pending === 0) {
-					resolver.become(new Fulfilled(this));
+					resolver.become(new Fulfilled(results));
 				}
 			}
 		}
 
-		function unreportRemaining(promises, start, rejectedHandler) {
+		function traverseAt(promises, handler, i, x, resolver) {
+			if (maybeThenable(x)) {
+				var h = getHandlerMaybeThenable(x);
+				var s = h.state();
+
+				if (s === 0) {
+					h.fold(handler, i, void 0, resolver);
+				} else if (s > 0) {
+					handler(i, h.value, resolver);
+				} else {
+					resolveAndObserveRemaining(promises, i+1, h, resolver);
+				}
+
+			} else {
+				handler(i, x, resolver);
+			}
+		}
+
+		function resolveAndObserveRemaining(promises, start, handler, resolver) {
+			resolver.become(handler);
+
 			var i, h, x;
 			for(i=start; i<promises.length; ++i) {
 				x = promises[i];
 				if(maybeThenable(x)) {
 					h = getHandlerMaybeThenable(x);
-
-					if(h !== rejectedHandler) {
+					if(h !== handler) {
 						h.visit(h, void 0, h._unreport);
 					}
 				}
@@ -626,21 +579,35 @@ define(function() {
 		 * is empty, returns a promise that will never settle.
 		 */
 		function race(promises) {
-			// Sigh, race([]) is untestable unless we return *something*
-			// that is recognizable without calling .then() on it.
-			if(Object(promises) === promises && promises.length === 0) {
-				return never();
+			if(typeof promises !== 'object' || promises === null) {
+				return reject(new TypeError('non-iterable passed to race()'));
 			}
 
-			var h = new Pending();
-			var i, x;
+			// Sigh, race([]) is untestable unless we return *something*
+			// that is recognizable without calling .then() on it.
+			return promises.length === 0 ? never()
+				 : promises.length === 1 ? resolve(promises[0])
+				 : runRace(promises);
+		}
+
+		function runRace(promises) {
+			var resolver = new Pending();
+			var i, x, h;
 			for(i=0; i<promises.length; ++i) {
 				x = promises[i];
-				if (x !== void 0 && i in promises) {
-					getHandler(x).visit(h, h.resolve, h.reject);
+				if (x === void 0 && !(i in promises)) {
+					continue;
 				}
+
+				h = getHandler(x);
+				if(h.state() !== 0) {
+					resolveAndObserveRemaining(promises, i+1, h, resolver);
+					break;
+				}
+
+				h.visit(resolver, resolver.resolve, resolver.reject);
 			}
-			return new Promise(Handler, h);
+			return new Promise(Handler, resolver);
 		}
 
 		// Promise internals
@@ -692,7 +659,7 @@ define(function() {
 
 		Handler.prototype.when
 			= Handler.prototype.become
-			= Handler.prototype.notify
+			= Handler.prototype.notify // deprecated
 			= Handler.prototype.fail
 			= Handler.prototype._unreport
 			= Handler.prototype._report
@@ -732,9 +699,7 @@ define(function() {
 		};
 
 		Handler.prototype.fold = function(f, z, c, to) {
-			this.visit(to, function(x) {
-				f.call(c, z, x, this);
-			}, to.reject, to.notify);
+			this.when(new Fold(f, z, c, to));
 		};
 
 		/**
@@ -835,6 +800,9 @@ define(function() {
 			}
 		};
 
+		/**
+		 * @deprecated
+		 */
 		Pending.prototype.notify = function(x) {
 			if(!this.resolved) {
 				tasks.enqueue(new ProgressTask(x, this));
@@ -950,6 +918,9 @@ define(function() {
 		};
 
 		Rejected.prototype._unreport = function() {
+			if(this.handled) {
+				return;
+			}
 			this.handled = true;
 			tasks.afterQueue(new UnreportTask(this));
 		};
@@ -1067,6 +1038,28 @@ define(function() {
 			}
 		}
 
+		/**
+		 * Fold a handler value with z
+		 * @constructor
+		 */
+		function Fold(f, z, c, to) {
+			this.f = f; this.z = z; this.c = c; this.to = to;
+			this.resolver = failIfRejected;
+			this.receiver = this;
+		}
+
+		Fold.prototype.fulfilled = function(x) {
+			this.f.call(this.c, this.z, x, this.to);
+		};
+
+		Fold.prototype.rejected = function(x) {
+			this.to.reject(x);
+		};
+
+		Fold.prototype.progress = function(x) {
+			this.to.notify(x);
+		};
+
 		// Other helpers
 
 		/**
@@ -1107,6 +1100,9 @@ define(function() {
 			Promise.exitContext();
 		}
 
+		/**
+		 * @deprecated
+		 */
 		function runNotify(f, x, h, receiver, next) {
 			if(typeof f !== 'function') {
 				return next.notify(x);
@@ -1115,6 +1111,14 @@ define(function() {
 			Promise.enterContext(h);
 			tryCatchReturn(f, x, receiver, next);
 			Promise.exitContext();
+		}
+
+		function tryCatch2(f, a, b) {
+			try {
+				return f(a, b);
+			} catch(e) {
+				return reject(e);
+			}
 		}
 
 		/**
@@ -1141,6 +1145,7 @@ define(function() {
 		}
 
 		/**
+		 * @deprecated
 		 * Return f.call(thisArg, x), or if it throws, *return* the exception
 		 */
 		function tryCatchReturn(f, x, thisArg, next) {
@@ -1156,46 +1161,16 @@ define(function() {
 			Child.prototype.constructor = Child;
 		}
 
+		function snd(x, y) {
+			return y;
+		}
+
 		function noop() {}
 
 		return Promise;
 	};
 });
 }(typeof define === 'function' && define.amd ? define : function(factory) { module.exports = factory(); }));
-
-},{}],8:[function(require,module,exports){
-/** @license MIT License (c) copyright 2010-2014 original author or authors */
-/** @author Brian Cavalier */
-/** @author John Hann */
-
-(function(define) { 'use strict';
-define(function(require) {
-	/*global setTimeout,clearTimeout*/
-	var cjsRequire, vertx, setTimer, clearTimer;
-
-	cjsRequire = require;
-
-	try {
-		vertx = cjsRequire('vertx');
-	} catch (e) { }
-
-	if (vertx && typeof vertx.setTimer === 'function') {
-		setTimer = function (f, ms) { return vertx.setTimer(ms, f); };
-		clearTimer = vertx.cancelTimer;
-	} else {
-		// NOTE: Truncate decimals to workaround node 0.10.30 bug:
-		// https://github.com/joyent/node/issues/8167
-		setTimer = function(f, ms) { return setTimeout(f, ms|0); };
-		clearTimer = function(t) { return clearTimeout(t); };
-	}
-
-	return {
-		set: setTimer,
-		clear: clearTimer
-	};
-
-});
-}(typeof define === 'function' && define.amd ? define : function(factory) { module.exports = factory(require); }));
 
 },{}]},{},[1])
 (1)

@@ -60,6 +60,7 @@ define(function() {
 			}
 
 			/**
+			 * @deprecated
 			 * Issue a progress event, notifying all progress listeners
 			 * @param {*} x progress event payload to pass to all listeners
 			 */
@@ -170,6 +171,7 @@ define(function() {
 
 		Promise.all = all;
 		Promise.race = race;
+		Promise._traverse = traverse;
 
 		/**
 		 * Return a promise that will fulfill when all promises in the
@@ -179,13 +181,28 @@ define(function() {
 		 * @returns {Promise} promise for array of fulfillment values
 		 */
 		function all(promises) {
-			/*jshint maxcomplexity:8*/
+			return traverseWith(snd, null, promises);
+		}
+
+		/**
+		 * Array<Promise<X>> -> Promise<Array<f(X)>>
+		 * @private
+		 * @param {function} f function to apply to each promise's value
+		 * @param {Array} promises array of promises
+		 * @returns {Promise} promise for transformed values
+		 */
+		function traverse(f, promises) {
+			return traverseWith(tryCatch2, f, promises);
+		}
+
+		function traverseWith(tryMap, f, promises) {
+			var handler = typeof f === 'function' ? mapAt : settleAt;
+
 			var resolver = new Pending();
 			var pending = promises.length >>> 0;
 			var results = new Array(pending);
 
-			var i, h, x, s;
-			for (i = 0; i < promises.length; ++i) {
+			for (var i = 0, x; i < promises.length; ++i) {
 				x = promises[i];
 
 				if (x === void 0 && !(i in promises)) {
@@ -193,25 +210,7 @@ define(function() {
 					continue;
 				}
 
-				if (maybeThenable(x)) {
-					h = getHandlerMaybeThenable(x);
-
-					s = h.state();
-					if (s === 0) {
-						h.fold(settleAt, i, results, resolver);
-					} else if (s > 0) {
-						results[i] = h.value;
-						--pending;
-					} else {
-						unreportRemaining(promises, i+1, h);
-						resolver.become(h);
-						break;
-					}
-
-				} else {
-					results[i] = x;
-					--pending;
-				}
+				traverseAt(promises, handler, i, x, resolver);
 			}
 
 			if(pending === 0) {
@@ -220,23 +219,45 @@ define(function() {
 
 			return new Promise(Handler, resolver);
 
+			function mapAt(i, x, resolver) {
+				traverseAt(promises, settleAt, i, tryMap(f, x, i), resolver);
+			}
+
 			function settleAt(i, x, resolver) {
-				/*jshint validthis:true*/
-				this[i] = x;
+				results[i] = x;
 				if(--pending === 0) {
-					resolver.become(new Fulfilled(this));
+					resolver.become(new Fulfilled(results));
 				}
 			}
 		}
 
-		function unreportRemaining(promises, start, rejectedHandler) {
+		function traverseAt(promises, handler, i, x, resolver) {
+			if (maybeThenable(x)) {
+				var h = getHandlerMaybeThenable(x);
+				var s = h.state();
+
+				if (s === 0) {
+					h.fold(handler, i, void 0, resolver);
+				} else if (s > 0) {
+					handler(i, h.value, resolver);
+				} else {
+					resolveAndObserveRemaining(promises, i+1, h, resolver);
+				}
+
+			} else {
+				handler(i, x, resolver);
+			}
+		}
+
+		function resolveAndObserveRemaining(promises, start, handler, resolver) {
+			resolver.become(handler);
+
 			var i, h, x;
 			for(i=start; i<promises.length; ++i) {
 				x = promises[i];
 				if(maybeThenable(x)) {
 					h = getHandlerMaybeThenable(x);
-
-					if(h !== rejectedHandler) {
+					if(h !== handler) {
 						h.visit(h, void 0, h._unreport);
 					}
 				}
@@ -258,21 +279,35 @@ define(function() {
 		 * is empty, returns a promise that will never settle.
 		 */
 		function race(promises) {
-			// Sigh, race([]) is untestable unless we return *something*
-			// that is recognizable without calling .then() on it.
-			if(Object(promises) === promises && promises.length === 0) {
-				return never();
+			if(typeof promises !== 'object' || promises === null) {
+				return reject(new TypeError('non-iterable passed to race()'));
 			}
 
-			var h = new Pending();
-			var i, x;
+			// Sigh, race([]) is untestable unless we return *something*
+			// that is recognizable without calling .then() on it.
+			return promises.length === 0 ? never()
+				 : promises.length === 1 ? resolve(promises[0])
+				 : runRace(promises);
+		}
+
+		function runRace(promises) {
+			var resolver = new Pending();
+			var i, x, h;
 			for(i=0; i<promises.length; ++i) {
 				x = promises[i];
-				if (x !== void 0 && i in promises) {
-					getHandler(x).visit(h, h.resolve, h.reject);
+				if (x === void 0 && !(i in promises)) {
+					continue;
 				}
+
+				h = getHandler(x);
+				if(h.state() !== 0) {
+					resolveAndObserveRemaining(promises, i+1, h, resolver);
+					break;
+				}
+
+				h.visit(resolver, resolver.resolve, resolver.reject);
 			}
-			return new Promise(Handler, h);
+			return new Promise(Handler, resolver);
 		}
 
 		// Promise internals
@@ -324,7 +359,7 @@ define(function() {
 
 		Handler.prototype.when
 			= Handler.prototype.become
-			= Handler.prototype.notify
+			= Handler.prototype.notify // deprecated
 			= Handler.prototype.fail
 			= Handler.prototype._unreport
 			= Handler.prototype._report
@@ -364,9 +399,7 @@ define(function() {
 		};
 
 		Handler.prototype.fold = function(f, z, c, to) {
-			this.visit(to, function(x) {
-				f.call(c, z, x, this);
-			}, to.reject, to.notify);
+			this.when(new Fold(f, z, c, to));
 		};
 
 		/**
@@ -467,6 +500,9 @@ define(function() {
 			}
 		};
 
+		/**
+		 * @deprecated
+		 */
 		Pending.prototype.notify = function(x) {
 			if(!this.resolved) {
 				tasks.enqueue(new ProgressTask(x, this));
@@ -582,6 +618,9 @@ define(function() {
 		};
 
 		Rejected.prototype._unreport = function() {
+			if(this.handled) {
+				return;
+			}
 			this.handled = true;
 			tasks.afterQueue(new UnreportTask(this));
 		};
@@ -699,6 +738,28 @@ define(function() {
 			}
 		}
 
+		/**
+		 * Fold a handler value with z
+		 * @constructor
+		 */
+		function Fold(f, z, c, to) {
+			this.f = f; this.z = z; this.c = c; this.to = to;
+			this.resolver = failIfRejected;
+			this.receiver = this;
+		}
+
+		Fold.prototype.fulfilled = function(x) {
+			this.f.call(this.c, this.z, x, this.to);
+		};
+
+		Fold.prototype.rejected = function(x) {
+			this.to.reject(x);
+		};
+
+		Fold.prototype.progress = function(x) {
+			this.to.notify(x);
+		};
+
 		// Other helpers
 
 		/**
@@ -739,6 +800,9 @@ define(function() {
 			Promise.exitContext();
 		}
 
+		/**
+		 * @deprecated
+		 */
 		function runNotify(f, x, h, receiver, next) {
 			if(typeof f !== 'function') {
 				return next.notify(x);
@@ -747,6 +811,14 @@ define(function() {
 			Promise.enterContext(h);
 			tryCatchReturn(f, x, receiver, next);
 			Promise.exitContext();
+		}
+
+		function tryCatch2(f, a, b) {
+			try {
+				return f(a, b);
+			} catch(e) {
+				return reject(e);
+			}
 		}
 
 		/**
@@ -773,6 +845,7 @@ define(function() {
 		}
 
 		/**
+		 * @deprecated
 		 * Return f.call(thisArg, x), or if it throws, *return* the exception
 		 */
 		function tryCatchReturn(f, x, thisArg, next) {
@@ -786,6 +859,10 @@ define(function() {
 		function inherit(Parent, Child) {
 			Child.prototype = objectCreate(Parent.prototype);
 			Child.prototype.constructor = Child;
+		}
+
+		function snd(x, y) {
+			return y;
 		}
 
 		function noop() {}
