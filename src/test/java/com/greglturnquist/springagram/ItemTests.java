@@ -53,7 +53,6 @@ public class ItemTests {
 
 		Item item = new Item();
 		item.setImage("foo");
-		item.setName("test");
 		itemRepository.save(item);
 
 		MvcResult result = mvc.perform(get("/api/items?projection=noItems")).andReturn();

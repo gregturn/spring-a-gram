@@ -18,8 +18,6 @@ public class Item {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	private String name;
-
 	@Lob
 	private String image;
 
@@ -34,14 +32,6 @@ public class Item {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getImage() {

@@ -1,16 +1,16 @@
 package com.greglturnquist.springagram;
 
+import javax.annotation.PostConstruct;
+import javax.xml.bind.DatatypeConverter;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
-
-import javax.annotation.PostConstruct;
-import javax.xml.bind.DatatypeConverter;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 @Service
 @Profile("!production")
@@ -55,7 +55,6 @@ public class DatabaseLoader {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         FileCopyUtils.copy(file.getInputStream(), output);
         Item item = new Item();
-        item.setName(file.getFilename());
         item.setImage("data:image/png;base64," + DatatypeConverter.printBase64Binary(output.toByteArray()));
         return item;
     }

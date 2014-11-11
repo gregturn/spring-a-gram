@@ -13,8 +13,6 @@ import org.springframework.hateoas.Link;
 @Projection(name = "noImages", types = {Item.class})
 public interface NoImages {
 
-	public String getName();
-
 	public Link getHtmlUrl();
 
 }
