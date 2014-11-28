@@ -2,11 +2,11 @@
 
     requirejs.config({
         paths: {
-            'jquery': 'bower_components/jquery/dist/jquery'
+            'jquery': 'node_modules/jquery/dist/jquery'
         },
         packages: [
-            { name: 'when', location: 'bower_components/when', main: 'when' },
-            { name: 'rest', location: 'bower_components/rest', main: 'browser' }
+            { name: 'rest', location: 'node_modules/rest', main: 'browser' },
+            { name: 'when', location: 'node_modules/rest/node_modules/when', main: 'when' }
         ],
         deps: [ 'app/main' ]
     });

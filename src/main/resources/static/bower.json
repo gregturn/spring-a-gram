@@ -26,8 +26,6 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.1",
-    "rest": "~1.2.0",
-    "when": "~3.6.0"
+    "inuit-starter-kit": "~0.2.8"
   }
 }

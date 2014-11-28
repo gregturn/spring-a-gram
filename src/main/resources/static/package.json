@@ -1,0 +1,31 @@
+{
+  "name": "Spring-a-Gram",
+  "version": "1.0.0",
+  "description": "Demo Spring Data REST by uploading your favorite pics",
+  "main": "run.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:gregturn/spring-a-gram.git"
+  },
+  "keywords": [
+    "spring",
+    "data",
+    "rest",
+    "hateoas",
+    "hypermedia"
+  ],
+  "author": "Greg L. Turnquist",
+  "license": "ASLv2",
+  "bugs": {
+    "url": "https://github.com/gregturn/spring-a-gram/issues"
+  },
+  "homepage": "https://github.com/gregturn/spring-a-gram",
+  "dependencies": {
+    "jquery": "^2.1.1",
+    "requirejs": "^2.1.15",
+    "rest": "^1.2.0"
+  }
+}

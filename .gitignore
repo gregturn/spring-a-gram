@@ -31,3 +31,8 @@ bin/
 # Bower Files
 
 .bower.json
+
+node
+bower_components
+node_modules
+*.css
