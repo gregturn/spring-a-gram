@@ -3,13 +3,8 @@
 <head>
     <title>Spring-A-Gram :: Upload your fav pics</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script async="" data-main="run.js" src="node_modules/requirejs/require.js"></script>
-    <style>
-        .responsive {
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
 </head>
 <body>
     <h2><a href="/">Spring-A-Gram: Upload your favorite pictures!</a></h2>
@@ -19,7 +14,7 @@
         <p><input type="submit" value="Upload" /></p>
     </form>
 
-    <img class="responsive" th:src="${item.image}" />
+    <img th:src="${item.image}" />
 
     <a id="tweetOneImage">
         Tweet me!

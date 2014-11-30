@@ -72,7 +72,7 @@ define(function(require) {
 
 	/* Create a new table row for a item based on its gallery */
 	function createItemRowForGallery(item, gallery) {
-		var row = $('<li></li>')
+		var row = $('<li class="layout__item lap-and-up-1/2 desk-1/5"></li>')
 			.attr('data-uri', item._links.self.href);
 
 		row.append($('<span></span>').append(
