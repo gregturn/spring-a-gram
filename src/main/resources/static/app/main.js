@@ -17,7 +17,7 @@ define(function(require) {
 	var talk = "https://2014.event.springone2gx.com/schedule/sessions/spring_data_rest_data_meets_hypermedia.html";
 	var tags = ['s2gx', 'REST'];
 
-	var emptyImageTable = '<ul></ul>';
+	var emptyImageTable = '<ul class="layout"></ul>';
 
 	/* Search for a given item in the table of unlinked images */
 	function findUnlinkedItem(item) {
@@ -148,7 +148,7 @@ define(function(require) {
 
 	/* Create a new table row for an unlinked item */
 	function createItemRow(item) {
-		var row = $('<li></li>').attr('data-uri', item._links.self.href);
+		var row = $('<li class="layout__item lap-and-up-1/2 desk-1/5"></li>').attr('data-uri', item._links.self.href);
 
 		row.append($('<span></span>').append(
 			$('<a></a>').attr('href', item.htmlUrl.href).append(

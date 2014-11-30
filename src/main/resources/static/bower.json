@@ -26,6 +26,8 @@
     "tests"
   ],
   "dependencies": {
-    "inuit-starter-kit": "~0.2.8"
+    "inuit-starter-kit": "~0.2.8",
+    "inuit-layout": "~0.3.2",
+    "inuit-widths-responsive": "~0.1.3"
   }
 }

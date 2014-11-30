@@ -33,8 +33,8 @@ public class DatabaseLoader {
 
         Item cat = itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg")));
         Item caterpillar = itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg")));
-
-        GalleryRepository galleryRepository = ctx.getBean(GalleryRepository.class);
+        itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg")));
+        itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg")));
 
         Gallery catGallery = new Gallery();
         catGallery.setDescription("Collection of cats");
@@ -44,8 +44,8 @@ public class DatabaseLoader {
         truckGallery.setDescription("Collection of trucks");
         truckGallery = galleryRepository.save(truckGallery);
 
-        cat.setGallery(catGallery);
-        itemRepository.save(cat);
+//        cat.setGallery(catGallery);
+//        itemRepository.save(cat);
 
 //		caterpillar.setGallery(truckGallery);
 //		itemRepository.save(caterpillar);
