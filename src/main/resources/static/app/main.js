@@ -72,12 +72,12 @@ define(function(require) {
 
 	/* Create a new table row for a item based on its gallery */
 	function createItemRowForGallery(item, gallery) {
-		var row = $('<li class="layout__item lap-and-up-1/2 desk-1/5"></li>')
+		var row = $('<li class="layout__item lap-and-up-1/2 desk-1/3"></li>')
 			.attr('data-uri', item._links.self.href);
 
 		row.append($('<span></span>').append(
 			$('<a></a>').attr('href', item.htmlUrl.href).append(
-				$('<img>').addClass('thumbnail').attr('src', item.image)
+				$('<img>').attr('src', item.image)
 			)
 		));
 
@@ -96,10 +96,10 @@ define(function(require) {
 
 	/* Draw the gallery table from scratch */
 	function drawGalleryTable(data) {
-		var table = $('<ul></ul>');
+		var table = $('<ul class="layout"></ul>');
 
 		return when.map(data, function (gallery) {
-			var row = $('<li></li>').attr('data-uri', gallery._links.self.href);
+			var row = $('<li class="layout__item lap-and-up-1/2 desk-1/3"></li>').attr('data-uri', gallery._links.self.href);
 
 			row.append($('<span></span>').append(
 				$('<input type="radio" name="gallery">').click(function () {
@@ -109,7 +109,7 @@ define(function(require) {
 
 			row.append($('<span></span>').text(gallery.description));
 
-			var nestedTable = $('<ul></ul>');
+			var nestedTable = $('<ul class="layout"></ul>');
 			row.append($('<span></span>').append(nestedTable));
 			table.append(row);
 			$('#gallery').append(table);
@@ -148,26 +148,24 @@ define(function(require) {
 
 	/* Create a new table row for an unlinked item */
 	function createItemRow(item) {
-		var row = $('<li class="layout__item lap-and-up-1/2 desk-1/5"></li>').attr('data-uri', item._links.self.href);
+		var row = $('<li class="layout__item lap-and-up-1/2 desk-1/3"></li>').attr('data-uri', item._links.self.href);
 
-		row.append($('<span></span>').append(
+		var media = $('<div class="media"></div>');
+
+		media.append(
 			$('<a></a>').attr('href', item.htmlUrl.href).append(
-				$('<img>').addClass('thumbnail').attr('src', item.image)
+				$('<img>').addClass("media__img 3/4").attr('src', item.image)
 			)
-		));
+		);
 
-		row.append($('<span></span>').append(
-			$('<a>Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags))
-				.attr('target', '_blank')
-		));
+		media.append($('<div class="media__body"></div>')
+			.append($('<a>Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'))
+			.append($('<button class="delete">Delete</button>'))
+			.append($('<button class="delete">Delete</button>'))
+			.append($('<button class="add-to-gallery">Add To Gallery</button>'))
+		);
 
-		row.append($('<span></span>').append(
-			$('<button class="delete">Delete</button>')
-		));
-
-		row.append($('<span></span>').append(
-			$('<button class="add-to-gallery">Add To Gallery</button>')
-		));
+		row.append(media);
 
 		return row;
 	}
