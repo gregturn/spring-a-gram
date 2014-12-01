@@ -75,22 +75,27 @@ define(function(require) {
 		var row = $('<li class="layout__item lap-and-up-1/2 desk-1/3"></li>')
 			.attr('data-uri', item._links.self.href);
 
-		row.append($('<span></span>').append(
+		var media = $('<div class="media"></div>');
+
+		media.append(
 			$('<a></a>').attr('href', item.htmlUrl.href).append(
-				$('<img>').attr('src', item.image)
+				$('<img>').addClass("media__img 1/2").attr('src', item.image)
 			)
-		));
+		);
 
-		row.append($('<span></span>').append(
-			$('<a>Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags))
-				.attr('target', '_blank')
-		));
+		var mediaBody = $('<div class="media__body"></div>');
 
-		row.append($('<span></span>').append(
-			$('<button class="remove">Remove</button>')
-				.attr('data-gallery-uri', gallery._links.self.href)
-				.attr('data-uri', item._links.self.href)
-		));
+		var buttonLayout = $('<div class="layout"></div>');
+
+		buttonLayout.append($('<a class="layout__item">Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'));
+		buttonLayout.append($('<button class="remove layout__item">Remove</button>').attr('data-gallery-uri', gallery._links.self.href).attr('data-uri', item._links.self.href));
+
+		mediaBody.append(buttonLayout);
+
+		media.append(mediaBody);
+
+		row.append(media);
+
 		return row;
 	}
 
@@ -158,12 +163,17 @@ define(function(require) {
 			)
 		);
 
-		media.append($('<div class="media__body"></div>')
-			.append($('<a>Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'))
-			.append($('<button class="delete">Delete</button>'))
-			.append($('<button class="delete">Delete</button>'))
-			.append($('<button class="add-to-gallery">Add To Gallery</button>'))
-		);
+		var mediaBody = $('<div class="media__body"></div>');
+
+		var buttonLayout = $('<div class="layout"></div>');
+
+		buttonLayout.append($('<a class="layout__item">Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'));
+		buttonLayout.append($('<button class="delete layout__item">Delete</button>'));
+		buttonLayout.append($('<button class="add-to-gallery layout__item">Add To Gallery</button>'));
+
+		mediaBody.append(buttonLayout);
+
+		media.append(mediaBody);
 
 		row.append(media);
 
@@ -224,12 +234,12 @@ define(function(require) {
 
 		/* Listen for clicks on the list of images */
 		imagesEl.on('click', '.delete', function(e) {
-			var itemUri = e.target.parentNode.parentNode.dataset['uri'];
+			var itemUri = e.target.parentNode.parentNode.parentNode.parentNode.dataset['uri'];
 			deletePic(items[itemUri]);
 		});
 
 		imagesEl.on('click', '.add-to-gallery', function(e) {
-			var itemUri = e.target.parentNode.parentNode.dataset['uri'];
+			var itemUri = e.target.parentNode.parentNode.parentNode.parentNode.dataset['uri'];
 			addToSelectedGallery(items[itemUri]);
 		});
 
