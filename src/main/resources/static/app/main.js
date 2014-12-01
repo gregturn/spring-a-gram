@@ -87,8 +87,8 @@ define(function(require) {
 
 		var buttonLayout = $('<div class="layout"></div>');
 
-		buttonLayout.append($('<a class="layout__item">Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'));
-		buttonLayout.append($('<button class="remove layout__item">Remove</button>').attr('data-gallery-uri', gallery._links.self.href).attr('data-uri', item._links.self.href));
+		buttonLayout.append($('<a class="btn layout__item">Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'));
+		buttonLayout.append($('<button class="btn remove layout__item">Remove</button>').attr('data-gallery-uri', gallery._links.self.href).attr('data-uri', item._links.self.href));
 
 		mediaBody.append(buttonLayout);
 
@@ -104,10 +104,10 @@ define(function(require) {
 		var table = $('<ul class="layout"></ul>');
 
 		return when.map(data, function (gallery) {
-			var row = $('<li class="layout__item lap-and-up-1/2 desk-1/3"></li>').attr('data-uri', gallery._links.self.href);
+			var row = $('<li class="layout__item"></li>').attr('data-uri', gallery._links.self.href);
 
 			row.append($('<span></span>').append(
-				$('<input type="radio" name="gallery">').click(function () {
+				$('<input type="radio" name="gallery" class="btn">').click(function () {
 					currentGallery = gallery;
 				})
 			));
@@ -159,7 +159,7 @@ define(function(require) {
 
 		media.append(
 			$('<a></a>').attr('href', item.htmlUrl.href).append(
-				$('<img>').addClass("media__img 3/4").attr('src', item.image)
+				$('<img>').addClass("media__img 1/2").attr('src', item.image)
 			)
 		);
 
@@ -167,9 +167,9 @@ define(function(require) {
 
 		var buttonLayout = $('<div class="layout"></div>');
 
-		buttonLayout.append($('<a class="layout__item">Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'));
-		buttonLayout.append($('<button class="delete layout__item">Delete</button>'));
-		buttonLayout.append($('<button class="add-to-gallery layout__item">Add To Gallery</button>'));
+		buttonLayout.append($('<a class="btn layout__item">Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'));
+		buttonLayout.append($('<button class="btn delete layout__item">Delete</button>'));
+		buttonLayout.append($('<button class="btn add-to-gallery layout__item">Add To Gallery</button>'));
 
 		mediaBody.append(buttonLayout);
 
