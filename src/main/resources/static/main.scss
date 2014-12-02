@@ -1,9 +1,10 @@
+// Spring's palette (found on spring.io)
 $spring-green: #6db33f;
 $spring-black: #34302d;
 $spring-antique-white: #F1F1F1;
 $spring-white: #eee;
 
-$inuit-base-font-size:  12px;
+//$inuit-base-font-size:  12px;
 $inuit-base-line-height:  18px;
 $inuit-base-background-color: $spring-antique-white;
 
@@ -27,11 +28,12 @@ $inuit-enable-layout--large: true;
 @import "bower_components/inuit-layout/objects.layout";
 
 $inuit-enable-media--large: true;
+$inuit-enable-media--responsive: true;
 @import "bower_components/inuit-media/objects.media";
 
 $inuit-enable-btn--full: true;
 $inuit-btn-background: $spring-green;
-$inuit-btn-color: #eee;
+$inuit-btn-color: $spring-white;
 @import "bower_components/inuit-buttons/objects.buttons";
 
 // Trumps layer
@@ -45,12 +47,8 @@ html {
   font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
 }
 
-h1 {
-  margin-top: quarter($inuit-base-line-height);
-}
-
 .page-top {
-  border-top: $spring-green solid halve(quarter($inuit-base-line-height));
+  border-top: $spring-green solid 4px;
   color: $spring-white;
   background-color: $spring-black;
   width: 100%;
