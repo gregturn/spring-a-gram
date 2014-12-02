@@ -75,7 +75,7 @@ define(function(require) {
 		var row = $('<li class="layout__item lap-and-up-1/2 desk-1/3"></li>')
 			.attr('data-uri', item._links.self.href);
 
-		var media = $('<div class="media media--responsive box"></div>');
+		var media = $('<div class="media media--responsive box box--tiny"></div>');
 
 		media.append(
 			//$('<a></a>').attr('href', item.htmlUrl.href).append(
@@ -155,7 +155,7 @@ define(function(require) {
 	function createItemRow(item) {
 		var row = $('<li class="layout__item lap-and-up-1/2 desk-1/3"></li>').attr('data-uri', item._links.self.href);
 
-		var media = $('<div class="media media--responsive box"></div>');
+		var media = $('<div class="media media--responsive box box--tiny"></div>');
 
 		media.append(
 			//$('<a></a>').attr('href', item.htmlUrl.href).append(
