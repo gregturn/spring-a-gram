@@ -36,6 +36,8 @@ $inuit-btn-background: $spring-green;
 $inuit-btn-color: $spring-white;
 @import "bower_components/inuit-buttons/objects.buttons";
 
+@import "bower_components/inuit-box/objects.box";
+
 // Trumps layer
 @import "bower_components/inuit-widths/trumps.widths";
 @import "bower_components/inuit-clearfix/trumps.clearfix";
