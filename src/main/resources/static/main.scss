@@ -46,10 +46,12 @@ $inuit-enable-box--tiny: true;
 
 // Custom overrides
 
+// Plugin the Ubuntu font
 html {
-  font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
+  font-family: 'Ubuntu', sans-serif;
 }
 
+// Dress up the top row of a "page"
 .page-top {
   border-top: $spring-green solid 4px;
   color: $spring-white;
@@ -57,3 +59,25 @@ html {
   width: 100%;
   margin-top: 0em;
 }
+
+// Add a small amount of padding at the bottom of a "page"
+$inuit-base-spacing-unit--tiny: round($inuit-base-spacing-unit / 8);
+.page-bottom {
+  padding-bottom: $inuit-base-spacing-unit--tiny;
+}
+
+// Wrap a given block with insets so it isn't pushed to the edge of the browser
+.wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-right: 12px;
+  padding-left: 12px;
+}
+
+// Fine tune the navbar at the top, so it shrinks on portable devices
+h1 {
+  @include media-query(portable) {
+    margin: 0.1em 0;
+  }
+}
+

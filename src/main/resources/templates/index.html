@@ -1,34 +1,47 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" data-rave-meta="bower.json">
 <head>
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'/>
     <title>Spring-A-Gram :: Upload your fav pics</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
     <script async="" data-main="run.js" src="node_modules/requirejs/require.js"></script>
     <link rel="stylesheet" href="main.css" />
 </head>
 <body>
-    <h1 class="page-top">Spring-A-Gram: Upload your favorite pictures!</h1>
+    <header class="page-top page-bottom wrapper">
+        <h1>Spring-a-Gram</h1>
+    </header>
 
-    <form id="upload">
-        <p>File to upload: <input type="file" id="file" /></p>
-        <p><input type="submit" value="Upload" /></p>
-    </form>
+    <section class="wrapper">
+        <form id="upload">
+            <p>File to upload: <input type="file" id="file" /></p>
+            <p><input type="submit" value="Upload" /></p>
+        </form>
 
-    <form th:action="${newGallery.href}" th:object="${gallery}" method="post">
-        <input type="text" th:field="*{description}" />
-        <input type="submit" />
-    </form>
+        <form th:action="${newGallery.href}" th:object="${gallery}" method="post">
+            <input type="text" th:field="*{description}" />
+            <input type="submit" />
+        </form>
+    </section>
 
-    <h3>Galleries</h3>
+    <section class="wrapper">
+        <h3>Galleries</h3>
 
-    <div id="gallery"></div>
+        <div id="gallery"></div>
+    </section>
 
-    <h3>Unlinked Images</h3>
+    <section class="wrapper">
+        <hr/>
+    </section>
 
-    <div id="images"></div>
+    <section class="wrapper">
+        <h3>Unlinked Images</h3>
 
-    <div th:include="_links :: springone" />
+        <div id="images"></div>
+
+        <div th:include="_links :: springone" />
+    </section>
 
 </body>
 </html>
