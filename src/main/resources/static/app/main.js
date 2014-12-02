@@ -75,12 +75,12 @@ define(function(require) {
 		var row = $('<li class="layout__item lap-and-up-1/2 desk-1/3"></li>')
 			.attr('data-uri', item._links.self.href);
 
-		var media = $('<div class="media"></div>');
+		var media = $('<div class="media media--responsive"></div>');
 
 		media.append(
-			$('<a></a>').attr('href', item.htmlUrl.href).append(
+			//$('<a></a>').attr('href', item.htmlUrl.href).append(
 				$('<img>').addClass("media__img 1/2").attr('src', item.image)
-			)
+			//)
 		);
 
 		var mediaBody = $('<div class="media__body"></div>');
@@ -155,12 +155,12 @@ define(function(require) {
 	function createItemRow(item) {
 		var row = $('<li class="layout__item lap-and-up-1/2 desk-1/3"></li>').attr('data-uri', item._links.self.href);
 
-		var media = $('<div class="media"></div>');
+		var media = $('<div class="media media--responsive"></div>');
 
 		media.append(
-			$('<a></a>').attr('href', item.htmlUrl.href).append(
+			//$('<a></a>').attr('href', item.htmlUrl.href).append(
 				$('<img>').addClass("media__img 1/2").attr('src', item.image)
-			)
+			//)
 		);
 
 		var mediaBody = $('<div class="media__body"></div>');
@@ -168,8 +168,8 @@ define(function(require) {
 		var buttonLayout = $('<div class="layout"></div>');
 
 		buttonLayout.append($('<a class="btn layout__item">Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'));
-		buttonLayout.append($('<button class="btn delete layout__item">Delete</button>'));
 		buttonLayout.append($('<button class="btn add-to-gallery layout__item">Add To Gallery</button>'));
+		buttonLayout.append($('<button class="btn delete layout__item">Delete</button>'));
 
 		mediaBody.append(buttonLayout);
 
