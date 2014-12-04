@@ -79,7 +79,7 @@ define(function(require) {
 
 		media.append(
 			//$('<a></a>').attr('href', item.htmlUrl.href).append(
-				$('<img>').addClass("media__img 1/2").attr('src', item.image)
+				$('<img>').addClass("media__img palm-1/1 lap-and-up-1/2").attr('src', item.image)
 			//)
 		);
 
@@ -87,8 +87,8 @@ define(function(require) {
 
 		var buttonLayout = $('<div class="layout"></div>');
 
-		buttonLayout.append($('<a class="btn layout__item">Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'));
-		buttonLayout.append($('<button class="btn remove layout__item">Remove</button>').attr('data-gallery-uri', gallery._links.self.href).attr('data-uri', item._links.self.href));
+		buttonLayout.append($('<a class="btn--responsive layout__item">Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'));
+		buttonLayout.append($('<button class="btn--responsive remove layout__item">Remove</button>').attr('data-gallery-uri', gallery._links.self.href).attr('data-uri', item._links.self.href));
 
 		mediaBody.append(buttonLayout);
 
@@ -106,16 +106,14 @@ define(function(require) {
 		return when.map(data, function (gallery) {
 			var row = $('<li class="layout__item"></li>').attr('data-uri', gallery._links.self.href);
 
-			row.append($('<span></span>').append(
-				$('<input type="radio" name="gallery" class="btn">').click(function () {
+			row.append($('<input type="radio" name="gallery" class="btn--responsive">').click(function () {
 					currentGallery = gallery;
-				})
-			));
+			}));
 
 			row.append($('<span></span>').text(gallery.description));
 
 			var nestedTable = $('<ul class="layout"></ul>');
-			row.append($('<span></span>').append(nestedTable));
+			row.append(nestedTable);
 			table.append(row);
 			$('#gallery').append(table);
 
@@ -159,7 +157,7 @@ define(function(require) {
 
 		media.append(
 			//$('<a></a>').attr('href', item.htmlUrl.href).append(
-				$('<img>').addClass("media__img 1/2").attr('src', item.image)
+				$('<img>').addClass("media__img palm-1/1 lap-and-up-1/2").attr('src', item.image)
 			//)
 		);
 
@@ -167,9 +165,9 @@ define(function(require) {
 
 		var buttonLayout = $('<div class="layout"></div>');
 
-		buttonLayout.append($('<a class="btn layout__item">Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'));
-		buttonLayout.append($('<button class="btn add-to-gallery layout__item">Add To Gallery</button>'));
-		buttonLayout.append($('<button class="btn delete layout__item">Delete</button>'));
+		buttonLayout.append($('<a class="btn--responsive layout__item">Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'));
+		buttonLayout.append($('<button class="btn--responsive add-to-gallery layout__item">Add To Gallery</button>'));
+		buttonLayout.append($('<button class="btn--responsive delete layout__item">Delete</button>'));
 
 		mediaBody.append(buttonLayout);
 

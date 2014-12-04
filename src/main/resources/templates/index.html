@@ -13,15 +13,19 @@
         <h1>Spring-a-Gram</h1>
     </header>
 
-    <section class="wrapper">
+    <section class="wrapper box box--tiny">
+        <h3>Snap a pic</h3>
         <form id="upload">
-            <p>File to upload: <input type="file" id="file" /></p>
-            <p><input type="submit" value="Upload" /></p>
+            <p><input type="file" id="file" /></p>
+            <p><input type="submit" value="Upload" class="btn btn--responsive" /></p>
         </form>
+    </section>
 
+    <section class="wrapper box box--tiny">
+        <h3>Add a gallery</h3>
         <form th:action="${newGallery.href}" th:object="${gallery}" method="post">
             <input type="text" th:field="*{description}" />
-            <input type="submit" />
+            <input type="submit" class="btn btn--responsive" />
         </form>
     </section>
 

@@ -31,7 +31,8 @@ $inuit-enable-media--large: true;
 $inuit-enable-media--responsive: true;
 @import "bower_components/inuit-media/objects.media";
 
-$inuit-enable-btn--full: true;
+//$inuit-enable-btn--full: true;
+$inuit-enable-btn--small: true;
 $inuit-btn-background: $spring-green;
 $inuit-btn-color: $spring-white;
 @import "bower_components/inuit-buttons/objects.buttons";
@@ -84,3 +85,15 @@ h1 {
 // Experimental CSS spinner
 // Based on http://codepen.io/adonisk/pen/IAzbo/
 // Removed for now
+
+.border {
+  border: 1px solid;
+}
+
+// Extend btn and make it turn into btn--small based on a media query
+.btn--responsive {
+  @extend %btn;
+  @include media-query(portable) {
+    padding: $inuit-btn-padding--small - $inuit-btn-border-width  double($inuit-btn-padding--small) - $inuit-btn-border-width; /* [7] */
+  }
+}
