@@ -87,8 +87,13 @@ define(function(require) {
 
 		var buttonLayout = $('<div class="layout"></div>');
 
-		buttonLayout.append($('<a class="btn--responsive layout__item">Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'));
-		buttonLayout.append($('<button class="btn--responsive remove layout__item">Remove</button>').attr('data-gallery-uri', gallery._links.self.href).attr('data-uri', item._links.self.href));
+		buttonLayout.append($('<a class="btn--responsive layout__item">Tweet</a>')
+			.attr('href', twitter.tweetIntent(item, talk, tags))
+			.attr('target', '_blank')
+			.attr('data-uri', item._links.self.href));
+		buttonLayout.append($('<button class="btn--responsive remove layout__item">Remove</button>')
+			.attr('data-gallery-uri', gallery._links.self.href)
+			.attr('data-uri', item._links.self.href));
 
 		mediaBody.append(buttonLayout);
 
@@ -165,9 +170,14 @@ define(function(require) {
 
 		var buttonLayout = $('<div class="layout"></div>');
 
-		buttonLayout.append($('<a class="btn--responsive layout__item">Tweet</a>').attr('href', twitter.tweetIntent(item, talk, tags)).attr('target', '_blank'));
-		buttonLayout.append($('<button class="btn--responsive add-to-gallery layout__item">Add To Gallery</button>'));
-		buttonLayout.append($('<button class="btn--responsive delete layout__item">Delete</button>'));
+		buttonLayout.append($('<a class="btn--responsive layout__item">Tweet</a>')
+			.attr('href', twitter.tweetIntent(item, talk, tags))
+			.attr('target', '_blank')
+			.attr('data-uri', item._links.self.href));
+		buttonLayout.append($('<button class="btn--responsive add-to-gallery layout__item">Add To Gallery</button>')
+			.attr('data-uri', item._links.self.href));
+		buttonLayout.append($('<button class="btn--responsive delete layout__item">Delete</button>')
+			.attr('data-uri', item._links.self.href));
 
 		mediaBody.append(buttonLayout);
 
@@ -232,12 +242,12 @@ define(function(require) {
 
 		/* Listen for clicks on the list of images */
 		imagesEl.on('click', '.delete', function(e) {
-			var itemUri = e.target.parentNode.parentNode.parentNode.parentNode.dataset['uri'];
+			var itemUri = e.target.dataset['uri'];
 			deletePic(items[itemUri]);
 		});
 
 		imagesEl.on('click', '.add-to-gallery', function(e) {
-			var itemUri = e.target.parentNode.parentNode.parentNode.parentNode.dataset['uri'];
+			var itemUri = e.target.dataset['uri'];
 			addToSelectedGallery(items[itemUri]);
 		});
 
