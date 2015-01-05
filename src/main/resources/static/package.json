@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Demo Spring Data REST by uploading your favorite pics",
   "main": "run.js",
-  "scripts": {
-    "install-bower-components": "./node_modules/.bin/bower install"
-  },
   "repository": {
     "type": "git",
     "url": "git@github.com:gregturn/spring-a-gram.git"
