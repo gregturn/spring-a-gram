@@ -79,25 +79,15 @@
 							<arguments>install</arguments>
 						</configuration>
 					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<executions>
 					<execution>
-						<id>exec-bower-install</id>
+						<id>install-bower-components</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<executable>bower</executable>
-							<workingDirectory>src/main/resources/static</workingDirectory>
-							<arguments>
-								<argument>install</argument>
-							</arguments>
+							<arguments>run install-bower-components</arguments>
 						</configuration>
-						<goals>
-							<goal>exec</goal>
-						</goals>
 					</execution>
 				</executions>
 			</plugin>
