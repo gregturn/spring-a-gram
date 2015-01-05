@@ -78,9 +78,7 @@ define(function(require) {
 		var media = $('<div class="media media--responsive box box--tiny"></div>');
 
 		media.append(
-			//$('<a></a>').attr('href', item.htmlUrl.href).append(
-				$('<img>').addClass("media__img palm-1/1 lap-and-up-1/2").attr('src', item.image)
-			//)
+			$('<img>').addClass("media__img palm-1/1 lap-and-up-1/2").attr('src', item.image)
 		);
 
 		var mediaBody = $('<div class="media__body"></div>');
@@ -94,6 +92,10 @@ define(function(require) {
 		buttonLayout.append($('<button class="btn--responsive remove layout__item">Remove</button>')
 			.attr('data-gallery-uri', gallery._links.self.href)
 			.attr('data-uri', item._links.self.href));
+
+		var permalink = $('<a></a>').attr('href', item.htmlUrl.href);
+		permalink.append($('<button class="btn--responsive permalink layout__item">Permalink</button></a>'));
+		buttonLayout.append(permalink);
 
 		mediaBody.append(buttonLayout);
 
@@ -161,9 +163,7 @@ define(function(require) {
 		var media = $('<div class="media media--responsive box box--tiny"></div>');
 
 		media.append(
-			//$('<a></a>').attr('href', item.htmlUrl.href).append(
-				$('<img>').addClass("media__img palm-1/1 lap-and-up-1/2").attr('src', item.image)
-			//)
+			$('<img>').addClass("media__img palm-1/1 lap-and-up-1/2").attr('src', item.image)
 		);
 
 		var mediaBody = $('<div class="media__body"></div>');
@@ -178,6 +178,10 @@ define(function(require) {
 			.attr('data-uri', item._links.self.href));
 		buttonLayout.append($('<button class="btn--responsive delete layout__item">Delete</button>')
 			.attr('data-uri', item._links.self.href));
+
+		var permalink = $('<a></a>').attr('href', item.htmlUrl.href);
+		permalink.append($('<button class="btn--responsive permalink layout__item">Permalink</button></a>'));
+		buttonLayout.append(permalink);
 
 		mediaBody.append(buttonLayout);
 
