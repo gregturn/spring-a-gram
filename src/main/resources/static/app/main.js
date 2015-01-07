@@ -32,9 +32,11 @@ define(function(require) {
 	/* Delete the picture from storage and remove from the screen */
 	function deletePic(item) {
 		api({ method: 'DELETE', path: item._links.self.href })
-			.done(function() {
-				findUnlinkedItem(item).remove();
-				delete items[item._links.self.href];
+			.done(function(response) {
+				if (response.status.code >= 200 && response.status.code < 300) {
+					findUnlinkedItem(item).remove();
+					delete items[item._links.self.href];
+				}
 			});
 	}
 
@@ -61,13 +63,13 @@ define(function(require) {
 			return;
 		}
 
-		api({
-			method: 'DELETE',
-			path: item._links.gallery.href
-		}).done(function() {
-			findLinkedItem(item).remove();
-			$('#images ul').append(createItemRow(item));
-		});
+		item.clientFor('gallery')({method: 'DELETE'})
+			.done(function(response) {
+				if (response.status.code >= 200 && response.status.code < 300) {
+					findLinkedItem(item).remove();
+					$('#images ul').append(createItemRow(item));
+				}
+			});
 	}
 
 	/* Create a new table row for a item based on its gallery */
