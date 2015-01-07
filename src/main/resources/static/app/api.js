@@ -4,11 +4,9 @@ define(function(require) {
 	var rest = require('rest');
 	var defaultRequest = require('rest/interceptor/defaultRequest');
 	var mime = require('rest/interceptor/mime');
-	var hateoas = require('rest/interceptor/hateoas');
 	var hal = require('rest/mime/type/application/hal');
 	var baseRegistry = require('rest/mime/registry');
 
-	var uriTemplateInterceptor = require('./api/uriTemplateInterceptor');
 	var uriListConverter = require('./api/uriListConverter');
 
 	var registry = baseRegistry.child();
@@ -18,8 +16,6 @@ define(function(require) {
 
 	return rest
 		.wrap(mime, { registry: registry })
-		.wrap(hateoas)
-		.wrap(defaultRequest, { headers: { 'Accept': 'application/hal+json' }})
-		.wrap(uriTemplateInterceptor);
+		.wrap(defaultRequest, { headers: { 'Accept': 'application/hal+json' }});
 
 });
