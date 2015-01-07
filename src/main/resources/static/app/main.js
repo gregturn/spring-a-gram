@@ -7,6 +7,7 @@ define(function(require) {
 	var follow = require('./follow');
 	var twitter = require('./twitter');
 	var imageReader = require('./imageReader');
+	var imageShrinker = require('./imageShrinker');
 	var hateoasHelper = require('./hateoasHelper');
 
 	var currentGallery;
@@ -213,11 +214,15 @@ define(function(require) {
 				return;
 			}
 
-			imageReader.readImage(fileInput).then(function(imageData) {
+			imageReader.readImage(fileInput).then(function(image) {
+				console.log("Original image is " + image.length + " bytes long");
+				return imageShrinker.shrink(image, 100, 75);
+			}).then(function(image) {
+				console.log("Image has been shrunk to " + image.length + " bytes");
 				return api({
 					method: 'POST',
 					path: root + '/items',
-					entity: imageData,
+					entity: {image: image},
 					headers: {'Content-Type': 'application/json'}
 				});
 			}).then(function(response) {

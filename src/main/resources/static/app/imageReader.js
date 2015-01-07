@@ -19,7 +19,7 @@ define(function(require) {
 
 			fileReader.onerror = reject;
 			fileReader.onloadend = function () {
-				resolve({ name: input.files[0].name, image: fileReader.result });
+				resolve(fileReader.result);
 			};
 
 			fileReader.readAsDataURL(input.files[0]);
