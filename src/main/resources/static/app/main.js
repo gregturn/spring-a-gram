@@ -14,7 +14,7 @@ define(function(require) {
 	var galleries = {};
 	var root = '/api';
 
-	var talk = "https://2014.event.springone2gx.com/schedule/sessions/spring_data_rest_data_meets_hypermedia.html";
+	var talk = "https://github.com/gregturn/spring-a-gram";
 	var tags = ['s2gx', 'REST'];
 
 	var emptyImageTable = '<ul class="layout"></ul>';

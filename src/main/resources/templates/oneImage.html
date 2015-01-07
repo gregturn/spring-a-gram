@@ -1,28 +1,40 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" data-rave-meta="bower.json">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'/>
     <title>Spring-A-Gram :: Upload your fav pics</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script async="" data-main="run.js" src="node_modules/requirejs/require.js"></script>
+    <script async="" data-main="/run.js" src="/bower_components/requirejs/require.js"></script>
+    <link rel="stylesheet" href="/main.css" />
 </head>
 <body>
-    <h2><a href="/">Spring-A-Gram: Upload your favorite pictures!</a></h2>
+    <header class="page wrapper">
+        <h1>Spring-a-Gram</h1>
+    </header>
 
-    <form action="#" id="upload">
-        <p>File to upload: <input type="file" id="file" /></p>
-        <p><input type="submit" value="Upload" /></p>
-    </form>
+    <section class="wrapper box box--tiny">
+        <h3>Snap a pic</h3>
+        <form id="upload">
+            <p><input type="file" id="file" /></p>
+            <p><input type="submit" value="Upload" class="btn btn--responsive" /></p>
+        </form>
+    </section>
 
-    <img th:src="${item.image}" />
+    <section class="wrapper">
+        <div class="media media--responsive box box--tiny">
+            <img class="media__img palm-1/1 lap-and-up-1/2" th:src="${item.image}"/>
+            <div class="media__body">
+                <a id="tweetOneImage" class="btn--responsive">Tweet me!</a>
+            </div>
+        </div>
+    </section>
 
-    <a id="tweetOneImage">
-        Tweet me!
-    </a>
+    <section class="wrapper">
+        <div th:include="_links :: nav" />
 
-    <div th:include="_links :: nav" />
-
-    <div th:include="_links :: springone" />
+        <div th:include="_links :: springone" />
+    </section>
 
 </body>
 </html>

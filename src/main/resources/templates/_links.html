@@ -4,7 +4,7 @@
     <h3>Links:</h3>
     <ul>
         <li th:each="link : ${links}">
-            <a th:href="${link.href}" th:text="${link.rel}"/>
+            <a th:href="${link.href}" th:text="${link.rel}" class="btn--responsive"/>
         </li>
     </ul>
 </div>
