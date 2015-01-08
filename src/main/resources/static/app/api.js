@@ -4,15 +4,12 @@ define(function(require) {
 	var rest = require('rest');
 	var defaultRequest = require('rest/interceptor/defaultRequest');
 	var mime = require('rest/interceptor/mime');
-	var hal = require('rest/mime/type/application/hal');
 	var baseRegistry = require('rest/mime/registry');
-
-	var uriListConverter = require('./api/uriListConverter');
 
 	var registry = baseRegistry.child();
 
-	registry.register('text/uri-list', uriListConverter);
-	registry.register('application/hal+json', hal);
+	registry.register('text/uri-list', require('./api/uriListConverter'));
+	registry.register('application/hal+json', require('rest/mime/type/application/hal'));
 
 	return rest
 		.wrap(mime, { registry: registry })
