@@ -8,7 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.Link;
 
 @Entity
@@ -23,6 +25,10 @@ public class Item {
 
 	@ManyToOne
 	private Gallery gallery;
+
+	@JsonIgnore
+	@OneToOne
+	private User user;
 
 	private Link htmlUrl;
 
@@ -48,6 +54,14 @@ public class Item {
 
 	public void setGallery(Gallery gallery) {
 		this.gallery = gallery;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Link getHtmlUrl() {

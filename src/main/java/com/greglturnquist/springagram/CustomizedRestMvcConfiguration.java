@@ -1,7 +1,5 @@
 package com.greglturnquist.springagram;
 
-import java.net.URI;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
@@ -16,7 +14,7 @@ public class CustomizedRestMvcConfiguration extends RepositoryRestMvcConfigurati
 	@Override
 	public RepositoryRestConfiguration config() {
 		RepositoryRestConfiguration config = super.config();
-		config.setBaseUri(URI.create("/api"));
+		config.setBasePath("/api");
 		return config;
 	}
 }
