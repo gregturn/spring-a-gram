@@ -1,0 +1,31 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "These are all the links for form controls from an Amazon web page",
+    "version": "1.0.0",
+    "title": "Amazon"
+  },
+  "host": "amazon.com",
+  "paths": {
+    "/": {
+      "get": {
+        "description": "http://amazon.com/ref=nav_logo",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/gp/product/B00DBYBNEE": {
+      "post": {
+        "description": "http://amazon.com//gp/product/B00DBYBNEE/ref=nav_joinprmlogo",
+        "responses": {
+          "200": {
+            "description" : "Success"
+          }
+        }
+      }
+    }
+  }
+}

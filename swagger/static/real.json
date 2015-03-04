@@ -1,0 +1,2220 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "These are all the links for form controls from an Amazon web page",
+    "version": "1.0.0",
+    "title": "Amazon"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "description": "javascript:void(0);",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/product/B00DBYBNEE": {
+      "post": {
+        "description": "http://www.amazon.com/gp/product/B00DBYBNEE/ref=nav_prime_join",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/yourstore/home": {
+      "get": {
+        "description": "http://www.amazon.com/gp/yourstore/home/ref=nav_cs_ys",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/goldbox": {
+      "post": {
+        "description": "http://www.amazon.com/gp/goldbox/ref=nav_cs_gb",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gift-cards/b": {
+      "get": {
+        "description": "http://www.amazon.com/gift-cards/b/ref=nav_cs_gc?ie=UTF8&node=2238192011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/seller-account/mm-product-page.html": {
+      "post": {
+        "description": "http://www.amazon.com/gp/seller-account/mm-product-page.html/ref=nav_cs_sell?ie=UTF8&ld=AZSOAUSCSNav",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/help/customer/display.html": {
+      "get": {
+        "description": "http://www.amazon.com/gp/help/customer/display.html/ref=footer_privacy?ie=UTF8&nodeId=468496",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/site-directory": {
+      "get": {
+        "description": "http://www.amazon.com/gp/site-directory/ref=nav_shopall_fullstore",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/css/homepage.html": {
+      "get": {
+        "description": "https://www.amazon.com/gp/css/homepage.html/ref=nav_youraccount_ya",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/registry/wishlist": {
+      "get": {
+        "description": "http://www.amazon.com/gp/registry/wishlist/ref=nav_youraccount_wl?ie=UTF8&requiresSignIn=1",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/cart/view.html": {
+      "post": {
+        "description": "http://www.amazon.com/gp/cart/view.html/ref=nav_flyout_viewcart?ie=UTF8&hasWorkingJavascript=1",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/books-used-books-textbooks/b": {
+      "get": {
+        "description": "http://www.amazon.com/books-used-books-textbooks/b/ref=nav_shopall_bo?ie=UTF8&node=283155",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Advanced-Search-Books/b": {
+      "post": {
+        "description": "http://www.amazon.com/Advanced-Search-Books/b/ref=sv_b_0?ie=UTF8&node=241582011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/new-releases/books": {
+      "get": {
+        "description": "http://www.amazon.com/gp/new-releases/books/ref=sv_b_1",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/bestsellers/books": {
+      "post": {
+        "description": "http://www.amazon.com/gp/bestsellers/books/ref=sv_b_2",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Books/b": {
+      "get": {
+        "description": "http://www.amazon.com/Books/b/ref=sv_b_3?ie=UTF8&node=549028",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Childrens-Books/b": {
+      "get": {
+        "description": "http://www.amazon.com/Childrens-Books/b/ref=nav_shopall_cbo?ie=UTF8&node=4",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/New-Used-Textbooks-Books/b": {
+      "post": {
+        "description": "http://www.amazon.com/New-Used-Textbooks-Books/b/ref=nav_shopall_tb?ie=UTF8&node=465600",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Rent-Textbooks/b": {
+      "post": {
+        "description": "http://www.amazon.com/Rent-Textbooks/b/ref=sv_b_6?ie=UTF8&node=5657188011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Sell-Books/b": {
+      "post": {
+        "description": "http://www.amazon.com/Sell-Books/b/ref=nav_shopall_us_ti_tb_0513?ie=UTF8&node=2205237011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Best-Books-of-the-Month/b": {
+      "post": {
+        "description": "http://www.amazon.com/Best-Books-of-the-Month/b/ref=sv_b_8?ie=UTF8&node=390919011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Bargain-Books/b": {
+      "get": {
+        "description": "http://www.amazon.com/Bargain-Books/b/ref=sv_b_9?ie=UTF8&node=45",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/s": {
+      "post": {
+        "description": "http://www.amazon.com/s/ref=rdr_ext_aut?_encoding=UTF8&index=books&field-author=Greg%20L.%20Turnquist",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Learning-Spring-Boot-Greg-Turnquist-ebook/dp/B00QAMMHKS": {
+      "post": {
+        "description": "http://www.amazon.com/Learning-Spring-Boot-Greg-Turnquist-ebook/dp/B00QAMMHKS/ref=kinw_dp_ke",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Kindle-Glare-Free-Touchscreen-Display-Wi-Fi/dp/B00I15SB16": {
+      "post": {
+        "description": "http://www.amazon.com/Kindle-Glare-Free-Touchscreen-Display-Wi-Fi/dp/B00I15SB16/ref=dp_kinw_strp_2",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/feature.html": {
+      "get": {
+        "description": "http://www.amazon.com/gp/feature.html/ref=nav_shopall_k_fire_music?ie=UTF8&docId=1000825251",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/pdp/taf": {
+      "get": {
+        "description": "http://www.amazon.com/gp/pdp/taf/ref=cm_sw_l_view_dp_S0I9ub1JT328W?ie=UTF8&…2Fgp%252Fproduct%252F1784393029%252Fref%253D&contentURI=%2Fdp%2F1784393029",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/redirect.html": {
+      "post": {
+        "description": "https://www.amazon.com/gp/redirect.html/ref=footer_sya?_encoding=UTF8&locat…amazonhome&source=standards&token=DF0CFA9EECFD0DEDEAE6094981480E48DBC1E112",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Learning-Spring-Boot-Greg-Turnquist/dp/1784393029": {
+      "get": {
+        "description": "http://www.amazon.com/Learning-Spring-Boot-Greg-Turnquist/dp/1784393029/ref=sr_1_1?ie=UTF8&qid=1425419465&sr=8-1&keywords=learning+spring+boot#",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/product/utility": {
+      "get": {
+        "description": "http://www.amazon.com/gp/product/utility/edit-one-click-pref.html?ie=UTF8&query=selectObb%3dnew&returnPath=%2fgp%2fproduct%2f1784393029",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/css/account/address": {
+      "post": {
+        "description": "http://www.amazon.com/gp/css/account/address/view.html?ie=UTF8",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/tradein/popovers/render-popover.html": {
+      "get": {
+        "description": "http://www.amazon.com/gp/tradein/popovers/render-popover.html/ref=dpxNoJSLearnMoreModal?ie=UTF8&name=dpxHowToTradeIn",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/tradein/add-to-cart.html": {
+      "post": {
+        "description": "https://www.amazon.com/gp/tradein/add-to-cart.html/ref=trade_btn_dpx_pc_1?ie=UTF8&asin=1784393029",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/abis/syh/DisplayCondition": {
+      "get": {
+        "description": "http://catalog-retail.amazon.com/abis/syh/DisplayCondition/ref=dp_sdp_sell?…ncoding=UTF8&colid=&asin=1784393029&ld=AMZDP&sr=8-1&qid=1425419465&coliid=",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Greg-L.-Turnquist/e/B00Q23NAXI": {
+      "get": {
+        "description": "http://www.amazon.com/Greg-L.-Turnquist/e/B00Q23NAXI/ref=dp_byline_cont_book_1",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/-/e/B00Q23NAXI": {
+      "get": {
+        "description": "http://www.amazon.com/-/e/B00Q23NAXI/ref=dp_byline_sr_pop_book_1?ie=UTF8&fi…+L.+Turnquist&search-alias=books&text=Greg+L.+Turnquist&sort=relevancerank",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/landing": {
+      "post": {
+        "description": "http://authorcentral.amazon.com/gp/landing/ref=ntt_atc_dp_pel_1",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/offer-listing/1784393029": {
+      "post": {
+        "description": "http://www.amazon.com/gp/offer-listing/1784393029/ref=rdr_ext_uan",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/1784393029": {
+      "get": {
+        "description": "http://www.amazon.com/dp/1784393029/ref=rdr_ext_tmb",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Learning-Spring-Boot-Greg-Turnquist/product-reviews/1784393029": {
+      "get": {
+        "description": "http://www.amazon.com/Learning-Spring-Boot-Greg-Turnquist/product-reviews/1…_dp_see_all_btm?ie=UTF8&showViewpoints=1&sortBy=bySubmissionDateDescending",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp": {
+      "get": {
+        "description": "http://www.amazon.com/dp/1784393029",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/history/?ybhGroup=Books": {
+      "post": {
+        "description": "http://www.amazon.com/gp/history/?ybhGroup=Books/ref=rdr_sb_bh",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/product": {
+      "post": {
+        "description": "http://www.amazon.com/gp/product/B00AW3IXZO?pr=discovit&inc=discovit3&ts=ch…6j39ht8&dasin=1784393029&plattr=D_PREM&place=detailpage&imp=A3LLEMXJNGGWRE",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Pro-AngularJS-Experts-Voice-Development/dp/1430264489": {
+      "get": {
+        "description": "http://www.amazon.com/Pro-AngularJS-Experts-Voice-Development/dp/1430264489/ref=pd_sim_b_1?ie=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Adam-Freeman/e/B005DOMYNE": {
+      "post": {
+        "description": "http://www.amazon.com/Adam-Freeman/e/B005DOMYNE/ref=pd_sim_b_bl_1?_encoding=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Pro-AngularJS-Experts-Voice-Development/product-reviews/1430264489": {
+      "post": {
+        "description": "http://www.amazon.com/Pro-AngularJS-Experts-Voice-Development/product-reviews/1430264489/ref=pd_sim_b_cr_1?ie=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Java-Action-Lambdas-functional-style-programming/dp/1617291994": {
+      "post": {
+        "description": "http://www.amazon.com/Java-Action-Lambdas-functional-style-programming/dp/1617291994/ref=pd_cp_b_0",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Raoul-Gabriel-Urma/e/B00NB151C2": {
+      "post": {
+        "description": "http://www.amazon.com/Raoul-Gabriel-Urma/e/B00NB151C2/ref=pd_sim_b_bl_2?_encoding=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Java-Action-Lambdas-functional-style-programming/product-reviews/1617291994": {
+      "post": {
+        "description": "http://www.amazon.com/Java-Action-Lambdas-functional-style-programming/prod…1617291994/ref=pd_cp_b_0_cm_cr_acr_txt?ie=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Spring-Action-Craig-Walls/dp/161729120X": {
+      "get": {
+        "description": "http://www.amazon.com/Spring-Action-Craig-Walls/dp/161729120X/ref=pd_cp_b_1",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Craig-Walls/e/B001JOVOZ6": {
+      "post": {
+        "description": "http://www.amazon.com/Craig-Walls/e/B001JOVOZ6/ref=pd_sim_b_bl_3?_encoding=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Spring-Action-Craig-Walls/product-reviews/161729120X": {
+      "get": {
+        "description": "http://www.amazon.com/Spring-Action-Craig-Walls/product-reviews/161729120X/ref=pd_cp_b_1_cm_cr_acr_txt?ie=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Introducing-Spring-Framework-A-Primer/dp/1430265329": {
+      "get": {
+        "description": "http://www.amazon.com/Introducing-Spring-Framework-A-Primer/dp/1430265329/ref=pd_sim_b_4?ie=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Felipe-Gutierrez/e/B00MDA4L4G": {
+      "post": {
+        "description": "http://www.amazon.com/Felipe-Gutierrez/e/B00MDA4L4G/ref=pd_sim_b_bl_4?_encoding=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Introducing-Spring-Framework-A-Primer/product-reviews/1430265329": {
+      "post": {
+        "description": "http://www.amazon.com/Introducing-Spring-Framework-A-Primer/product-reviews/1430265329/ref=pd_sim_b_cr_4?ie=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Continuous-Delivery-Deployment-Automation-Addison-Wesley/dp/0321601912": {
+      "get": {
+        "description": "http://www.amazon.com/Continuous-Delivery-Deployment-Automation-Addison-Wesley/dp/0321601912/ref=pd_sim_b_5?ie=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Jez-Humble/e/B003SNGS8E": {
+      "post": {
+        "description": "http://www.amazon.com/Jez-Humble/e/B003SNGS8E/ref=pd_sim_b_bl_5?_encoding=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Continuous-Delivery-Deployment-Automation-Addison-Wesley/product-reviews/0321601912": {
+      "post": {
+        "description": "http://www.amazon.com/Continuous-Delivery-Deployment-Automation-Addison-Wes…t-reviews/0321601912/ref=pd_sim_b_cr_5?ie=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Pro-Spring-Chris-Schaefer/dp/143026151X": {
+      "get": {
+        "description": "http://www.amazon.com/Pro-Spring-Chris-Schaefer/dp/143026151X/ref=pd_sim_b_6?ie=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/b": {
+      "post": {
+        "description": "http://www.amazon.com/b/ref=nav_shopall_gno_balance?ie=UTF8&node=10232440011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/digital/ep-landing-page": {
+      "get": {
+        "description": "http://www.amazon.com/gp/digital/ep-landing-page/ref=k_mtchbk_pb_f",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Kindle-Glare-Free-Touchscreen-Display-Wi-Fi/dp/B00I15SB16/ref=kinw_dp_gy": {
+      "get": {
+        "description": "http://www.amazon.com/Kindle-Glare-Free-Touchscreen-Display-Wi-Fi/dp/B00I15SB16/ref=kinw_dp_gy/183-8600549-3172730",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/help/seller/shipping.html": {
+      "get": {
+        "description": "http://www.amazon.com/gp/help/seller/shipping.html/ref=dp_pd_shipping?ie=UTF8&asin=1784393029&seller=ATVPDKIKX0DER",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/best-sellers-books-Amazon/zgbs/books": {
+      "get": {
+        "description": "http://www.amazon.com/best-sellers-books-Amazon/zgbs/books/ref=pd_dp_ts_b_1",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/gfix/welcome.html": {
+      "post": {
+        "description": "https://www.amazon.com/gp/gfix/welcome.html/ref=gfix-product-detail-catalog?ie=UTF8&ASIN=1784393029&merchantID=ATVPDKIKX0DER&storeID=books",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/gfix/imageCorrection.html": {
+      "get": {
+        "description": "https://www.amazon.com/gp/gfix/imageCorrection.html/ref=gfix-product-detail-image?ie=UTF8&ASIN=1784393029&merchantID=ATVPDKIKX0DER&storeID=books",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/review/create-review": {
+      "post": {
+        "description": "http://www.amazon.com/review/create-review/ref=cm_cr_dp_wrt_btm?ie=UTF8&asin=1784393029&channel=detail-glance&nodeID=283155&store=books",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/review/R2LRCRT4DK866": {
+      "post": {
+        "description": "http://www.amazon.com/review/R2LRCRT4DK866/ref=cm_cr_dp_cmt?ie=UTF8&ASIN=1784393029&channel=detail-glance&nodeID=283155&store=books#wasThisHelpful",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/pdp/profile/A3VPZMNQV486RQ": {
+      "get": {
+        "description": "http://www.amazon.com/gp/pdp/profile/A3VPZMNQV486RQ/ref=cm_cr_dp_pdp",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/voting/cast/Reviews/2115/R2LRCRT4DK866/Helpful/1": {
+      "post": {
+        "description": "http://www.amazon.com/gp/voting/cast/Reviews/2115/R2LRCRT4DK866/Helpful/1/r…rName=R2LRCRT4DK866.2115.Helpful.Reviews&voteSessionID=191-0375136-6153403",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/voting/cast/Reviews/2115/R2LRCRT4DK866/Helpful/-1": {
+      "get": {
+        "description": "http://www.amazon.com/gp/voting/cast/Reviews/2115/R2LRCRT4DK866/Helpful/-1/…rName=R2LRCRT4DK866.2115.Helpful.Reviews&voteSessionID=191-0375136-6153403",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/voting/cast/Reviews/2115/R2LRCRT4DK866/Inappropriate/1": {
+      "post": {
+        "description": "http://www.amazon.com/gp/voting/cast/Reviews/2115/R2LRCRT4DK866/Inappropria…R2LRCRT4DK866.2115.Inappropriate.Reviews&voteSessionID=191-0375136-6153403",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/review/RRXBU2VRGQG3X": {
+      "post": {
+        "description": "http://www.amazon.com/review/RRXBU2VRGQG3X/ref=cm_cr_dp_cmt?ie=UTF8&ASIN=1784393029&channel=detail-glance&nodeID=283155&store=books#wasThisHelpful",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/pdp/profile/A2VSFC2DVLFOEL": {
+      "get": {
+        "description": "http://www.amazon.com/gp/pdp/profile/A2VSFC2DVLFOEL/ref=cm_cr_dp_pdp",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/voting/cast/Reviews/2115/RRXBU2VRGQG3X/Helpful/1": {
+      "post": {
+        "description": "http://www.amazon.com/gp/voting/cast/Reviews/2115/RRXBU2VRGQG3X/Helpful/1/r…rName=RRXBU2VRGQG3X.2115.Helpful.Reviews&voteSessionID=191-0375136-6153403",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/voting/cast/Reviews/2115/RRXBU2VRGQG3X/Helpful/-1": {
+      "get": {
+        "description": "http://www.amazon.com/gp/voting/cast/Reviews/2115/RRXBU2VRGQG3X/Helpful/-1/…rName=RRXBU2VRGQG3X.2115.Helpful.Reviews&voteSessionID=191-0375136-6153403",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/voting/cast/Reviews/2115/RRXBU2VRGQG3X/Inappropriate/1": {
+      "post": {
+        "description": "http://www.amazon.com/gp/voting/cast/Reviews/2115/RRXBU2VRGQG3X/Inappropria…RRXBU2VRGQG3X.2115.Inappropriate.Reviews&voteSessionID=191-0375136-6153403",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/prime": {
+      "get": {
+        "description": "http://www.amazon.com/gp/prime/ref=footer_prime",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/NoSQL-Distilled-Emerging-Polyglot-Persistence/dp/0321826620": {
+      "post": {
+        "description": "http://www.amazon.com/NoSQL-Distilled-Emerging-Polyglot-Persistence/dp/0321826620/ref=pd_cp_b_2",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/NoSQL-Distilled-Emerging-Polyglot-Persistence/product-reviews/0321826620": {
+      "post": {
+        "description": "http://www.amazon.com/NoSQL-Distilled-Emerging-Polyglot-Persistence/product…0321826620/ref=pd_cp_b_2_cm_cr_acr_txt?ie=UTF8&refRID=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Learning-Spring-Boot-Greg-Turnquist/sim/1784393029/2": {
+      "get": {
+        "description": "http://www.amazon.com/Learning-Spring-Boot-Greg-Turnquist/sim/1784393029/2/ref=pd_cp_b_sexpl",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/giveaway": {
+      "post": {
+        "description": "http://www.amazon.com/gp/giveaway/home?ref=aga_dp_lm",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/socialmedia/giveaways": {
+      "get": {
+        "description": "http://www.amazon.com/gp/socialmedia/giveaways/ref=aga_dp_su?ie=UTF8&asin=1784393029",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/contact-us/contact-amazon-form.html": {
+      "post": {
+        "description": "https://sellercentral.amazon.com/gp/contact-us/contact-amazon-form.html/ref=asin_feedback_box?asin_or_isbn=1784393029&categoryID=20008&typeID=20023",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/yourstore/pym": {
+      "get": {
+        "description": "http://www.amazon.com/gp/yourstore/pym/ref=pd_pyml_rhf",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/redirect.html/ref=footer_affliate?location=http://affiliate-program.amazon.com": {
+      "get": {
+        "description": "http://www.amazon.com/gp/redirect.html/ref=footer_affliate?location=http://…mazon.com/&token=020E83530EE2B7F2EDA65ADA51F882D31A4AC155&source=standards",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/content/product-ads-on-amazon.htm": {
+      "post": {
+        "description": "http://services.amazon.com/content/product-ads-on-amazon.htm/ref=footer_pads?ld=AZPADSFooter",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/seller-account": {
+      "get": {
+        "description": "http://www.amazon.com/gp/seller-account/mm-summary-page.html?ie=UTF8&ld=AZFooterSelfPublish&topic=200260520",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/seller-account/mm-landing.html": {
+      "post": {
+        "description": "http://www.amazon.com/gp/seller-account/mm-landing.html/ref=footer_seeall?ie=UTF8&ld=AZSOAviewallMakeM",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/iss/credit/rewardscardmember": {
+      "get": {
+        "description": "http://www.amazon.com/iss/credit/rewardscardmember/ref=nav_shopall_credit_cbcc?_encoding=UTF8&plattr=CBCCGNO",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/iss/credit/storecardmember": {
+      "post": {
+        "description": "http://www.amazon.com/iss/credit/storecardmember/ref=nav_shopall_credit_plcc?_encoding=UTF8&plattr=PLCCGNO",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/cobrandcard/marketing.html": {
+      "post": {
+        "description": "http://www.amazon.com/gp/cobrandcard/marketing.html/ref=nav_shopall_credit_ccl?ie=UTF8&plattr=GNO_CCL&pr=ibprox",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/earn-spend-rewards-points/b": {
+      "post": {
+        "description": "http://www.amazon.com/earn-spend-rewards-points/b/ref=nav_shopall_credit_swp?ie=UTF8&node=2634438011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/compare-credit-card-offers/b": {
+      "get": {
+        "description": "http://www.amazon.com/compare-credit-card-offers/b/ref=nav_shopall_credit_ccmp?ie=UTF8&node=3561432011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Currency-Converter/b": {
+      "get": {
+        "description": "http://www.amazon.com/Currency-Converter/b/ref=nav_shopall_credit_tfx?ie=UTF8&node=388305011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/css/returns/homepage.html": {
+      "post": {
+        "description": "http://www.amazon.com/gp/css/returns/homepage.html/ref=hy_f_4",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/digital/fiona/manage": {
+      "get": {
+        "description": "http://www.amazon.com/gp/digital/fiona/manage/ref=nav_shopall_k_myf",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/what-is-cloud-computing": {
+      "get": {
+        "description": "http://aws.amazon.com/what-is-cloud-computing/?sc_channel=EL&sc_campaign=amazonfooter",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/c": {
+      "get": {
+        "description": "http://www.zappos.com/c/top-searches",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/uedata/nvp/unsticky/191-0375136-6153403/": {
+      "get": {
+        "description": "http://www.amazon.com/gp/uedata/nvp/unsticky/191-0375136-6153403//ntpoffrw?tepes=1&id=1VJXT23X2F80WJAEWJ77",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/registry/search": {
+      "get": {
+        "description": "http://www.amazon.com/gp/registry/search/ref=nav_wishlist_find",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/wedding/homepage": {
+      "get": {
+        "description": "http://www.amazon.com/gp/wedding/homepage/ref=nav_wishlist_wr",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/registry/baby": {
+      "get": {
+        "description": "http://www.amazon.com/gp/registry/baby/ref=nav_shopall_babyreg",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/toys/birthday": {
+      "post": {
+        "description": "http://www.amazon.com/gp/toys/birthday/ref=nav_shopall_kidsbirthdays",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/school-lists": {
+      "post": {
+        "description": "http://www.amazon.com/gp/school-lists/ref=nav_wishlist_sl",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/gift-central/organizer": {
+      "get": {
+        "description": "http://www.amazon.com/gp/gift-central/organizer/ref=nav_wishlist_fafgift",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/yt/newforyou/myactions": {
+      "post": {
+        "description": "http://www.amazon.com/gp/yt/newforyou/myactions/ref=nav_wishlist_yt",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/css/order-history": {
+      "post": {
+        "description": "https://www.amazon.com/gp/css/order-history/ref=nav_youraccount_orders",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/yourstore": {
+      "post": {
+        "description": "http://www.amazon.com/gp/yourstore/ref=nav_youraccount_recs",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/subscribe-and-save/manager/viewsubscriptions": {
+      "get": {
+        "description": "https://www.amazon.com/gp/subscribe-and-save/manager/viewsubscriptions/ref=nav_youraccount_sns",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/subs/primeclub/account/homepage.html": {
+      "post": {
+        "description": "http://www.amazon.com/gp/subs/primeclub/account/homepage.html/ref=nav_youraccount_prime",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/mn/dcw/myx.html": {
+      "get": {
+        "description": "http://www.amazon.com/mn/dcw/myx.html/ref=nav_youraccount_myk",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/dmusic/mp3/player": {
+      "get": {
+        "description": "http://www.amazon.com/gp/dmusic/mp3/player/ref=nav_youraccount_cldplyr",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/clouddrive": {
+      "post": {
+        "description": "http://www.amazon.com/clouddrive/ref=nav_shopall_acd_urc?_encoding=UTF8&sf=1",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Prime-Instant-Video/b": {
+      "get": {
+        "description": "http://www.amazon.com/Prime-Instant-Video/b/ref=nav_shopall_k_fire_tv_piv?ie=UTF8&node=2676882011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/video/watchlist": {
+      "get": {
+        "description": "http://www.amazon.com/gp/video/watchlist/ref=nav_shopall_aiv_wlst",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/video/library": {
+      "post": {
+        "description": "http://www.amazon.com/gp/video/library/ref=nav_shopall_aiv_yvl",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/swvgdtt/your-account/manage-downloads.html": {
+      "post": {
+        "description": "http://www.amazon.com/gp/swvgdtt/your-account/manage-downloads.html/ref=nav_youraccount_gsl",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/mas/your-account/myapps": {
+      "get": {
+        "description": "http://www.amazon.com/gp/mas/your-account/myapps/ref=nav_shopall_adr_yad",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/flex/sign-out.html": {
+      "post": {
+        "description": "http://www.amazon.com/gp/flex/sign-out.html/ref=nav_youraccount_signout?ie=…ion=sign-out&path=%2Fgp%2Fyourstore%2Fhome&signIn=1&useRedirectOnSuccess=1",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Instant-Video/b": {
+      "post": {
+        "description": "http://www.amazon.com/Instant-Video/b/ref=nav_shopall_atv?ie=UTF8&node=2858778011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Shop-Instant-Video/b": {
+      "get": {
+        "description": "http://www.amazon.com/Shop-Instant-Video/b/ref=nav_shopall_aiv_shop?ie=UTF8&node=7589478011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/MP3-Music-Download/b": {
+      "post": {
+        "description": "http://www.amazon.com/MP3-Music-Download/b/ref=nav_shopall_dmusic?ie=UTF8&node=163856011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Best-Sellers-MP3-Downloads/zgbs/dmusic": {
+      "post": {
+        "description": "http://www.amazon.com/Best-Sellers-MP3-Downloads/zgbs/dmusic/ref=nav_shopall_mp3_best_sellers",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/New-Future-Releases-MP3-Downloads/b": {
+      "get": {
+        "description": "http://www.amazon.com/New-Future-Releases-MP3-Downloads/b/ref=nav_shopall_mp3_new_releases?ie=UTF8&node=307026011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/MP3-Deals/b": {
+      "post": {
+        "description": "http://www.amazon.com/MP3-Deals/b/ref=nav_shopall_mp3_deal?ie=UTF8&node=678551011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/mobile-apps/b": {
+      "get": {
+        "description": "http://www.amazon.com/mobile-apps/b/ref=nav_shopall_adr_free?ie=UTF8&node=2350149011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/mas/download-client": {
+      "get": {
+        "description": "http://www.amazon.com/gp/mas/download-client/ref=nav_shopall_adr_dl",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/clouddrive/home": {
+      "get": {
+        "description": "http://www.amazon.com/clouddrive/home/ref=nav_shopall_k_fire_phone_cd",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/clouddrive/primephotos": {
+      "post": {
+        "description": "http://www.amazon.com/clouddrive/primephotos/ref=nav_shopall_acd_prime",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/clouddrive/pricing": {
+      "get": {
+        "description": "http://www.amazon.com/clouddrive/pricing/ref=nav_shopall_acd_pricing",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/B00I15SB16": {
+      "get": {
+        "description": "http://www.amazon.com/dp/B00I15SB16/ref=nav_shopall_k_ki",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/B00JG8GOWU": {
+      "post": {
+        "description": "http://www.amazon.com/dp/B00JG8GOWU/ref=nav_shopall_k_kp",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/B00IOY8XWQ": {
+      "get": {
+        "description": "http://www.amazon.com/dp/B00IOY8XWQ/ref=nav_shopall_k_kv",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Kindle-eBooks/b": {
+      "post": {
+        "description": "http://www.amazon.com/Kindle-eBooks/b/ref=nav_shopall_k_kbo?ie=UTF8&node=1286228011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/digital/fiona/redirect/newsstand/home": {
+      "get": {
+        "description": "http://www.amazon.com/gp/digital/fiona/redirect/newsstand/home/ref=nav_shopall_k_knwstnd",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/kindle/ku/sign-up/ui/rw/about": {
+      "get": {
+        "description": "http://www.amazon.com/gp/kindle/ku/sign-up/ui/rw/about/ref=nav_shopall_k_kds",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/redirect.html/ref=nav_shopall_k_kcr?location=https://read.amazon.com": {
+      "get": {
+        "description": "https://www.amazon.com/gp/redirect.html/ref=nav_shopall_k_kcr?location=http…mazon.com/&token=34AD60CFC4DCD7A97D4E2F4A4A7C4149FBEEF236&source=standards",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/B00KC6I06S": {
+      "get": {
+        "description": "http://www.amazon.com/dp/B00KC6I06S/ref=nav_shopall_k_hd6",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/B00IKPYKWG": {
+      "post": {
+        "description": "http://www.amazon.com/dp/B00IKPYKWG/ref=nav_shopall_k_hd7",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/B00LOR524M": {
+      "get": {
+        "description": "http://www.amazon.com/dp/B00LOR524M/ref=nav_shopall_k_hdk",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/B00BWYRF7E": {
+      "post": {
+        "description": "http://www.amazon.com/dp/B00BWYRF7E/ref=nav_shopall_k_hdx",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/B00HCNHDN0": {
+      "get": {
+        "description": "http://www.amazon.com/dp/B00HCNHDN0/ref=nav_shopall_k_hdx89",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/B00CX5P8FC": {
+      "post": {
+        "description": "http://www.amazon.com/dp/B00CX5P8FC/ref=nav_shopall_k_fire_tv",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/B00GDQ0RMG": {
+      "get": {
+        "description": "http://www.amazon.com/dp/B00GDQ0RMG/ref=nav_shopall_k_fire_stick",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/B00DU0ZI8Q": {
+      "post": {
+        "description": "http://www.amazon.com/dp/B00DU0ZI8Q/ref=nav_shopall_k_fire_tv_controller",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/B00OC0USA6": {
+      "get": {
+        "description": "http://www.amazon.com/dp/B00OC0USA6/ref=nav_shopall_k_phone_unlocked",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/B00EOE0WKQ": {
+      "post": {
+        "description": "http://www.amazon.com/dp/B00EOE0WKQ/ref=nav_shopall_k_phone_att",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/magazines/b": {
+      "get": {
+        "description": "http://www.amazon.com/magazines/b/ref=nav_shopall_magazines?ie=UTF8&node=599858",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/dp/B00NB86OYE": {
+      "get": {
+        "description": "http://www.amazon.com/dp/B00NB86OYE/ref=nav_shopall_aud_mem",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/movies-tv-dvd-bluray/b": {
+      "post": {
+        "description": "http://www.amazon.com/movies-tv-dvd-bluray/b/ref=nav_shopall_mov?ie=UTF8&node=2625373011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/movies-tv-bluray-bluray3d/b": {
+      "get": {
+        "description": "http://www.amazon.com/movies-tv-bluray-bluray3d/b/ref=nav_shopall_blu?ie=UTF8&node=2901953011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/music-rock-classical-pop-jazz/b": {
+      "get": {
+        "description": "http://www.amazon.com/music-rock-classical-pop-jazz/b/ref=nav_shopall_mu?ie=UTF8&node=5174",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/musical-instruments-accessories-sound-recording/b": {
+      "get": {
+        "description": "http://www.amazon.com/musical-instruments-accessories-sound-recording/b/ref=nav_shopall_mi_ce?ie=UTF8&node=11091801",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/computer-video-games-hardware-accessories/b": {
+      "post": {
+        "description": "http://www.amazon.com/computer-video-games-hardware-accessories/b/ref=nav_shopall_cvg_ce?ie=UTF8&node=468642",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Game-Downloads/b": {
+      "get": {
+        "description": "http://www.amazon.com/Game-Downloads/b/ref=nav_shopall_gdown?ie=UTF8&node=979455011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Entertainment-Collectibles/b": {
+      "post": {
+        "description": "http://www.amazon.com/Entertainment-Collectibles/b/ref=nav_shopall_entcol?ie=UTF8&node=5088769011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Trade-In/b": {
+      "get": {
+        "description": "http://www.amazon.com/Trade-In/b/ref=nav_shopall_trade_in_mmg?ie=UTF8&node=2242532011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Televisions-Video/b": {
+      "post": {
+        "description": "http://www.amazon.com/Televisions-Video/b/ref=nav_shopall_tv?ie=UTF8&node=1266092011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Home-Audio-Electronics/b": {
+      "get": {
+        "description": "http://www.amazon.com/Home-Audio-Electronics/b/ref=nav_shopall_hat?ie=UTF8&node=667846011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Camera-Photo-Film-Canon-Sony/b": {
+      "post": {
+        "description": "http://www.amazon.com/Camera-Photo-Film-Canon-Sony/b/ref=nav_shopall_p?ie=UTF8&node=502394",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/cell-phones-service-plans-accessories/b": {
+      "get": {
+        "description": "http://www.amazon.com/cell-phones-service-plans-accessories/b/ref=nav_shopall_wi?ie=UTF8&node=2335752011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/MP3-Players-Audio-Video/b": {
+      "get": {
+        "description": "http://www.amazon.com/MP3-Players-Audio-Video/b/ref=nav_shopall_mp3?ie=UTF8&node=172630",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Car-Electronics/b": {
+      "post": {
+        "description": "http://www.amazon.com/Car-Electronics/b/ref=nav_shopall_gps_ce?ie=UTF8&node=1077068",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Tech-Accessories-Electronics/b": {
+      "post": {
+        "description": "http://www.amazon.com/Tech-Accessories-Electronics/b/ref=nav_shopall_elec_acc?ie=UTF8&node=5745855011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Laptops-Tablets/b": {
+      "post": {
+        "description": "http://www.amazon.com/Laptops-Tablets/b/ref=nav_shopall_lapnet?ie=UTF8&node=2956501011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Desktops/b": {
+      "get": {
+        "description": "http://www.amazon.com/Desktops/b/ref=nav_shopall_deskserv?ie=UTF8&node=4972214011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Computer-Accessories-Supplies/b": {
+      "post": {
+        "description": "http://www.amazon.com/Computer-Accessories-Supplies/b/ref=nav_shopall_compaccess?ie=UTF8&node=172456",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/PC-Parts-Components/b": {
+      "get": {
+        "description": "http://www.amazon.com/PC-Parts-Components/b/ref=nav_shopall_components?ie=UTF8&node=193870011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/design-download-business-education-software/b": {
+      "post": {
+        "description": "http://www.amazon.com/design-download-business-education-software/b/ref=nav_shopall_sw?ie=UTF8&node=229534",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Printers-Office-Electronics/b": {
+      "get": {
+        "description": "http://www.amazon.com/Printers-Office-Electronics/b/ref=nav_shopall_printers?ie=UTF8&node=172635",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/office-products-supplies-electronics-furniture/b": {
+      "post": {
+        "description": "http://www.amazon.com/office-products-supplies-electronics-furniture/b/ref=nav_shopall_op?ie=UTF8&node=1064954",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Electronics-Trade-In/b": {
+      "get": {
+        "description": "http://www.amazon.com/Electronics-Trade-In/b/ref=nav_shopall_trade_in_elec?ie=UTF8&node=2226766011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/home-garden-kitchen-furniture-bedding/b": {
+      "post": {
+        "description": "http://www.amazon.com/home-garden-kitchen-furniture-bedding/b/ref=nav_shopall_home_storefront?ie=UTF8&node=1055398",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/kitchen-dining/b": {
+      "get": {
+        "description": "http://www.amazon.com/kitchen-dining/b/ref=nav_shopall_ki?ie=UTF8&node=284507",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/furniture-decor-rugs-lamps-beds-tv-stands/b": {
+      "post": {
+        "description": "http://www.amazon.com/furniture-decor-rugs-lamps-beds-tv-stands/b/ref=nav_shopall_fd?ie=UTF8&node=1057794",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/bedding-bath-sheets-towels/b": {
+      "get": {
+        "description": "http://www.amazon.com/bedding-bath-sheets-towels/b/ref=nav_shopall_bb?ie=UTF8&node=1057792",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Appliances/b": {
+      "post": {
+        "description": "http://www.amazon.com/Appliances/b/ref=nav_shopall_ha?ie=UTF8&node=2619525011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Patio-Lawn-Garden/b": {
+      "get": {
+        "description": "http://www.amazon.com/Patio-Lawn-Garden/b/ref=nav_shopall_lp?ie=UTF8&node=2972638011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Art/b": {
+      "post": {
+        "description": "http://www.amazon.com/Art/b/ref=nav_shopall_fine_art?ie=UTF8&node=6685269011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Arts-Crafts-Sewing/b": {
+      "get": {
+        "description": "http://www.amazon.com/Arts-Crafts-Sewing/b/ref=nav_shopall_sch?ie=UTF8&node=2617941011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/pet-shops-dogs-cats-hamsters-kittens/b": {
+      "post": {
+        "description": "http://www.amazon.com/pet-shops-dogs-cats-hamsters-kittens/b/ref=nav_shopall_ps?ie=UTF8&node=2619533011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/wedding/homepage/ref=gno_listpop_wr": {
+      "get": {
+        "description": "http://www.amazon.com/gp/wedding/homepage/ref=gno_listpop_wr/ref=nav_shopall_weddingregistry",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Tools-and-Home-Improvement/b": {
+      "post": {
+        "description": "http://www.amazon.com/Tools-and-Home-Improvement/b/ref=nav_shopall_hi2?ie=UTF8&node=228013",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Power-Tools-and-Hand-Tools/b": {
+      "get": {
+        "description": "http://www.amazon.com/Power-Tools-and-Hand-Tools/b/ref=nav_shopall_hi?ie=UTF8&node=328182011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Lighting-and-Ceiling-Fans/b": {
+      "post": {
+        "description": "http://www.amazon.com/Lighting-and-Ceiling-Fans/b/ref=nav_shopall_llf?ie=UTF8&node=495224",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Kitchen-and-Bath-Fixtures/b": {
+      "get": {
+        "description": "http://www.amazon.com/Kitchen-and-Bath-Fixtures/b/ref=nav_shopall_kbf?ie=UTF8&node=3754161",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Hardware-Locks-and-Fasteners/b": {
+      "post": {
+        "description": "http://www.amazon.com/Hardware-Locks-and-Fasteners/b/ref=nav_shopall_hdw?ie=UTF8&node=511228",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/home-automation-smarthome/b": {
+      "get": {
+        "description": "http://www.amazon.com/home-automation-smarthome/b/ref=nav_shopall_homaut?ie=UTF8&node=6563140011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Beauty-Makeup-Skin-Hair-Products/b": {
+      "post": {
+        "description": "http://www.amazon.com/Beauty-Makeup-Skin-Hair-Products/b/ref=nav_shopall_bty?ie=UTF8&node=3760911",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Luxury-Makeup-Skin-Hair-Beauty-Products/b": {
+      "get": {
+        "description": "http://www.amazon.com/Luxury-Makeup-Skin-Hair-Beauty-Products/b/ref=nav_shopall_luxury_bty?ie=UTF8&node=7175545011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Mens-Grooming-Products/b": {
+      "post": {
+        "description": "http://www.amazon.com/Mens-Grooming-Products/b/ref=nav_shopall_men_grooming?ie=UTF8&node=6682399011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/health-personal-care-nutrition-fitness/b": {
+      "get": {
+        "description": "http://www.amazon.com/health-personal-care-nutrition-fitness/b/ref=nav_shopall_health_household_baby?ie=UTF8&node=3760901",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/grocery-breakfast-foods-snacks-organic/b": {
+      "post": {
+        "description": "http://www.amazon.com/grocery-breakfast-foods-snacks-organic/b/ref=nav_shopall_gro?ie=UTF8&node=16310101",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Specialty-Diets/b": {
+      "get": {
+        "description": "http://www.amazon.com/Specialty-Diets/b/ref=nav_shopall_gro_sd?ie=UTF8&node=10529351011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Wine-Red-White-Sparkling-Dessert-Rose/b": {
+      "post": {
+        "description": "http://www.amazon.com/Wine-Red-White-Sparkling-Dessert-Rose/b/ref=nav_shopall_wine?ie=UTF8&node=2983386011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/redirect.html/ref=nav_shopall_fresh?location=https://fresh.amazon.com": {
+      "get": {
+        "description": "https://www.amazon.com/gp/redirect.html/ref=nav_shopall_fresh?location=http…mazon.com/&token=28DE5151E2930C25FD313A6DAA6DA31818DA06E4&source=standards",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/toys/b": {
+      "get": {
+        "description": "http://www.amazon.com/toys/b/ref=nav_shopall_tg?ie=UTF8&node=165793011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/baby-car-seats-strollers-bedding/b": {
+      "post": {
+        "description": "http://www.amazon.com/baby-car-seats-strollers-bedding/b/ref=nav_shopall_ba?ie=UTF8&node=165796011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Kids-Family/b": {
+      "get": {
+        "description": "http://www.amazon.com/Kids-Family/b/ref=nav_shopall_cvg?ie=UTF8&node=471306",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/gp/mom/signup": {
+      "post": {
+        "description": "http://www.amazon.com/gp/mom/signup/ref=nav_shopall_mom",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Luggage-Bags-Travel-Accessories-Clothing/b": {
+      "get": {
+        "description": "http://www.amazon.com/Luggage-Bags-Travel-Accessories-Clothing/b/ref=nav_shopall_sft_luggage?ie=UTF8&node=15743161",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Exercise-Fitness-Sports-Outdoors/b": {
+      "get": {
+        "description": "http://www.amazon.com/Exercise-Fitness-Sports-Outdoors/b/ref=nav_shopall_ef?ie=UTF8&node=3407731",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Hunting-Fishing/b": {
+      "post": {
+        "description": "http://www.amazon.com/Hunting-Fishing/b/ref=nav_shopall_hntfsh?ie=UTF8&node=706813011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Apparel/b": {
+      "post": {
+        "description": "http://www.amazon.com/Apparel/b/ref=nav_shopall_outcloth?ie=UTF8&node=2206626011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Boating-Water-Sports-Outdoors/b": {
+      "post": {
+        "description": "http://www.amazon.com/Boating-Water-Sports-Outdoors/b/ref=nav_shopall_btwt?ie=UTF8&node=3421331",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Team-Sports-Outdoors/b": {
+      "get": {
+        "description": "http://www.amazon.com/Team-Sports-Outdoors/b/ref=nav_shopall_teamsp?ie=UTF8&node=706809011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Fan-Shop-Sports-Outdoors/b": {
+      "post": {
+        "description": "http://www.amazon.com/Fan-Shop-Sports-Outdoors/b/ref=nav_shopall_fan?ie=UTF8&node=3386071",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Sports-Collectibles/b": {
+      "get": {
+        "description": "http://www.amazon.com/Sports-Collectibles/b/ref=nav_shopall_sprt_cllct?ie=UTF8&node=3250697011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Golf-Sports-Outdoors/b": {
+      "post": {
+        "description": "http://www.amazon.com/Golf-Sports-Outdoors/b/ref=nav_shopall_golf?ie=UTF8&node=3410851",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Leisure-Sports-Games/b": {
+      "get": {
+        "description": "http://www.amazon.com/Leisure-Sports-Games/b/ref=nav_shopall_sgr?ie=UTF8&node=706808011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/sporting-goods/b": {
+      "post": {
+        "description": "http://www.amazon.com/sporting-goods/b/ref=nav_shopall_sg?ie=UTF8&node=3375251",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/outdoor-gear/b": {
+      "get": {
+        "description": "http://www.amazon.com/outdoor-gear/b/ref=nav_shopall_outrec?ie=UTF8&node=706814011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Cycling-Wheel-Sports-Outdoors/b": {
+      "get": {
+        "description": "http://www.amazon.com/Cycling-Wheel-Sports-Outdoors/b/ref=nav_shopall_bike?ie=UTF8&node=3403201",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Action-Sports-Outdoors/b": {
+      "post": {
+        "description": "http://www.amazon.com/Action-Sports-Outdoors/b/ref=nav_shopall_action_sprt?ie=UTF8&node=706812011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/automotive-auto-truck-replacements-parts/b": {
+      "get": {
+        "description": "http://www.amazon.com/automotive-auto-truck-replacements-parts/b/ref=nav_shopall_apa?ie=UTF8&node=15684181",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Tools-Equipment-Automotive/b": {
+      "post": {
+        "description": "http://www.amazon.com/Tools-Equipment-Automotive/b/ref=nav_shopall_ate?ie=UTF8&node=15706941",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Motorcycle-ATV-Automotive/b": {
+      "get": {
+        "description": "http://www.amazon.com/Motorcycle-ATV-Automotive/b/ref=nav_shopall_matv?ie=UTF8&node=346333011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/industrial-scientific-supplies/b": {
+      "post": {
+        "description": "http://www.amazon.com/industrial-scientific-supplies/b/ref=nav_shopall_ind_sup?ie=UTF8&node=16310091",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/Lab-Scientific-Supplies/b": {
+      "get": {
+        "description": "http://www.amazon.com/Lab-Scientific-Supplies/b/ref=nav_shopall_ind_lab?ie=UTF8&node=317970011",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/ap": {
+      "post": {
+        "description": "https://www.amazon.com/ap/register?_encoding=UTF8&openid.assoc_handle=usfle…mazon.com%2Fgp%2Fyourstore%2Fhome%3Fie%3DUTF8%26ref_%3Dnav_custrec_newcust",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    }
+  }
+}
