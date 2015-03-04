@@ -15,8 +15,8 @@ define(function(require) {
 	var galleries = {};
 	var root = '/api';
 
-	var talk = "https://github.com/gregturn/spring-a-gram";
-	var tags = ['s2gx', 'REST'];
+	var talk = "https://devnexus.com/s/presentations#id-4417 on 3/11 @ 2:30pm";
+	var tags = ['devnexus', 'REST'];
 
 	var emptyImageTable = '<ul class="layout"></ul>';
 
