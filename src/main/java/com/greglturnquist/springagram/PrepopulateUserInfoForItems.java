@@ -1,7 +1,5 @@
 package com.greglturnquist.springagram;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
@@ -21,8 +19,6 @@ import org.springframework.stereotype.Component;
 @RepositoryEventHandler(Item.class)
 public class PrepopulateUserInfoForItems {
 
-	private static final Logger log = LoggerFactory.getLogger(PrepopulateUserInfoForItems.class);
-
 	private final UserRepository repository;
 
 	@Autowired
@@ -33,7 +29,8 @@ public class PrepopulateUserInfoForItems {
 
 	@HandleBeforeCreate
 	public void applyUserInformationUsingSecurityContext(Item item) {
-		item.setUser(repository.findByName(SecurityContextHolder.getContext().getAuthentication().getName()));
+		item.setUser(repository.findByName(
+			SecurityContextHolder.getContext().getAuthentication().getName()));
 	}
 
 }
