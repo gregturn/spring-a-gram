@@ -18,7 +18,8 @@ public class User {
 
 	private String name;
 
-	// This field MUST be protected against any form of serialization to avoid security leakage
+	// This field MUST be protected against any form of
+	// serialization to avoid security leakage
 	@JsonIgnore
 	private String password;
 
@@ -55,4 +56,5 @@ public class User {
 	public void setRoles(String... roles) {
 		this.roles = roles;
 	}
+
 }
