@@ -8,11 +8,13 @@ define(function(require) {
 
 	var registry = baseRegistry.child();
 
+	var uriTemplateInterceptor = require('./api/uriTemplateInterceptor');
 	registry.register('text/uri-list', require('./api/uriListConverter'));
 	registry.register('application/hal+json', require('rest/mime/type/application/hal'));
 
 	return rest
 		.wrap(mime, { registry: registry })
+		.wrap(uriTemplateInterceptor)
 		.wrap(defaultRequest, { headers: { 'Accept': 'application/hal+json' }});
 
 });
