@@ -12,7 +12,8 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
 	List<Item> findByGalleryIsNull();
 
 	@Override
-	Item save(Item item);
+	@PreAuthorize("#item?.user == null or #item?.user?.name == authentication?.name")
+	Item save(@Param("item") Item item);
 
 	@Override
 	@PreAuthorize("#item?.user?.name == authentication?.name")

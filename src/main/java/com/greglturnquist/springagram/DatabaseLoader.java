@@ -50,11 +50,15 @@ public class DatabaseLoader {
 		userRepository.save(roy);
 
 		SecurityContextHolder.clearContext();
-		runAs(greg.getName(), greg.getPassword(), "ROLE_USER");
+
+		runAs(roy.getName(), roy.getPassword(), "ROLE_USER");
 
 		Item cat = itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg"), roy));
-		Item caterpillar = itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg"), greg));
 		itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg"), roy));
+
+		runAs(greg.getName(), greg.getPassword(), "ROLE_USER");
+
+		Item caterpillar = itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg"), greg));
 		itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg"), greg));
 
 		Gallery catGallery = new Gallery();
