@@ -38,6 +38,10 @@ define(function(require) {
 					findUnlinkedItem(item).remove();
 					delete items[item._links.self.href];
 				}
+			}, function(response) {
+				if (response.status.code === 403) {
+					alert('You are not authorized to delete that picture');
+				}
 			});
 	}
 
@@ -55,6 +59,10 @@ define(function(require) {
 		}).done(function() {
 			$('#gallery ul li[data-uri="' + currentGallery._links.self.href +'"] ul').append(createItemRowForGallery(item, currentGallery));
 			findUnlinkedItem(item).remove();
+		}, function(response) {
+			if (response.status.code === 403) {
+				alert('You are not authorized to assign that picture to a gallery');
+			}
 		});
 	}
 
