@@ -26,6 +26,7 @@
             <img class="media__img palm-1/1 lap-and-up-1/2 desk-1/3" th:src="${item.image}"/>
             <div class="media__body">
                 <a id="tweetOneImage" class="btn--responsive">Tweet me!</a>
+                <div th:text="'Uploaded by: ' + ${item.user.name}"></div>
                 <div th:include="_links :: nav" />
                 <div th:include="_links :: springone" />
             </div>
