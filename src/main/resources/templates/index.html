@@ -13,59 +13,51 @@
     <h1>Spring-a-Gram</h1>
 </header>
 
-<div th:if="${#authorization.expression('isAuthenticated() == false')}">
-    <section class="wrapper box box--tiny">
-        <a th:href="@{/login}">Log In</a>
-    </section>
-</div>
+<section class="wrapper box box--tiny">
 
-<div th:if="${#authorization.expression('isAuthenticated()')}">
-    <section class="wrapper box box--tiny">
+    Hello, <span th:text="${#authentication.name}">user</span>.
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Log Out"/>
+    </form>
 
-        Hello, <span th:text="${#authentication.name}">user</span>.
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Log Out"/>
-        </form>
+</section>
 
-    </section>
+<section class="wrapper box box--tiny">
+    <h3>Snap a pic</h3>
 
-    <section class="wrapper box box--tiny">
-        <h3>Snap a pic</h3>
+    <form id="upload">
+        <p><input type="file" id="file"/></p>
 
-        <form id="upload">
-            <p><input type="file" id="file"/></p>
+        <p><input type="submit" value="Upload" class="btn btn--responsive"/></p>
+    </form>
+</section>
 
-            <p><input type="submit" value="Upload" class="btn btn--responsive"/></p>
-        </form>
-    </section>
+<section class="wrapper box box--tiny">
+    <h3>Add a gallery</h3>
 
-    <section class="wrapper box box--tiny">
-        <h3>Add a gallery</h3>
+    <form th:action="${newGallery.href}" th:object="${gallery}" method="post">
+        <input type="text" th:field="*{description}"/>
+        <input type="submit" class="btn btn--responsive"/>
+    </form>
+</section>
 
-        <form th:action="${newGallery.href}" th:object="${gallery}" method="post">
-            <input type="text" th:field="*{description}"/>
-            <input type="submit" class="btn btn--responsive"/>
-        </form>
-    </section>
+<section class="wrapper">
+    <h3>Galleries</h3>
 
-    <section class="wrapper">
-        <h3>Galleries</h3>
+    <div id="gallery"></div>
+</section>
 
-        <div id="gallery"></div>
-    </section>
+<section class="wrapper">
+    <hr/>
+</section>
 
-    <section class="wrapper">
-        <hr/>
-    </section>
+<section class="wrapper">
+    <h3>Unlinked Images</h3>
 
-    <section class="wrapper">
-        <h3>Unlinked Images</h3>
+    <div id="images"></div>
 
-        <div id="images"></div>
-
-        <div th:include="_links :: springone"/>
-    </section>
-</div>
+    <div th:include="_links :: springone"/>
+</section>
 
 </body>
 </html>
