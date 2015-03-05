@@ -15,7 +15,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<spring-data-releasetrain.version>Fowler-BUILD-SNAPSHOT</spring-data-releasetrain.version>
+		<spring-data-releasetrain.version>Fowler-M1</spring-data-releasetrain.version>
 	</properties>
 
 	<dependencies>
