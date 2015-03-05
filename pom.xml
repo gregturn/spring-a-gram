@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-data-releasetrain.version>Fowler-M1</spring-data-releasetrain.version>
+		<thymeleaf-extras-springsecurity3.version>2.1.1.RELEASE</thymeleaf-extras-springsecurity3.version>
 	</properties>
 
 	<dependencies>
@@ -42,7 +43,7 @@
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity3</artifactId>
-			<version>2.1.1.RELEASE</version>
+			<version>${thymeleaf-extras-springsecurity3.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
