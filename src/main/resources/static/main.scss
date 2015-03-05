@@ -111,3 +111,9 @@ h1 {
     padding: $inuit-btn-padding--small - $inuit-btn-border-width  double($inuit-btn-padding--small) - $inuit-btn-border-width; /* [7] */
   }
 }
+
+.login-page .layout {
+  margin-top: $inuit-base-line-height;
+  margin-bottom: $inuit-base-line-height;
+}
+
