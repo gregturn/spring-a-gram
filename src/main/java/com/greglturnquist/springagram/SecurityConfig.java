@@ -28,11 +28,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.anyRequest().permitAll()
-//				.antMatchers("/").permitAll()
-//				.anyRequest().authenticated()
 				.and()
 			.formLogin()
 				.loginPage("/login")
+				.defaultSuccessUrl("/", true)
 				.permitAll()
 				.and()
 			.logout()
