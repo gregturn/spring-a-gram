@@ -32,7 +32,7 @@ public class ApplicationController {
 		this.galleryRepository = galleryRepository;
 	}
 
-	@Value("${hashtag:#s2gx}")
+	@Value("${hashtag:#devnexus}")
 	String hashtag;
 
 	/**
