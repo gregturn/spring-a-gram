@@ -20,9 +20,18 @@
         You have been logged out.
     </div>
     <form th:action="@{/login}" method="post">
-        <div><label> User Name : <input type="text" name="username"/> </label></div>
-        <div><label> Password: <input type="password" name="password"/> </label></div>
-        <div><input type="submit" value="Log In"/></div>
+        <div class="layout"><div class="layout__item"></div></div>
+        <div class="layout"><!--
+            --><label class="layout__item palm-1/2 lap-1/3 desk-1/5"> User Name: </label><!--
+            --><input type="text" name="username" class="layout__item palm-1/2 lap-1/3 desk-1/5" autofocus=""/><!--
+        --></div>
+        <div class="layout"><div class="layout__item"></div></div>
+        <div class="layout"><!--
+            --><label class="layout__item palm-1/2 lap-1/3 desk-1/5"> Password: </label><!--
+            --><input type="password" name="password" class="layout__item palm-1/2 lap-1/3 desk-1/5"/><!--
+        --></div>
+        <div class="layout"><div class="layout__item"></div></div>
+        <div class="layout"><div class="layout__item palm-1/1"><input type="submit" value="Log In"/></div></div>
     </form>
 </section>
 </body>
