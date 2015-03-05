@@ -27,6 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
+				// NOTE: If you add other static resources to src/main/resources, they must be
+				// listed here to avoid security checks
 				.antMatchers("/bower_components/**", "/run.js", "/app/**", "/main.css").permitAll()
 				.anyRequest().authenticated()
 				.and()
@@ -37,7 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.logout()
 				.logoutSuccessUrl("/")
-				.permitAll()
 				.and()
 			.csrf().disable();
 
