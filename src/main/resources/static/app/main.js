@@ -189,7 +189,7 @@ define(function(require) {
 		permalink.append($('<button class="btn--responsive permalink layout__item">Permalink</button></a>'));
 		buttonLayout.append(permalink);
 
-		buttonLayout.append($('<span class="layout__item">' + item.user.name + '</span>'));
+		buttonLayout.append($('<span class="layout__item">Uploaded by: ' + item.user.name + '</span>'));
 
 		mediaBody.append(buttonLayout);
 
