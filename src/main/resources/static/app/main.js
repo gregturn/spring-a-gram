@@ -233,7 +233,8 @@ define(function(require) {
 			}).then(function(response) {
 				return api({
 					method: 'GET',
-					path: response.headers.Location
+					path: response.headers.Location,
+					params: { projection: "owner" }
 				});
 			}).done(function(response) {
 				var item = response.entity;
