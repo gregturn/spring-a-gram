@@ -100,6 +100,8 @@ define(function(require) {
 		permalink.append($('<button class="btn--responsive permalink layout__item">Permalink</button></a>'));
 		buttonLayout.append(permalink);
 
+		buttonLayout.append($('<span class="layout__item">' + item.user.name + '</span>'));
+
 		mediaBody.append(buttonLayout);
 
 		media.append(mediaBody);
@@ -154,7 +156,8 @@ define(function(require) {
 
 		return embedded.items.map(function (itemWithoutImage) {
 			return api({
-				path: itemWithoutImage._links.self.href
+				path: itemWithoutImage._links.self.href,
+				params: { projection: "owner" }
 			});
 		});
 	}
@@ -185,6 +188,8 @@ define(function(require) {
 		var permalink = $('<a></a>').attr('href', item.htmlUrl.href);
 		permalink.append($('<button class="btn--responsive permalink layout__item">Permalink</button></a>'));
 		buttonLayout.append(permalink);
+
+		buttonLayout.append($('<span class="layout__item">' + item.user.name + '</span>'));
 
 		mediaBody.append(buttonLayout);
 
@@ -288,7 +293,8 @@ define(function(require) {
 
 				return when.map(response, function(itemWithoutImage) {
 					return api({
-						path: itemWithoutImage._links.self.href
+						path: itemWithoutImage._links.self.href,
+						params: { projection: "owner" }
 					}).then(function(item) {
 						items[item.entity._links.self.href] = item.entity;
 						addItemRow(item.entity);
