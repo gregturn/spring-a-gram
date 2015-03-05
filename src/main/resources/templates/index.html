@@ -2,34 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'/>
-    <title>Spring-A-Gram :: Upload your fav pics</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
+    <title>Spring-a-Gram :: Upload your fav pics</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0"/>
     <script async="" data-main="/run.js" src="/bower_components/requirejs/require.js"></script>
-    <link rel="stylesheet" href="/main.css" />
+    <link rel="stylesheet" href="/main.css"/>
 </head>
 <body>
-    <header class="page wrapper">
-        <h1>Spring-a-Gram</h1>
-    </header>
+<header class="page wrapper">
+    <h1>Spring-a-Gram</h1>
+</header>
 
+<div th:if="${#authorization.expression('isAuthenticated() == false')}">
     <section class="wrapper box box--tiny">
+        <a th:href="@{/login}">Log In</a>
+    </section>
+</div>
+
+<div th:if="${#authorization.expression('isAuthenticated()')}">
+    <section class="wrapper box box--tiny">
+
         Hello, <span th:text="${#authentication.name}">user</span>.
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Log Out"/>
+        </form>
+
     </section>
 
     <section class="wrapper box box--tiny">
         <h3>Snap a pic</h3>
+
         <form id="upload">
-            <p><input type="file" id="file" /></p>
-            <p><input type="submit" value="Upload" class="btn btn--responsive" /></p>
+            <p><input type="file" id="file"/></p>
+
+            <p><input type="submit" value="Upload" class="btn btn--responsive"/></p>
         </form>
     </section>
 
     <section class="wrapper box box--tiny">
         <h3>Add a gallery</h3>
+
         <form th:action="${newGallery.href}" th:object="${gallery}" method="post">
-            <input type="text" th:field="*{description}" />
-            <input type="submit" class="btn btn--responsive" />
+            <input type="text" th:field="*{description}"/>
+            <input type="submit" class="btn btn--responsive"/>
         </form>
     </section>
 
@@ -48,8 +63,9 @@
 
         <div id="images"></div>
 
-        <div th:include="_links :: springone" />
+        <div th:include="_links :: springone"/>
     </section>
+</div>
 
 </body>
 </html>
