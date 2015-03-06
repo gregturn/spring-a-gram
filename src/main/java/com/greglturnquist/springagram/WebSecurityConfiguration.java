@@ -51,8 +51,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.logout()
 				.logoutSuccessUrl("/")
 				.and()
-			.httpBasic()
-				.and()
+//			.httpBasic()
+//				.and()
 			.csrf().disable();
 
 		if (env.acceptsProfiles("ssl")) {
