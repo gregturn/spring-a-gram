@@ -9,6 +9,7 @@ define(function(require) {
 	var imageReader = require('./imageReader');
 	var imageShrinker = require('./imageShrinker');
 	var hateoasHelper = require('./hateoasHelper');
+	var stompClient = require('./websocket-listener.js');
 
 	var currentGallery;
 	var items = {};
@@ -34,10 +35,6 @@ define(function(require) {
 	function deletePic(item) {
 		api({ method: 'DELETE', path: item._links.self.href })
 			.done(function(response) {
-				if (response.status.code >= 200 && response.status.code < 300) {
-					findUnlinkedItem(item).remove();
-					delete items[item._links.self.href];
-				}
 			}, function(response) {
 				if (response.status.code === 403) {
 					alert('You are not authorized to delete that picture');
@@ -230,24 +227,14 @@ define(function(require) {
 			imageReader.readImage(fileInput).then(function(image) {
 				console.log("Original image is " + image.length + " bytes long");
 				return imageShrinker.shrink(image, 100, 75);
-			}).then(function(image) {
+			}).done(function(image) {
 				console.log("Image has been shrunk to " + image.length + " bytes");
-				return api({
+				api({
 					method: 'POST',
 					path: root + '/items',
 					entity: {image: image},
 					headers: {'Content-Type': 'application/json'}
 				});
-			}).then(function(response) {
-				return api({
-					method: 'GET',
-					path: response.headers.Location,
-					params: { projection: "owner" }
-				});
-			}).done(function(response) {
-				var item = response.entity;
-				items[item._links.self.href] = item;
-				addItemRow(item);
 			});
 		});
 
@@ -310,5 +297,53 @@ define(function(require) {
 					});
 				});
 			});
+
+		stompClient.register([
+			{ route: '/topic/newItem', callback: showNewItem },
+			{ route: '/topic/deleteItem', callback: deleteItem },
+			{ route: '/topic/removeItemFromGallery', callback: removeItemFromGallery },
+			{ route: '/topic/addItemToGallery', callback: addItemToGallery }
+		]);
+
+		function showNewItem(message) {
+			var href = message.body;
+			api({
+				method: 'GET',
+				path: href,
+				params: { projection: "owner" }
+			}).done(function(response) {
+				var item = response.entity;
+				console.log(item);
+				console.log('Adding ' + item._links.self.href + ' to Items');
+				items[item._links.self.href] = item;
+				addItemRow(item);
+			});
+		}
+
+		function deleteItem(message) {
+			var href = message.body
+			for (var property in items) {
+				if (items.hasOwnProperty(property)) {
+					// Add '{' to href to avoid 'http://localhost:8080/api/items/50{?projection}' accidentally matching
+					// '/api/items/5'
+					if (~property.indexOf(href + '{')) {
+						console.log(href + " matches " + property + " so I'm deleting it off the page");
+						findUnlinkedItem(hateoasHelper.wrapSelfHref(property)).remove();
+						delete items[property];
+					}
+				}
+			}
+		}
+
+		function removeItemFromGallery(message) {
+			var href = message.body;
+			console.log(href + ' just had a link removed!');
+		}
+
+		function addItemToGallery(message) {
+			var href = message.body;
+			console.log(href + ' just had a link saved!');
+		}
+
 	});
 });

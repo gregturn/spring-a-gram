@@ -1,7 +1,8 @@
 define(function (require) {
 
     return {
-        wrapHref: wrapHref
+        wrapHref: wrapHref,
+        wrapSelfHref: wrapSelfHref
     };
 
     // Take an href and serve it via obj.htmlUrl.href
@@ -12,5 +13,17 @@ define(function (require) {
             }
         }
     }
+
+    // Taken an href and serve it up via obj._links.self.href
+    function wrapSelfHref(href) {
+        return {
+            _links: {
+                self: {
+                    href: href
+                }
+            }
+        }
+    }
+
 
 });
