@@ -52,7 +52,6 @@ public class ItemTests {
 	}
 
 	@Configuration
-	@Import(CustomizedRestMvcConfiguration.class)
 	@EnableJpaRepositories(basePackageClasses = Item.class)
 	@EnableAutoConfiguration
 	public static class TestConfiguration {

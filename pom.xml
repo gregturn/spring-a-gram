@@ -10,13 +10,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.2.2.RELEASE</version>
+		<version>1.2.3.RELEASE</version>
 	</parent>
 
 	<properties>
 		<java.version>1.8</java.version>
-		<spring-data-releasetrain.version>Fowler-RC1</spring-data-releasetrain.version>
+		<spring-data-releasetrain.version>Fowler-Release</spring-data-releasetrain.version>
 		<spring-security-oauth2.version>2.0.6.RELEASE</spring-security-oauth2.version>
+		<docker.image.prefix>gregturn</docker.image.prefix>
 	</properties>
 
 	<dependencies>
@@ -133,6 +134,22 @@
 								<directory>${basedir}/src/main/resources/static</directory>
 							</source>
 							<destination>${basedir}/src/main/resources/static</destination>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.2.3</version>
+				<configuration>
+					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+					<dockerDirectory>src/main/docker</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
 						</resource>
 					</resources>
 				</configuration>
