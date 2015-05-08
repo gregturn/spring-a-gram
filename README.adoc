@@ -1,5 +1,7 @@
 :source-highlighter: prettify
 
+image:https://travis-ci.org/gregturn/spring-a-gram.svg["Build Status", link="https://travis-ci.org/gregturn/spring-a-gram"]
+
 Spring-a-Gram is a demonstration of the Spring stack used to upload and view pictures.
 
 * http://projects.spring.io/spring-data-rest[Spring Data REST]
