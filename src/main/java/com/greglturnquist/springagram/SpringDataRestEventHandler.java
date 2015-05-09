@@ -25,9 +25,11 @@ import org.springframework.stereotype.Component;
  * {@link org.springframework.security.core.context.SecurityContextHolder} can be used to retrieve the username,
  * and hence do the user lookup.
  */
+// tag::event-handler-one[]
 @Component
 @RepositoryEventHandler(Item.class)
 public class SpringDataRestEventHandler {
+// end::event-handler-one[]
 
 	private static final Logger log = LoggerFactory.getLogger(SpringDataRestEventHandler.class);
 
@@ -45,13 +47,15 @@ public class SpringDataRestEventHandler {
 		this.entityLinks = entityLinks;
 	}
 
-
+	// tag::event-handler-two[]
 	@HandleBeforeCreate
 	public void applyUserInformationUsingSecurityContext(Item item) {
 		item.setUser(repository.findByName(
 			SecurityContextHolder.getContext().getAuthentication().getName()));
 	}
+	// end::event-handler-two[]
 
+	// tag::event-handler-three[]
 	@HandleAfterCreate
 	public void notifyAllClientsAboutNewItem(Item item) {
 		template.convertAndSend(WebSocketConfiguration.MESSAGE_PREFIX + "/newItem", pathFor(item));
@@ -61,6 +65,7 @@ public class SpringDataRestEventHandler {
 	public void notifyAllClientsAboutItemDeletion(Item item) {
 		template.convertAndSend(WebSocketConfiguration.MESSAGE_PREFIX + "/deleteItem", pathFor(item));
 	}
+	// end::event-handler-three[]
 
 	@HandleAfterLinkDelete
 	public void notifyAllClientsWhenRemovedFromGallery(Item item, Object obj) {
@@ -76,8 +81,10 @@ public class SpringDataRestEventHandler {
 		template.convertAndSend(WebSocketConfiguration.MESSAGE_PREFIX + "/addItemToGallery", pathFor(item));
 	}
 
+	// tag::event-handler-four[]
 	private String pathFor(Item item) {
 		return entityLinks.linkForSingleResource(item.getClass(), item.getId()).toUri().getPath();
 	}
+	// end::event-handler-four[]
 
 }

@@ -1,12 +1,11 @@
 package com.greglturnquist.springagram;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Gallery {
@@ -17,8 +16,10 @@ public class Gallery {
 
 	private String description;
 
+	// tag::items-def[]
 	@OneToMany(mappedBy = "gallery")
 	private List<Item> items;
+	// end::items-def[]
 
 	public long getId() {
 		return id;

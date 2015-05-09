@@ -10,9 +10,11 @@ import org.springframework.hateoas.Link;
  * This will allow "curl localhost:8080/api/items?projection=noImages" to be run, and provide a slimmed down
  * JSON document with just the name and links provided. This applies anywhere an Item is retrieved.
  */
+// tag::projection[]
 @Projection(name = "noImages", types = {Item.class})
 public interface NoImages {
 
 	public Link getHtmlUrl();
 
 }
+// end::projection[]
