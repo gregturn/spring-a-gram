@@ -23,12 +23,16 @@ public class Item {
 	@Lob
 	private String image;
 
+	// tag::gallery-def[]
 	@ManyToOne
 	private Gallery gallery;
+	// end::gallery-def[]
 
+	// tag::user-def[]
 	@JsonIgnore
 	@OneToOne
 	private User user;
+	// end::user-def[]
 
 	private Link htmlUrl;
 
@@ -64,11 +68,13 @@ public class Item {
 		this.user = user;
 	}
 
+	// tag::html-url[]
 	public Link getHtmlUrl() {
 		if (htmlUrl == null) {
 			htmlUrl = linkTo(methodOn(ApplicationController.class).image(this.id)).withRel("htmlUrl");
 		}
 		return htmlUrl;
 	}
+	// end::html-url[]
 
 }

@@ -278,6 +278,7 @@ define(function(require) {
 				return drawGalleryTable(response);
 			});
 
+		// tag::find-unlinked-images[]
 		var itemsReady = follow(api, root, [
 			{ rel: 'items', params: { projection: "noImages"} },
 			'search',
@@ -297,6 +298,7 @@ define(function(require) {
 					});
 				});
 			});
+		// end::find-unlinked-images[]
 
 		stompClient.register([
 			{ route: '/topic/newItem', callback: showNewItem },
