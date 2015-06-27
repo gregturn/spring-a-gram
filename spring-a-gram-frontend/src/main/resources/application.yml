@@ -1,0 +1,15 @@
+# Changes to Spring Data REST's settings
+spring:
+  data:
+    rest:
+      basePath: /api
+
+zuul:
+  routes:
+    api:
+      path: /api/**
+      url: http://localhost:9000
+      stripPrefix: false
+
+
+
