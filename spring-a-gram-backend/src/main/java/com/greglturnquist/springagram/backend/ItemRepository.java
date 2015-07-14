@@ -20,12 +20,12 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
 	// end::save-item[]
 
 	@Override
-	@PreAuthorize("#item?.user?.name == authentication?.name")
+	@PreAuthorize("#item?.user?.name == authentication?.name or hasRole('ROLE_ADMIN')")
 	void delete(@Param("item") Item item);
 
 	// tag::delete[]
 	@Override
-	@PreAuthorize("@itemRepository.findOne(#id)?.user?.name == authentication?.name")
+	@PreAuthorize("@itemRepository.findOne(#id)?.user?.name == authentication?.name or hasRole('ROLE_ADMIN')")
 	void delete(@Param("id") Long id);
 	// end::delete[]
 }

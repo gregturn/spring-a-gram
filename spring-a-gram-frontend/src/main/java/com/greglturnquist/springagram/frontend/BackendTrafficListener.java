@@ -53,7 +53,7 @@ public class BackendTrafficListener {
 	@RabbitListener(queues = BACKEND_CHANNEL)
 	public void handle(@Header(RECEIVED_ROUTING_KEY) String routingKey, String message) {
 
-		log.info("Forwarding <" + message + "> to " + MESSAGE_PREFIX + "/" + routingKey);
+		log.error("Forwarding <" + message + "> to " + MESSAGE_PREFIX + "/" + routingKey);
 		template.convertAndSend(MESSAGE_PREFIX + "/" + routingKey, message);
 	}
 

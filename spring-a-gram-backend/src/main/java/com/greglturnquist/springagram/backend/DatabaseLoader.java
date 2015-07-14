@@ -46,7 +46,7 @@ public class DatabaseLoader {
 		User reacher = new User();
 		reacher.setName("jack");
 		reacher.setPassword("reacher");
-		reacher.setRoles(new String[]{"ROLE_USER"});
+		reacher.setRoles(new String[]{"ROLE_USER", "ROLE_ADMIN"});
 		reacher = userRepository.save(reacher);
 
 		User strange = new User();
@@ -60,21 +60,21 @@ public class DatabaseLoader {
 		runAs(strange.getName(), strange.getPassword(), "ROLE_USER");
 
 		Item cat = itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg"), strange));
-		itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg"), strange));
+		//itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg"), strange));
 
 		runAs(reacher.getName(), reacher.getPassword(), "ROLE_USER");
 
 		Item caterpillar = itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg"), reacher));
-		itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg"), reacher));
+		//itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg"), reacher));
 
 		Gallery catGallery = galleryRepository.save(new Gallery("Collection of cats"));
 		Gallery truckGallery = galleryRepository.save(new Gallery("Collection of trucks"));
 
-		// cat.setGallery(catGallery);
-		// itemRepository.save(cat);
+//		 cat.setGallery(catGallery);
+//		 itemRepository.save(cat);
 
-		// caterpillar.setGallery(truckGallery);
-		// itemRepository.save(caterpillar);
+		 caterpillar.setGallery(truckGallery);
+		 itemRepository.save(caterpillar);
 
 		SecurityContextHolder.clearContext();
 	}

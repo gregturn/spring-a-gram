@@ -1,5 +1,7 @@
 package com.greglturnquist.springagram.backend;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Data
 @ToString(exclude = "password")
 @Entity
-public class User {
+public class User implements Serializable {
 
 	public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 

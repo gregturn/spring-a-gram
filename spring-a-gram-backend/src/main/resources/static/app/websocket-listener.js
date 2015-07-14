@@ -9,6 +9,8 @@ define(function(require) {
 	};
 
 	function register(registrations) {
+		console.log(sockjs);
+		console.log(stomp);
 		var socket = new SockJS('/spring-a-gram');
 		var stompClient = Stomp.over(socket);
 		stompClient.connect({}, function(frame) {

@@ -9,55 +9,38 @@
     <link rel="stylesheet" href="/main.css"/>
 </head>
 <body>
-<header class="page wrapper">
-    <h1>Spring-a-Gram</h1>
-</header>
+    <header class="page wrapper">
+        <h1>Spring-a-Gram</h1>
+    </header>
 
-<section class="wrapper box box--tiny">
+    <section class="wrapper box box--tiny">
 
-    Hello, <span th:text="${#authentication.name}">user</span>.
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Log Out"/>
-    </form>
+        Hello, <span th:text="${#authentication.name}">user</span>.
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Log Out"/>
+        </form>
 
-</section>
+    </section>
 
-<section class="wrapper box box--tiny">
-    <h3>Snap a pic</h3>
+    <section class="wrapper box box--tiny">
+        <h3>Snap a pic</h3>
+        <div id="upload2"></div>
+    </section>
 
-    <form id="upload">
-        <p><input type="file" id="file"/></p>
+    <section class="wrapper box box--tiny">
+        <h3>Add a gallery</h3>
 
-        <p><input type="submit" value="Upload" class="btn btn--responsive"/></p>
-    </form>
-</section>
+        <form th:action="${newGallery.href}" th:object="${gallery}" method="post">
+            <input type="text" th:field="*{description}"/>
+            <input type="submit" class="btn btn--responsive"/>
+        </form>
+    </section>
 
-<section class="wrapper box box--tiny">
-    <h3>Add a gallery</h3>
+    <div id="react"></div>
 
-    <form th:action="${newGallery.href}" th:object="${gallery}" method="post">
-        <input type="text" th:field="*{description}"/>
-        <input type="submit" class="btn btn--responsive"/>
-    </form>
-</section>
-
-<section class="wrapper">
-    <h3>Galleries</h3>
-
-    <div id="gallery"></div>
-</section>
-
-<section class="wrapper">
-    <hr/>
-</section>
-
-<section class="wrapper">
-    <h3>Unlinked Images</h3>
-
-    <div id="images"></div>
-
-    <div th:include="_links :: springone"/>
-</section>
+    <section class="wrapper">
+        <div th:include="_links :: springone"/>
+    </section>
 
 </body>
 </html>

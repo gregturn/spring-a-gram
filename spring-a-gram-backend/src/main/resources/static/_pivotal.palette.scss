@@ -1,0 +1,162 @@
+// Accent colors - teal for now
+// -------------------------
+
+$teal-1: #025a53;
+$teal-2: #00776d;
+$teal-3: #00a79d;
+$teal-4: #92d0c0;
+$teal-5: #71ffda;
+
+
+// Grays - use these rather than the bootstrap grays
+// -------------------------
+
+$gray-1: #282828;
+$gray-2: #424242;
+$gray-3: #686868;
+$gray-4: #8d8e8e;
+$gray-5: #b4b4b4;
+$gray-6: #c3c5c7;
+$gray-7: #d4d9d9;
+$gray-8: #e0e4e5;
+$gray-9: #ecefef;
+$gray-10: #F8F8F8;
+$gray-11: white;
+
+// Shadows
+// -------------------------
+
+$shadow-1 : rgba(0, 0, 0, 0.3);
+$shadow-2 : rgba(0, 0, 0, 0.14);
+$shadow-3 : rgba(0, 0, 0, 0.07);
+$shadow-4 : rgba(0, 0, 0, 0.035);
+$glow-1 : rgba(255,255,255,0.1);
+$glow-2 : rgba(255,255,255,0.2);
+$glow-3 : rgba(255,255,255,0.4);
+$glow-4 : rgba(255,255,255,0.6);
+$glow-5 : rgba(255,255,255,1);
+
+// Blue
+// -------------------------
+
+$blue-1: #1a739e;
+$blue-2: #2185c5;
+$blue-3: #49a8d5;
+$blue-4: #a7c9e0;
+$blue-5: #c3f4ff;
+
+// Navy
+// -------------------------
+
+$navy-1: #243640;
+$navy-2: #3f484f;
+$navy-3: #525c63;
+
+// Red
+// -------------------------
+
+$red-1: #b31612;
+$red-2: #eb3d46;
+$red-3: #ff434c;
+$red-4: #febfc1;
+
+// Green
+// -------------------------
+$green-1: #165450;
+$green-2: #AFD79B;
+
+// Yellow
+// -------------------------
+$yellow-1: #B59033;
+$yellow-2: #F1C148;
+$yellow-3: #F9F3C3;
+
+// Orange
+// -------------------------
+$orange-1: null;
+$orange-2: null;
+
+
+// Background Colors
+// -------------------------
+
+// gray backgrounds
+$neutral-1: $gray-1;
+$neutral-2: $gray-2;
+$neutral-3: $gray-3;
+$neutral-4: $gray-4;
+$neutral-5: $gray-5;
+$neutral-6: $gray-6;
+$neutral-7: $gray-7;
+$neutral-8: $gray-8;
+$neutral-9: $gray-9;
+$neutral-10: $gray-10;
+$neutral-11: $gray-11;
+
+// Grays (Bootstrap only, don't use directly) TODO: can we eliminate these entirely without modifying bootstrap base files?
+// -------------------------
+
+$gray-base:              #000 !default;
+$gray-darker:            lighten(#000, 13.5%) !default; // #222 bootstrap only
+$gray-dark:              lighten(#000, 20%) !default;   // #333 bootstrap only
+$gray:                   lighten(#000, 33.5%) !default; // #555 bootstrap only
+$gray-light:             lighten(#000, 60%) !default;   // #999 bootstrap only
+$gray-lighter:           lighten(#000, 93.5%) !default; // #eee bootstrap only
+
+// Dark colors
+// -------------------------
+
+$dark-1:                $navy-1;
+$dark-2:                $navy-2;
+$dark-3:                $navy-3;
+
+// Brand colors
+// -------------------------
+
+$brand-1:               $teal-1;
+$brand-2:               $teal-2;
+$brand-3:               $teal-3;
+$brand-4:               $teal-4;
+$brand-5:               $teal-5;
+
+$brand-primary:         #1b92cb !default;
+$brand-success:         #5cb85c !default;
+$brand-warning:         #f0ad4e !default;
+$brand-danger:          #CA7070 !default;
+$brand-info:            #5bc0de !default;
+
+// Accents
+// -------------------------
+
+$accent-1: $blue-1;
+$accent-2: $blue-2;
+$accent-3: $blue-3;
+$accent-4: $blue-4;
+$accent-5: $blue-5;
+
+// Errors
+// -------------------------
+
+$error-1: $red-1;
+$error-2: $red-2;
+$error-3: $red-3;
+$error-4: $red-4;
+
+// Warnings
+// -------------------------
+
+$warn-1: $yellow-1;
+$warn-2: $yellow-2;
+$warn-3: $yellow-3;
+
+// Success
+// -------------------------
+
+$success-1: $green-1;
+$success-2: $green-2;
+
+
+// login page colors
+// --------------------------
+$dark_grey:             #3b3c41;
+$almost_white:          #ededed;

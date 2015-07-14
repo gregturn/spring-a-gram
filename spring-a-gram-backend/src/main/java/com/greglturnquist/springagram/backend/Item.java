@@ -9,11 +9,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
+import lombok.ToString;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
 @Entity
+@ToString(exclude = "gallery")
 public class Item {
 
 	@Id

@@ -1,0 +1,119 @@
+////////////////////////////////////////////////////////////////////////
+// Pre-sets must be done BEFORE a module is imported. Some of these settings are at the top, while others
+// are right before the import statement.
+////////////////////////////////////////////////////////////////////////
+
+@import "pivotal.palette";
+
+// Spring's palette (found on spring.io)
+$spring-green: #6db33f;
+$spring-black: #34302d;
+$spring-antique-white: #F1F1F1;
+$spring-white: #eee;
+
+// spring.io coloring
+$brand-color: $spring-green;
+$brand-highlight: $spring-white;
+$brand-highlight2: $spring-antique-white;
+$brand-lowlight: $spring-black;
+
+// pivotal.io coloring
+$brand-color: $green-2;
+$brand-highlight: white;
+$brand-highlight2: $spring-antique-white;
+$brand-lowlight: $teal-3;
+
+//$inuit-base-font-size:  12px;
+$inuit-base-line-height:  18px;
+$inuit-base-background-color: $brand-highlight2;
+
+////////////////////////////////////////////////////////////////////////
+// Here are the layers of inuit. Each layer needs to have its order preserved, but modules within the same layer
+// can be imported in any order.
+////////////////////////////////////////////////////////////////////////
+
+// Settings layer
+@import "bower_components/inuit-defaults/settings.defaults";
+@import "bower_components/inuit-responsive-settings/settings.responsive";
+
+// Tools layer
+@import "bower_components/inuit-functions/tools.functions";
+@import "bower_components/inuit-mixins/tools.mixins";
+@import "bower_components/inuit-responsive-tools/tools.responsive";
+
+// Generic layer
+@import "bower_components/inuit-normalize/generic.normalize";
+@import "bower_components/inuit-box-sizing/generic.box-sizing";
+
+@import "bower_components/inuit-page/base.page";
+
+// Objects layer
+$inuit-enable-layout--large: true;
+@import "bower_components/inuit-layout/objects.layout";
+
+$inuit-enable-table--rows: true;
+$inuit-enable-table--cosy: true;
+@import "bower_components/inuit-tables/objects.tables";
+
+//$inuit-enable-btn--full: true;
+$inuit-enable-btn--small: true;
+$inuit-btn-background: $brand-color;
+$inuit-btn-color: $brand-highlight;
+@import "bower_components/inuit-buttons/objects.buttons";
+
+$inuit-enable-box--tiny: true;
+@import "bower_components/inuit-box/objects.box";
+
+// Trumps layer
+@import "bower_components/inuit-widths/trumps.widths";
+@import "bower_components/inuit-clearfix/trumps.clearfix";
+@import "bower_components/inuit-widths-responsive/trumps.widths-responsive";
+
+////////////////////////////////////////////////////////////////////////
+// Custom CSS additions and overrides
+//
+// This isn't to override settings from inuit, but instead, to override or add to CSS generated
+// by inuit.
+////////////////////////////////////////////////////////////////////////
+
+// Plugin the Ubuntu font
+html {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+// Dress up the top row of a "page"
+// Add a small amount of padding at the bottom of a "page"
+$inuit-base-spacing-unit--tiny: round($inuit-base-spacing-unit / 8);
+.page {
+  border-top: $brand-color solid 4px;
+  color: $brand-highlight;
+  background-color: $brand-lowlight;
+  width: 100%;
+  margin-top: 0em;
+  padding-bottom: $inuit-base-spacing-unit--tiny;
+}
+
+// Wrap a given block with insets so it isn't pushed to the edge of the browser
+.wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+// Fine tune the bar at the top, so it shrinks vertically on portable devices
+h1 {
+  @include media-query(portable) {
+    margin: 0.1em 0;
+  }
+}
+
+// Custom adjustments for single items
+img {
+  height: $inuit-base-line-height*2;
+}
+
+th {
+  text-align: left;
+}
+

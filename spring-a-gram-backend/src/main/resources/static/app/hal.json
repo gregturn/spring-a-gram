@@ -1,0 +1,48 @@
+{
+  "_links" : {
+    "self" : {
+      "href" : "http://spring-a-gram.cfapps.io/api/items{?page,size,sort,projection}",
+      "templated" : true
+    },
+    "search" : {
+      "href" : "http://spring-a-gram.cfapps.io/api/items/search"
+    }
+  },
+  "_embedded" : {
+    "items" : [ {
+      "image": "http://spring-a-gram.cfapps.io/raw/1",
+      "htmlUrl" : {
+        "href" : "http://spring-a-gram.cfapps.io/image/1"
+      },
+      "_links" : {
+        "self" : {
+          "href" : "http://spring-a-gram.cfapps.io/api/items/1{?projection}",
+          "templated" : true
+        },
+        "gallery" : {
+          "href" : "http://spring-a-gram.cfapps.io/api/items/1/gallery"
+        }
+      }
+    }, {
+      "image": "http://spring-a-gram.cfapps.io/raw/2",
+      "htmlUrl" : {
+        "href" : "http://spring-a-gram.cfapps.io/image/2"
+      },
+      "_links" : {
+        "self" : {
+          "href" : "http://spring-a-gram.cfapps.io/api/items/2{?projection}",
+          "templated" : true
+        },
+        "gallery" : {
+          "href" : "http://spring-a-gram.cfapps.io/api/items/2/gallery"
+        }
+      }
+    } ]
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 2,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}
