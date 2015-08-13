@@ -10,6 +10,14 @@ zuul:
       path: /api/**
       url: http://localhost:9000
       stripPrefix: false
+    fileupload:
+      path: /upload/**
+      url: http://localhost:7000
+      stripPrefix: false
+    filereader:
+      path: /files/**
+      url: http://localhost:7000
+      stripPrefix: false
 
 
 

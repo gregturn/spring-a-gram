@@ -31,7 +31,6 @@ define(function (require) {
 				'search',
 				{ rel: 'findByGalleryIsNull', params: { projection: 'owner'}}
 			]).done(function (response) {
-				console.log(response);
 				self.setState({
 					data: response.entity._embedded.items, galleries: self.state.galleries,
 					selectedGallery: self.state.selectedGallery
@@ -41,7 +40,6 @@ define(function (require) {
 		loadGalleriesFromServer: function () {
 			var self = this;
 			follow(client, root, ['galleries']).done(function (galleries) {
-				console.log(galleries);
 				when.all(galleries.entity._embedded.galleries.map(self.loadItemsForGallery)).done(function (galleries) {
 					self.setState({
 						data: self.state.data,

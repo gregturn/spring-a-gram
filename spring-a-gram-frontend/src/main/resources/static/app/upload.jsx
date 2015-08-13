@@ -1,40 +1,56 @@
-define(function(require) {
+define(function (require) {
 	'use strict';
 
 	var React = require('react');
 	var client = require('./api');
+	var when = require('when');
+	var follow = require('./follow');
+
+	var root = '/api';
 
 	var FileForm = React.createClass({
-		getInitialState: function() {
-			return {data_uri: null};
-		},
-		handleSubmit: function(e) {
+		handleSubmit: function (e) {
 			e.preventDefault();
 			var self = this;
-			client({
-				method: 'POST',
-				path: self.props.url,
-				entity: {image: self.state.data_uri},
-				headers: {'Content-Type': 'application/json'}
-			}).done(function(response) {
-				self.setState({data_uri: null});
+
+			when.promise(function (resolve, reject) {
+				var request = new XMLHttpRequest();
+
+				request.onerror = reject;
+				request.onload = function () {
+					resolve(request);
+				}
+
+				var selectedFile = React.findDOMNode(self.refs.fileInput).files[0];
+
+				var formData = new FormData();
+				formData.append("name", selectedFile.name);
+				formData.append("file", selectedFile);
+
+				request.open('POST', '/upload');
+				request.send(formData);
+			}).then(function (response) {
+				return response.getResponseHeader("Location");
+			}).then(function (location) {
+				if (location === null) {
+					return "No location header";
+				}
+				return follow(client, root, ['items']).then(function(response) {
+					return client({
+						method: 'POST',
+						path: response.entity._links.self.href,
+						entity: {image: location},
+						headers: {'Content-Type': 'application/json'}
+					});
+				});
+			}).done(function (response) {
+				React.findDOMNode(self.refs.fileInput).value = null;
 			});
 		},
-		handleFile: function(e) {
-			var self = this;
-			var reader = new FileReader();
-			var file = e.target.files[0];
-
-			reader.onload = function(upload) {
-				self.setState({data_uri: upload.target.result});
-			}
-
-			reader.readAsDataURL(file);
-		},
-		render: function() {
+		render: function () {
 			return (
 				<form onSubmit={this.handleSubmit} encType="multipart/form-data">
-					<p><input type="file" onChange={this.handleFile}></input></p>
+					<p><input type="file" ref="fileInput"></input></p>
 					<p><input type="submit" value="Upload" className="btn btn--responsive"></input></p>
 				</form>
 			)
@@ -42,7 +58,7 @@ define(function(require) {
 	});
 
 	React.render(
-		<FileForm url="/api/items" />,
+		<FileForm url="/api/items"/>,
 		document.getElementById('upload2')
 	);
 

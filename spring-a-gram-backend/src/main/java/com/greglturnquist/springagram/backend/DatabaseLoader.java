@@ -57,14 +57,14 @@ public class DatabaseLoader {
 
 		SecurityContextHolder.clearContext();
 
-		runAs(strange.getName(), strange.getPassword(), "ROLE_USER");
+//		runAs(strange.getName(), strange.getPassword(), "ROLE_USER");
 
-		Item cat = itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg"), strange));
+//		Item cat = itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg"), strange));
 		//itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg"), strange));
 
 		runAs(reacher.getName(), reacher.getPassword(), "ROLE_USER");
 
-		Item caterpillar = itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg"), reacher));
+//		Item caterpillar = itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg"), reacher));
 		//itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg"), reacher));
 
 		Gallery catGallery = galleryRepository.save(new Gallery("Collection of cats"));
@@ -73,8 +73,8 @@ public class DatabaseLoader {
 //		 cat.setGallery(catGallery);
 //		 itemRepository.save(cat);
 
-		 caterpillar.setGallery(truckGallery);
-		 itemRepository.save(caterpillar);
+//		 caterpillar.setGallery(truckGallery);
+//		 itemRepository.save(caterpillar);
 
 		SecurityContextHolder.clearContext();
 	}
