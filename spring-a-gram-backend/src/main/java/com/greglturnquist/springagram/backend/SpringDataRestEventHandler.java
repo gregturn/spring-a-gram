@@ -5,8 +5,8 @@ import static com.greglturnquist.springagram.backend.WebSocketConfiguration.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.rest.core.annotation.HandleAfterCreate;
 import org.springframework.data.rest.core.annotation.HandleAfterDelete;
 import org.springframework.data.rest.core.annotation.HandleAfterLinkDelete;
@@ -38,19 +38,19 @@ public class SpringDataRestEventHandler {
 	private static final Logger log = LoggerFactory.getLogger(SpringDataRestEventHandler.class);
 
 	private final UserRepository repository;
-	private final RabbitTemplate rabbit;
 	private final EntityLinks entityLinks;
 	private final ResourceMappings resourceMappings;
 	private final RepositoryRestConfiguration config;
+	private final StringRedisTemplate redis;
 	private final SimpMessagingTemplate websocket;
 
 	@Autowired
-	public SpringDataRestEventHandler(UserRepository repository, RabbitTemplate rabbit, EntityLinks entityLinks,
+	public SpringDataRestEventHandler(UserRepository repository, StringRedisTemplate redis, EntityLinks entityLinks,
 									  ResourceMappings resourceMappings, RepositoryRestConfiguration config,
 									  SimpMessagingTemplate websocket) {
 
 		this.repository = repository;
-		this.rabbit = rabbit;
+		this.redis = redis;
 		this.entityLinks = entityLinks;
 		this.resourceMappings = resourceMappings;
 		this.config = config;
@@ -107,7 +107,7 @@ public class SpringDataRestEventHandler {
 
 	private void publish(String routingKey, String message) {
 
-		rabbit.convertAndSend(RabbitConfig.EXCHANGE, routingKey, message);
+		redis.convertAndSend(MESSAGE_PREFIX + "/" + routingKey, message);
 		websocket.convertAndSend(MESSAGE_PREFIX + "/" + routingKey, message);
 	}
 

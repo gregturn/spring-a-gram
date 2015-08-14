@@ -15,18 +15,17 @@
  */
 package com.greglturnquist.springagram.frontend;
 
-import static com.greglturnquist.springagram.frontend.WebSocketConfiguration.*;
-import static org.springframework.amqp.support.AmqpHeaders.*;
+import java.nio.charset.Charset;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.annotation.EnableRabbit;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.data.redis.connection.MessageListener;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.listener.PatternTopic;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +36,6 @@ import org.springframework.stereotype.Component;
  */
 // tag::code[]
 @Component
-@EnableRabbit
 public class BackendTrafficListener {
 
 	private static final String BACKEND_CHANNEL = "spring-a-gram";
@@ -50,16 +48,27 @@ public class BackendTrafficListener {
 		this.template = template;
 	}
 
-	@RabbitListener(queues = BACKEND_CHANNEL)
-	public void handle(@Header(RECEIVED_ROUTING_KEY) String routingKey, String message) {
+	@Bean
+	RedisMessageListenerContainer container(RedisConnectionFactory factory, MessageListener messageListener) {
 
-		log.error("Forwarding <" + message + "> to " + MESSAGE_PREFIX + "/" + routingKey);
-		template.convertAndSend(MESSAGE_PREFIX + "/" + routingKey, message);
+		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+		container.setConnectionFactory(factory);
+		container.addMessageListener(messageListener, new PatternTopic("/topic/*"));
+		return container;
 	}
 
 	@Bean
-	public Queue queue() {
-		return new Queue(BACKEND_CHANNEL, false);
+	MessageListener messageListener() {
+
+		return (message, pattern) ->
+				handle(new String(message.getBody(),Charset.defaultCharset()),
+						new String(message.getChannel(),Charset.defaultCharset()));
+	}
+
+	public void handle(String message, String destination) {
+
+		log.error("Forwarding <" + message + "> to " + destination);
+		template.convertAndSend(destination, message);
 	}
 
 }

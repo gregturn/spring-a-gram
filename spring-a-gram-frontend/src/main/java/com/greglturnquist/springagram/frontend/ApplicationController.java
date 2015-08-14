@@ -4,6 +4,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 import static org.springframework.hateoas.mvc.TypeReferences.*;
 
 import java.net.URI;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +86,9 @@ public class ApplicationController {
 		return new ModelAndView("oneImage")
 				.addObject("item", itemResource.getBody().getContent())
 				.addObject("hashtag", hashtag)
-				.addObject("links", linkTo(methodOn(ApplicationController.class).index()).withRel("All Images"));
+				.addObject("links", Arrays.asList(
+						linkTo(methodOn(ApplicationController.class).index()).withRel("All Images"),
+						new Link(itemResource.getBody().getContent().getImage()).withRel("Raw Image")));
 	}
 
 }
