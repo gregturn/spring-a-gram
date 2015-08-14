@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: ${vcap.application.name:spring-a-gram-mongodb}
+
+server:
+  port: 0  # Spring Boot randomly assigns a port number
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    hostname: ${vcap.application.uris[0]:localhost}
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}

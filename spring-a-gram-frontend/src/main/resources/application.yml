@@ -23,9 +23,9 @@ zuul:
       stripPrefix: false
     fileupload:
       path: /upload/**
-      url: http://localhost:7000
+      serviceId: spring-a-gram-mongodb
       stripPrefix: false
     filereader:
       path: /files/**
-      url: http://localhost:7000
+      serviceId: spring-a-gram-mongodb
       stripPrefix: false
