@@ -17,11 +17,13 @@ package com.greglturnquist.springagram.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @author Greg Turnquist
  */
 @SpringBootApplication
+@EnableDiscoveryClient
 public class BackendApplication {
 
 	public static void main(String[] args) {

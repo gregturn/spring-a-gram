@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: ${vcap.application.name:spring-a-gram-backend}
+  data:
+    rest:
+      basePath: /api
+
+server:
+  port: 0  # Spring Boot randomly assigns a port number
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    hostname: ${vcap.application.uris[0]:localhost}
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+logging:
+  level:
+    ROOT: INFO
+    com.gregturnquist.springagram: DEBUG
+
+---
+spring:
+  profiles: cloud
+
+eureka:
+  instance:
+    nonSecurePort: 80

@@ -1,14 +1,25 @@
-# Changes to Spring Data REST's settings
 spring:
+  application:
+    name: ${vcap.application.name:spring-a-gram-frontend}
   data:
     rest:
       basePath: /api
+
+server:
+  port: 8080
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    hostname: ${vcap.application.uris[0]:localhost}
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
 zuul:
   routes:
     api:
       path: /api/**
-      url: http://localhost:9000
+      serviceId: spring-a-gram-backend
       stripPrefix: false
     fileupload:
       path: /upload/**
@@ -18,6 +29,3 @@ zuul:
       path: /files/**
       url: http://localhost:7000
       stripPrefix: false
-
-
-
