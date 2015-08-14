@@ -44,14 +44,14 @@ public class DatabaseLoader {
 	public void init() throws IOException {
 
 		User reacher = new User();
-		reacher.setName("jack");
-		reacher.setPassword("reacher");
+		reacher.setName("greg");
+		reacher.setPassword("turnquist");
 		reacher.setRoles(new String[]{"ROLE_USER", "ROLE_ADMIN"});
 		reacher = userRepository.save(reacher);
 
 		User strange = new User();
-		strange.setName("doctor");
-		strange.setPassword("strange");
+		strange.setName("roy");
+		strange.setPassword("clarkson");
 		strange.setRoles(new String[]{"ROLE_USER"});
 		strange = userRepository.save(strange);
 
