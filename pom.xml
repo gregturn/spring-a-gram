@@ -11,6 +11,7 @@
 		<module>spring-a-gram-backend</module>
 		<module>spring-a-gram-frontend</module>
 		<module>spring-a-gram-mongodb-fileservice</module>
+		<module>spring-a-gram-s3-fileservice</module>
 	</modules>
 	<packaging>pom</packaging>
 

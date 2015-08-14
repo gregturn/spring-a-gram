@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ${vcap.application.name:spring-a-gram-mongodb-fileservice}
+    name: ${vcap.application.name:spring-a-gram-s3-fileservice}
 
 server:
   port: 0  # Spring Boot randomly assigns a port number

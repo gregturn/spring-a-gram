@@ -29,3 +29,27 @@ zuul:
       path: /files/**
       serviceId: spring-a-gram-mongodb-fileservice
       stripPrefix: false
+
+logging:
+  level:
+    ROOT: INFO
+    com.gregturnquist.springagram: DEBUG
+
+---
+spring:
+  profiles: s3
+
+zuul:
+  routes:
+    api:
+      path: /api/**
+      serviceId: spring-a-gram-backend
+      stripPrefix: false
+    fileupload:
+      path: /upload/**
+      serviceId: spring-a-gram-s3-fileservice
+      stripPrefix: false
+    filereader:
+      path: /files/**
+      serviceId: spring-a-gram-s3-fileservice
+      stripPrefix: false
