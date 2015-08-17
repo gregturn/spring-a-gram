@@ -7,7 +7,7 @@
 	<artifactId>spring-a-gram</artifactId>
 	<version>0.1.0</version>
 	<modules>
-		<module>eureka-server</module>
+		<module>spring-a-gram-eureka-server</module>
 		<module>spring-a-gram-backend</module>
 		<module>spring-a-gram-frontend</module>
 		<module>spring-a-gram-mongodb-fileservice</module>
@@ -41,13 +41,16 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+
 		<spring-data-releasetrain.version>Gosling-M1</spring-data-releasetrain.version>
 		<spring-cloud-releasetrain.version>Angel.SR3</spring-cloud-releasetrain.version>
+
 		<spring-security-oauth2.version>2.0.6.RELEASE</spring-security-oauth2.version>
 		<spring-hateoas.version>0.17.0.RELEASE</spring-hateoas.version>
-		<docker.image.prefix>gregturn</docker.image.prefix>
 		<spring-session.version>1.0.1.RELEASE</spring-session.version>
 		<jedis.version>2.7.2</jedis.version>
+
+		<docker.image.prefix>gregturn</docker.image.prefix>
 	</properties>
 
 	<dependencies>
@@ -57,20 +60,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-messaging</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security.oauth</groupId>
-			<artifactId>spring-security-oauth2</artifactId>
-			<version>${spring-security-oauth2.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.session</groupId>

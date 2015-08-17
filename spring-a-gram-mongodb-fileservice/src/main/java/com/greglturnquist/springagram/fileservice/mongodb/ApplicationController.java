@@ -95,8 +95,6 @@ public class ApplicationController {
 	@ResponseBody
 	public ResponseEntity<InputStreamResource> getFile(@PathVariable String filename) {
 
-		System.out.println("Looking for " + filename);
-
 		GridFsResource file = this.fileService.findOne(filename);
 
 		try {

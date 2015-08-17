@@ -3,22 +3,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.demo</groupId>
-	<artifactId>eureka-server</artifactId>
-	<version>0.1.0</version>
-	<packaging>jar</packaging>
-	<name>Eureka Server</name>
-	<description>Eureka Server</description>
-
 	<parent>
-		<groupId>org.springframework.cloud</groupId>
-		<artifactId>spring-cloud-starter-parent</artifactId>
-		<version>Angel.SR3</version>
+		<groupId>com.greglturnquist.springagram</groupId>
+		<artifactId>spring-a-gram</artifactId>
+		<version>0.1.0</version>
 	</parent>
 
-	<properties>
-		<java.version>1.8</java.version>
-	</properties>
+	<groupId>com.greglturnquist.springagram</groupId>
+	<artifactId>spring-a-gram-eureka-server</artifactId>
+	<version>0.1.0</version>
 
 	<dependencies>
 		<dependency>
@@ -28,11 +21,6 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka-server</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -56,27 +44,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<repositories>
-		<repository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/libs-snapshot</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/libs-snapshot</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 
 </project>
