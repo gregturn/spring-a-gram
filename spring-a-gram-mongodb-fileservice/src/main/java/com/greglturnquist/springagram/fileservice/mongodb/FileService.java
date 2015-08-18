@@ -41,6 +41,7 @@ public class FileService {
 	}
 
 	public void saveFile(InputStream input, String filename) {
+
 		this.gridFsTemplate.delete(query(whereFilename().is(filename)));
 		this.gridFsTemplate.store(input, filename, MediaType.IMAGE_JPEG_VALUE);
 	}
@@ -54,8 +55,13 @@ public class FileService {
 	}
 
 	public void deleteAll() {
+
 		for (GridFsResource resource : this.gridFsTemplate.getResources("*")) {
-			this.gridFsTemplate.delete(query(whereFilename().is(resource.getFilename())));
+			this.deleteOne(resource.getFilename());
 		}
+	}
+
+	public void deleteOne(String filename) {
+		this.gridFsTemplate.delete(query(whereFilename().is(filename)));
 	}
 }

@@ -18,8 +18,8 @@ package com.greglturnquist.springagram.fileservice.s3;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 import java.io.IOException;
-
-import javax.servlet.http.HttpServletResponse;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,17 +28,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -46,7 +44,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 /**
  * @author Greg Turnquist
  */
-@Controller
+@RestController
 public class ApplicationController {
 
 	private static final Logger log = LoggerFactory.getLogger(ApplicationController.class);
@@ -58,19 +56,21 @@ public class ApplicationController {
 		this.fileService = fileService;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/upload")
-	public void newFile(@RequestParam("name") String filename,
-			@RequestParam("file") MultipartFile file, HttpServletResponse response) {
+	@RequestMapping(method = RequestMethod.POST, value = "/files")
+	public ResponseEntity<?> newFile(@RequestParam("name") String filename, @RequestParam("file") MultipartFile file) {
 
 		try {
 			this.fileService.saveFile(file.getInputStream(), file.getSize(), filename);
-		} catch (IOException e) {
-			throw new UnableToProcessFileException();
+
+			Link link = linkTo(methodOn(ApplicationController.class).getFile(filename)).withRel(filename);
+			return ResponseEntity.created(new URI(link.getHref())).build();
+
+		} catch (IOException | URISyntaxException e) {
+			return ResponseEntity.badRequest().body("Couldn't process the request");
 		}
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/files")
-	@ResponseBody
 	public ResponseEntity<ResourceSupport> listFiles() throws IOException {
 
 		Resource[] files = this.fileService.findAll();
@@ -78,7 +78,7 @@ public class ApplicationController {
 		ResourceSupport resources = new ResourceSupport();
 
 		for (Resource file : files) {
-			resources.add(linkTo(methodOn(ApplicationController.class).file(file.getFilename()))
+			resources.add(linkTo(methodOn(ApplicationController.class).getFile(file.getFilename()))
 					.withRel(file.getFilename()));
 		}
 
@@ -86,8 +86,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/files/{filename}")
-	@ResponseBody
-	public ResponseEntity<InputStreamResource> file(@PathVariable String filename) throws IOException {
+	public ResponseEntity<?> getFile(@PathVariable String filename) throws IOException {
 
 		Resource file = this.fileService.findOne(filename);
 
@@ -97,16 +96,16 @@ public class ApplicationController {
 					.body(new InputStreamResource(file.getInputStream()));
 		}
 		catch (IOException e) {
-			throw new UnableToProcessFileException();
+			return ResponseEntity.badRequest().body("Couldn't process the request");
 		}
 	}
 
-	@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE, reason = "File is empty")
-	static class EmptyFileException extends RuntimeException {
-	}
+	@RequestMapping(method = RequestMethod.DELETE, value = "/files/{filename}")
+	public ResponseEntity<?> deleteFile(@PathVariable String filename) {
 
-	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Couldn't process the request")
-	static class UnableToProcessFileException extends RuntimeException {
+		this.fileService.deleteOne(filename);
+
+		return ResponseEntity.noContent().build();
 	}
 
 	@Configuration

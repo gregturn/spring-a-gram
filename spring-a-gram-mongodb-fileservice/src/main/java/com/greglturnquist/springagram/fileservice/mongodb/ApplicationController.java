@@ -18,8 +18,8 @@ package com.greglturnquist.springagram.fileservice.mongodb;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 import java.io.IOException;
-
-import javax.servlet.http.HttpServletResponse;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,17 +30,14 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -48,7 +45,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 /**
  * @author Greg Turnquist
  */
-@Controller
+@RestController
 public class ApplicationController {
 
 	private static final Logger log = LoggerFactory.getLogger(ApplicationController.class);
@@ -60,25 +57,25 @@ public class ApplicationController {
 		this.fileService = fileService;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/upload")
-	public void newFile(@RequestParam("name") String filename,
-			@RequestParam("file") MultipartFile file, HttpServletResponse response) {
+	@RequestMapping(method = RequestMethod.POST, value = "/files")
+	public ResponseEntity<?> newFile(@RequestParam("name") String filename, @RequestParam("file") MultipartFile file) {
 
 		if (!file.isEmpty()) {
 			try {
 				this.fileService.saveFile(file.getInputStream(), filename);
+
 				Link link = linkTo(methodOn(ApplicationController.class).getFile(filename)).withRel(filename);
-				response.addHeader(HttpHeaders.LOCATION, link.getHref());
-			} catch (IOException e) {
-				throw new UnableToProcessFileException();
+				return ResponseEntity.created(new URI(link.getHref())).build();
+
+			} catch (IOException | URISyntaxException e) {
+				return ResponseEntity.badRequest().body("Couldn't process the request");
 			}
 		} else {
-			throw new EmptyFileException();
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("File is empty");
 		}
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/files")
-	@ResponseBody
 	public ResponseEntity<ResourceSupport> listAllFiles() {
 
 		ResourceSupport files = new ResourceSupport();
@@ -92,10 +89,13 @@ public class ApplicationController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/files/{filename}")
-	@ResponseBody
-	public ResponseEntity<InputStreamResource> getFile(@PathVariable String filename) {
+	public ResponseEntity<?> getFile(@PathVariable String filename) {
 
 		GridFsResource file = this.fileService.findOne(filename);
+
+		if (file == null) {
+			return ResponseEntity.notFound().build();
+		}
 
 		try {
 			return ResponseEntity.ok().contentLength(file.contentLength())
@@ -103,18 +103,21 @@ public class ApplicationController {
 					.body(new InputStreamResource(file.getInputStream()));
 		}
 		catch (IOException e) {
-			throw new UnableToProcessFileException();
+			return ResponseEntity.badRequest().body("Couldn't process the request");
 		}
 	}
 
-	@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE, reason = "File is empty")
-	static class EmptyFileException extends RuntimeException {
+	@RequestMapping(method = RequestMethod.DELETE, value = "/files/{filename}")
+	public ResponseEntity<?> deleteFile(@PathVariable String filename) {
+
+		this.fileService.deleteOne(filename);
+
+		return ResponseEntity.noContent().build();
 	}
 
-	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Couldn't process the request")
-	static class UnableToProcessFileException extends RuntimeException {
-	}
-
+	/**
+	 * Suffixes like ".jpg" should be part of the path and not extracted for content negotiation.
+	 */
 	@Configuration
 	static class AllResources extends WebMvcConfigurerAdapter {
 

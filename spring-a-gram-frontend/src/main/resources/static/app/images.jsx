@@ -107,8 +107,13 @@ define(function (require) {
 		onDelete: function (item) {
 			client({
 				method: 'DELETE',
-				path: item._links.self.href.split('{')[0]
-			}).done(function () {/* Let the websocket handler update the state */
+				path: item.image
+			}).then(response =>
+				client({
+					method: 'DELETE',
+					path: item._links.self.href.split('{')[0]
+				})
+			).done(function () {/* Let the websocket handler update the state */
 				},
 				function (response) {
 					if (response.status.code === 403) {

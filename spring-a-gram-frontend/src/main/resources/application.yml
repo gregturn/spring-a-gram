@@ -21,11 +21,7 @@ zuul:
       path: /api/**
       serviceId: spring-a-gram-backend
       stripPrefix: false
-    fileupload:
-      path: /upload/**
-      serviceId: spring-a-gram-mongodb-fileservice
-      stripPrefix: false
-    filereader:
+    files:
       path: /files/**
       serviceId: spring-a-gram-mongodb-fileservice
       stripPrefix: false
@@ -45,11 +41,7 @@ zuul:
       path: /api/**
       serviceId: spring-a-gram-backend
       stripPrefix: false
-    fileupload:
-      path: /upload/**
-      serviceId: spring-a-gram-s3-fileservice
-      stripPrefix: false
-    filereader:
+    files:
       path: /files/**
       serviceId: spring-a-gram-s3-fileservice
       stripPrefix: false

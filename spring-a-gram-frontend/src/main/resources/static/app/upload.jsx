@@ -27,7 +27,7 @@ define(function (require) {
 				formData.append("name", selectedFile.name);
 				formData.append("file", selectedFile);
 
-				request.open('POST', '/upload');
+				request.open('POST', '/files');
 				request.send(formData);
 			}).then(function (response) {
 				return response.getResponseHeader("Location");
