@@ -45,3 +45,5 @@ zuul:
       path: /files/**
       serviceId: spring-a-gram-s3-fileservice
       stripPrefix: false
+      ribbon:
+        ReadTimeout: 1000     # uploads need a little more time
