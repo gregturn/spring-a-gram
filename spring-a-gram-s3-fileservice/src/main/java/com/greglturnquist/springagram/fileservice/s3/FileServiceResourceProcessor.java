@@ -15,6 +15,8 @@
  */
 package com.greglturnquist.springagram.fileservice.s3;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+
 import org.springframework.data.rest.webmvc.RepositoryLinksResource;
 import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.stereotype.Component;
@@ -30,7 +32,7 @@ public class FileServiceResourceProcessor implements ResourceProcessor<Repositor
 	@Override
 	public RepositoryLinksResource process(RepositoryLinksResource resources) {
 
-		// TODO Add link to file lister
+		resources.add(linkTo(methodOn(ApplicationController.class).listFiles()).withRel("files"));
 
 		return resources;
 	}

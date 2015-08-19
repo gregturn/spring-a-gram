@@ -15,6 +15,11 @@ eureka:
     metadataMap:
       instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000
+
 zuul:
   routes:
     api:
@@ -45,5 +50,3 @@ zuul:
       path: /files/**
       serviceId: spring-a-gram-s3-fileservice
       stripPrefix: false
-      ribbon:
-        ReadTimeout: 1000     # uploads need a little more time

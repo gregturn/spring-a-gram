@@ -71,18 +71,22 @@ public class ApplicationController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/files")
-	public ResponseEntity<ResourceSupport> listFiles() throws IOException {
+	public ResponseEntity<?> listFiles() {
 
-		Resource[] files = this.fileService.findAll();
+		try {
+			Resource[] files = this.fileService.findAll();
 
-		ResourceSupport resources = new ResourceSupport();
+			ResourceSupport resources = new ResourceSupport();
 
-		for (Resource file : files) {
-			resources.add(linkTo(methodOn(ApplicationController.class).getFile(file.getFilename()))
-					.withRel(file.getFilename()));
+			for (Resource file : files) {
+				resources.add(linkTo(methodOn(ApplicationController.class).getFile(file.getFilename()))
+						.withRel(file.getFilename()));
+			}
+
+			return ResponseEntity.ok(resources);
+		} catch (IOException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
 		}
-
-		return ResponseEntity.ok(resources);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/files/{filename}")

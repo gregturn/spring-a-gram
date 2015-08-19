@@ -113,8 +113,7 @@ define(function (require) {
 					method: 'DELETE',
 					path: item._links.self.href.split('{')[0]
 				})
-			).done(function () {/* Let the websocket handler update the state */
-				},
+			).done(function () {/* Let the websocket handler update the state */},
 				function (response) {
 					if (response.status.code === 403) {
 						alert('You are not authorized to delete that picture');
