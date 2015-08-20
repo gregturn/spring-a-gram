@@ -19,6 +19,7 @@ logging:
   level:
     ROOT: INFO
     com.gregturnquist.springagram: DEBUG
+    org.hibernate.SQL: DEBUG
 
 ---
 spring:

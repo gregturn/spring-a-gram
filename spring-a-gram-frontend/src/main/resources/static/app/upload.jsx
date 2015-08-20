@@ -11,9 +11,8 @@ define(function (require) {
 	var FileForm = React.createClass({
 		handleSubmit: function (e) {
 			e.preventDefault();
-			var self = this;
 
-			when.promise(function (resolve, reject) {
+			when.promise((resolve, reject) => {
 				var request = new XMLHttpRequest();
 
 				request.onerror = reject;
@@ -21,7 +20,7 @@ define(function (require) {
 					resolve(request);
 				}
 
-				var selectedFile = React.findDOMNode(self.refs.fileInput).files[0];
+				var selectedFile = React.findDOMNode(this.refs.fileInput).files[0];
 
 				var formData = new FormData();
 				formData.append("name", selectedFile.name);
@@ -29,9 +28,9 @@ define(function (require) {
 
 				request.open('POST', '/files');
 				request.send(formData);
-			}).then(function (response) {
-				return response.getResponseHeader("Location");
-			}).then(function (location) {
+			}).then(response =>
+				response.getResponseHeader("Location")
+			).then(location => {
 				if (location === null) {
 					return "No location header";
 				}
@@ -43,8 +42,8 @@ define(function (require) {
 						headers: {'Content-Type': 'application/json'}
 					});
 				});
-			}).done(function (response) {
-				React.findDOMNode(self.refs.fileInput).value = null;
+			}).done(response => {
+				React.findDOMNode(this.refs.fileInput).value = null;
 			});
 		},
 		render: function () {
@@ -59,7 +58,7 @@ define(function (require) {
 
 	React.render(
 		<FileForm url="/api/items"/>,
-		document.getElementById('upload2')
+		document.getElementById('upload')
 	);
 
 });
