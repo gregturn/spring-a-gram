@@ -2,7 +2,7 @@ define(function (require) {
 	'use strict';
 
 	/**
-	 * Collection hand-written polyfills, because the best source I found required bundling to support
+	 * Collection of hand-written polyfills, because the best source I found required bundling to support
 	 * requireJS
 	 */
 

@@ -13,8 +13,8 @@ define(function (require) {
 	var when = require('when');
 	var follow = require('./follow');
 
-	var talk = "https://devnexus.com/s/presentations#id-4417 on 3/11 @ 2:30pm";
-	var tags = ['devnexus', 'REST'];
+	var talk = "https://2015.event.springone2gx.com/schedule/sessions/spring_data_rest_data_meets_hypermedia_security.html on 9/15 @ 12:45pm";
+	var tags = ['s2gx', 'REST'];
 
 	var root = '/api';
 
@@ -25,26 +25,24 @@ define(function (require) {
 		 */
 
 		loadItemsFromServer: function () {
-			var self = this;
 			follow(client, root, [
 				{ rel: 'items', params: { projection: 'noImages' }},
 				'search',
 				{ rel: 'findByGalleryIsNull', params: { projection: 'owner'}}
-			]).done(function (response) {
-				self.setState({
-					data: response.entity._embedded.items, galleries: self.state.galleries,
-					selectedGallery: self.state.selectedGallery
+			]).done(response => {
+				this.setState({
+					data: response.entity._embedded.items, galleries: this.state.galleries,
+					selectedGallery: this.state.selectedGallery
 				});
 			});
 		},
 		loadGalleriesFromServer: function () {
-			var self = this;
-			follow(client, root, ['galleries']).done(function (galleries) {
-				when.all(galleries.entity._embedded.galleries.map(self.loadItemsForGallery)).done(function (galleries) {
-					self.setState({
-						data: self.state.data,
+			follow(client, root, ['galleries']).done(galleries => {
+				when.all(galleries.entity._embedded.galleries.map(this.loadItemsForGallery)).done(galleries => {
+					this.setState({
+						data: this.state.data,
 						galleries: galleries,
-						selectedGallery: self.state.selectedGallery
+						selectedGallery: this.state.selectedGallery
 					});
 				});
 			});
@@ -54,7 +52,7 @@ define(function (require) {
 				method: 'GET',
 				path: gallery._links.items.href,
 				params: {projection: 'owner'}
-			}).then(function (items) {
+			}).then(items => {
 				return {
 					gallery: gallery,
 					items: items.entity._embedded.items
@@ -84,25 +82,25 @@ define(function (require) {
 				path: item._links.gallery.href,
 				entity: this.state.selectedGallery,
 				headers: {'Content-Type': 'text/uri-list'}
-			}).done(function () {/* Let the websocket handler update the state */
-				},
-				function (response) {
+			}).done(() => {/* Let the websocket handler update the state */},
+				response => {
 					if (response.status.code === 403) {
 						alert('You are not authorized to assign that picture to a gallery');
 					}
-				})
+				}
+			);
 		},
 		onRemoveFromGallery: function (item) {
 			client({
 				method: 'DELETE',
 				path: item._links.gallery.href
-			}).done(function () {/* Let the websocket handler update the state */
-				},
-				function (response) {
+			}).done(() => {/* Let the websocket handler update the state */},
+				response => {
 					if (response.status.code === 403) {
 						alert('You are not authorized to assign that picture to a gallery');
 					}
-				});
+				}
+			);
 		},
 		onDelete: function (item) {
 			client({
@@ -113,8 +111,8 @@ define(function (require) {
 					method: 'DELETE',
 					path: item._links.self.href.split('{')[0]
 				})
-			).done(function () {/* Let the websocket handler update the state */},
-				function (response) {
+			).done(() => {/* Let the websocket handler update the state */},
+				response => {
 					if (response.status.code === 403) {
 						alert('You are not authorized to delete that picture');
 					}
@@ -129,36 +127,39 @@ define(function (require) {
 		 */
 
 		addItemToUnlinkedList: function (message) {
-			var self = this;
-			client({method: 'GET', path: message.body, params: {projection: "owner"}}).done(function (response) {
-				self.setState({
-					data: self.state.data.concat([response.entity]), galleries: self.state.galleries,
-					selectedGallery: self.state.selectedGallery
+			client({
+				method: 'GET',
+				path: message.body,
+				params: {projection: "owner"}
+			}).done(response => {
+				this.setState({
+					data: this.state.data.concat([response.entity]), galleries: this.state.galleries,
+					selectedGallery: this.state.selectedGallery
 				});
 			})
 		},
 		removeItemFromUnlinkedList: function (message) {
 			var items = this.state.data;
-			_.remove(items, function (item) {
-				return item._links.self.href.split('{')[0].endsWith(message.body);
-			});
+			_.remove(items, item => item._links.self.href.split('{')[0].endsWith(message.body));
 			this.setState({data: items, galleries: this.state.galleries, selectedGallery: this.state.selectedGallery});
 		},
 		updateGallery: function (message) {
-			var self = this;
-			client({method: 'GET', path: message.body}).done(function (response) {
-				self.loadItemsForGallery(response.entity).done(function (refreshedGallery) {
-					var newGalleries = self.state.galleries.map(function (gallery) {
+			client({
+				method: 'GET',
+				path: message.body
+			}).then(response => {
+				this.loadItemsForGallery(response.entity).done(refreshedGallery => {
+					var newGalleries = this.state.galleries.map(gallery => {
 						if (gallery.gallery._links.self.href === response.entity._links.self.href) {
 							return refreshedGallery;
 						} else {
 							return gallery;
 						}
-					})
-					self.setState({
-						data: self.state.data,
+					});
+					this.setState({
+						data: this.state.data,
 						galleries: newGalleries,
-						selectedGallery: self.state.selectedGallery
+						selectedGallery: this.state.selectedGallery
 					});
 				})
 			})
@@ -211,15 +212,12 @@ define(function (require) {
 
 	var GalleryList = React.createClass({
 		render: function () {
-			var self = this;
-			var galleries = this.props.galleries.map(function (gallery) {
-				return (
-					<Gallery gallery={gallery.gallery} items={gallery.items}
-							 onSelectGallery={self.props.onSelectGallery}
-							 onRemoveFromGallery={self.props.onRemoveFromGallery}
-							 key={gallery.gallery._links.self.href}/>
-				)
-			})
+			var galleries = this.props.galleries.map(gallery =>
+				<Gallery gallery={gallery.gallery} items={gallery.items}
+						 onSelectGallery={this.props.onSelectGallery}
+						 onRemoveFromGallery={this.props.onRemoveFromGallery}
+						 key={gallery.gallery._links.self.href}/>
+			);
 			return (
 				<ul className="layout">
 					{galleries}
@@ -233,17 +231,14 @@ define(function (require) {
 			this.props.onSelectGallery(this.props.gallery);
 		},
 		render: function () {
-			var self = this;
-			var items = this.props.items.map(function (item) {
-				return (
-					<ItemInGallery item={item} gallery={self.props.gallery}
-								   onRemoveFromGallery={self.props.onRemoveFromGallery}
-								   key={item._links.self.href}/>
-				)
-			})
+			var items = this.props.items.map(item =>
+				<ItemInGallery item={item} gallery={this.props.gallery}
+							   onRemoveFromGallery={this.props.onRemoveFromGallery}
+							   key={item._links.self.href}/>
+			);
 			return (
 				<li className="layout__item">
-					<input className="btn--responsive" type="radio" name="gallery2" onClick={this.handleChange}/>
+					<input className="btn--responsive" type="radio" onClick={this.handleChange}/>
 					<span>{this.props.gallery.description}</span>
 					<ul className="layout">
 						{items}
@@ -270,7 +265,7 @@ define(function (require) {
 								<button className="btn--responsive remove layout__item" onClick={this.handleRemove}>
 									Remove
 								</button>
-								<a href={linkHelper.htmlUrl(this.props.item._links.self.href)}>
+							<a href={linkHelper.htmlUrl(this.props.item._links.self.href)}>
 									<button className="btn--responsive permalink layout__item">Permalink</button>
 								</a>
 								<span className="layout__item">{this.props.item.user.name}</span>
@@ -284,13 +279,10 @@ define(function (require) {
 
 	var ItemList = React.createClass({
 		render: function () {
-			var self = this;
-			var items = this.props.data.map(function (item) {
-				return (
-					<Item item={item} onAddToGallery={self.props.onAddToGallery} onDelete={self.props.onDelete}
-						  key={item._links.self.href}/>
-				)
-			})
+			var items = this.props.data.map(item =>
+				<Item item={item} onAddToGallery={this.props.onAddToGallery} onDelete={this.props.onDelete}
+					  key={item._links.self.href}/>
+			);
 			return (
 				<ul className="layout">
 					{items}
