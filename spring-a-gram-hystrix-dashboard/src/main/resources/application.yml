@@ -1,0 +1,14 @@
+info:
+  component: Hystrix Dashboard
+
+server:
+  port: 7979
+
+hystrix:
+  dashboard: 
+    enableIgnoreConnectionCloseHeader: true
+
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.cloud: DEBUG

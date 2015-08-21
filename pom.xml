@@ -8,6 +8,7 @@
 	<version>0.1.0</version>
 	<modules>
 		<module>spring-a-gram-eureka-server</module>
+		<module>spring-a-gram-hystrix-dashboard</module>
 		<module>spring-a-gram-backend</module>
 		<module>spring-a-gram-frontend</module>
 		<module>spring-a-gram-mongodb-fileservice</module>
