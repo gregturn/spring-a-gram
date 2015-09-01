@@ -66,25 +66,35 @@ define(function (require) {
 		},
 		fallbackDataLoad: function() {
 			this.setState({
-				data: [ {
-					"image" : "https://d1fto35gcfffzn.cloudfront.net/images/oss/oss-logo-spring.png",
-					"user": { "name": "Spring-a-Gram"},
-					"_links" : {
-						"self" : {
-							"href" : "http://localhost:8080/api/items/1"
+				data: [{
+					"image": "https://d1fto35gcfffzn.cloudfront.net/images/oss/oss-logo-spring.png",
+					"user": {"name": "Spring-a-Gram"},
+					"_links": {
+						"self": {
+							"href": "http://localhost:8080/api/items/1"
 						},
-						"item" : {
-							"href" : "http://localhost:8080/api/items/1{?projection}",
-							"templated" : true
+						"item": {
+							"href": "http://localhost:8080/api/items/1{?projection}",
+							"templated": true
 						},
-						"gallery" : {
-							"href" : "http://localhost:8080/api/items/1/gallery"
+						"gallery": {
+							"href": "http://localhost:8080/api/items/1/gallery"
 						}
 					}
-				} ],
+				}],
 				galleries: [],
 				selectedGallery: undefined
 			});
+		},
+		registerTopics: function () {
+			return stompClient.register([
+				{route: '/topic/backend.newItem', callback: this.addItemToUnlinkedList},
+				{route: '/topic/backend.deleteItem', callback: this.removeItemFromUnlinkedList},
+				{route: '/topic/backend.removeItemFromGallery-item', callback: this.addItemToUnlinkedList},
+				{route: '/topic/backend.removeItemFromGallery-gallery', callback: this.updateGallery},
+				{route: '/topic/backend.addItemToGallery-item', callback: this.removeItemFromUnlinkedList},
+				{route: '/topic/backend.addItemToGallery-gallery', callback: this.updateGallery}
+			]);
 		},
 
 		/**
@@ -201,16 +211,9 @@ define(function (require) {
 		},
 
 		componentDidMount: function () {
-			this.loadItemsFromServer();
-			this.loadGalleriesFromServer();
-			stompClient.register([
-				{route: '/topic/backend.newItem', callback: this.addItemToUnlinkedList},
-				{route: '/topic/backend.deleteItem', callback: this.removeItemFromUnlinkedList},
-				{route: '/topic/backend.removeItemFromGallery-item', callback: this.addItemToUnlinkedList},
-				{route: '/topic/backend.removeItemFromGallery-gallery', callback: this.updateGallery},
-				{route: '/topic/backend.addItemToGallery-item', callback: this.removeItemFromUnlinkedList},
-				{route: '/topic/backend.addItemToGallery-gallery', callback: this.updateGallery}
-			]);
+			when.try(this.loadItemsFromServer);
+			when.try(this.loadGalleriesFromServer);
+			when.try(this.registerTopics);
 		},
 
 		render: function () {
