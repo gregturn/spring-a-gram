@@ -21,7 +21,7 @@ public class WebSocketConfiguration extends AbstractSessionWebSocketMessageBroke
 
 	@Override
 	protected void configureStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
-		stompEndpointRegistry.addEndpoint("/spring-a-gram").withSockJS();
+		stompEndpointRegistry.addEndpoint("/springagram").withSockJS();
 	}
 
 }

@@ -51,3 +51,14 @@ zuul:
       path: /files/**
       serviceId: spring-a-gram-s3-fileservice
       stripPrefix: false
+
+---
+spring:
+  profiles: cloud
+
+eureka:
+  instance:
+    nonSecurePort: 80
+  client:
+    serviceUrl:
+      defaultZone: http://spring-a-gram-eureka-server.cfapps.io/eureka/

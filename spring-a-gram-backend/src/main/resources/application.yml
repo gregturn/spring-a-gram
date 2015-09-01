@@ -28,3 +28,6 @@ spring:
 eureka:
   instance:
     nonSecurePort: 80
+  client:
+    serviceUrl:
+      defaultZone: http://spring-a-gram-eureka-server.cfapps.io/eureka/
