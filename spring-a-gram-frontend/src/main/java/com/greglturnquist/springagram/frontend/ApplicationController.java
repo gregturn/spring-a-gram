@@ -89,7 +89,9 @@ public class ApplicationController {
 				.addObject("hashtag", hashtag)
 				.addObject("links", Arrays.asList(
 						linkTo(methodOn(ApplicationController.class).index()).withRel("All Images"),
-						new Link(itemResource.getContent().getImage()).withRel("Raw Image")));
+						new Link(itemResource.getContent().getImage()).withRel("Raw Image"),
+						new Link(link).withRel("HAL record")
+				));
 	}
 
 }
