@@ -1,7 +1,7 @@
 package com.greglturnquist.springagram.frontend;
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.TypeReferences;
@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+
 @Component
 public class ApplicationControllerHelper {
 
@@ -18,7 +20,14 @@ public class ApplicationControllerHelper {
 
 	private static final String FALLBACK_IMAGE_URL = "https://d1fto35gcfffzn.cloudfront.net/images/oss/oss-logo-spring.png";
 
-	private final RestTemplate rest = new RestTemplate();
+	private final RestTemplate rest;
+	private final ApplicationContext ctx;
+
+	@Autowired
+	public ApplicationControllerHelper(RestTemplate rest, ApplicationContext ctx) {
+		this.rest = rest;
+		this.ctx = ctx;
+	}
 
 	@HystrixCommand(fallbackMethod = "getFallbackImageResource")
 	public Resource<Item> getImageResourceViaLink(String link, HttpEntity<String> httpEntity) {

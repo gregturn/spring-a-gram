@@ -34,6 +34,8 @@ define(function (require) {
 					data: response.entity._embedded.items, galleries: this.state.galleries,
 					selectedGallery: this.state.selectedGallery
 				});
+			}, response => {
+				this.fallbackDataLoad();
 			});
 		},
 		loadGalleriesFromServer: function () {
@@ -45,6 +47,9 @@ define(function (require) {
 						selectedGallery: this.state.selectedGallery
 					});
 				});
+			},
+			response => {
+				this.fallbackDataLoad();
 			});
 		},
 		loadItemsForGallery: function (gallery) {
@@ -58,6 +63,28 @@ define(function (require) {
 					items: items.entity._embedded.items
 				};
 			})
+		},
+		fallbackDataLoad: function() {
+			this.setState({
+				data: [ {
+					"image" : "https://d1fto35gcfffzn.cloudfront.net/images/oss/oss-logo-spring.png",
+					"user": { "name": "Spring-a-Gram"},
+					"_links" : {
+						"self" : {
+							"href" : "http://localhost:8080/api/items/1"
+						},
+						"item" : {
+							"href" : "http://localhost:8080/api/items/1{?projection}",
+							"templated" : true
+						},
+						"gallery" : {
+							"href" : "http://localhost:8080/api/items/1/gallery"
+						}
+					}
+				} ],
+				galleries: [],
+				selectedGallery: undefined
+			});
 		},
 
 		/**
