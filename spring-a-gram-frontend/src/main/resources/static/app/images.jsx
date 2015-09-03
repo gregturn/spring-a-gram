@@ -26,7 +26,7 @@ define(function (require) {
 
 		loadItemsFromServer: function () {
 			follow(client, root, [
-				{ rel: 'items', params: { projection: 'noImages' }},
+				'items',
 				'search',
 				{ rel: 'findByGalleryIsNull', params: { projection: 'owner'}}
 			]).done(response => {
