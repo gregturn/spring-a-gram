@@ -46,8 +46,8 @@ public class DatabaseLoader {
 
 		this.fileService.deleteAll();
 
-		loadImage("cat.jpg");
-		loadImage("caterpillar.jpg");
+//		loadImage("cat.jpg");
+//		loadImage("caterpillar.jpg");
 	}
 
 	private void loadImage(String filename) throws IOException {

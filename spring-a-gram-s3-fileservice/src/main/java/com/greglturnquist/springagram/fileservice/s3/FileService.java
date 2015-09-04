@@ -108,7 +108,11 @@ public class FileService {
 	}
 
 	private String s3ify(String s) {
-		return "s3://" + s;
+		if (s.startsWith("s3://")) {
+			return s;
+		} else {
+			return "s3://" + s;
+		}
 	}
 
 	/**
