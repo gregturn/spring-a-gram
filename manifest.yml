@@ -43,3 +43,4 @@ applications:
   - spring-a-gram-redis
   env:
     SPRING_PROFILES_ACTIVE: cloud,production
+    BUCKET: spring-a-gram.spring.io
