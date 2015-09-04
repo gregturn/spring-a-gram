@@ -13,7 +13,7 @@ applications:
   services:
   - spring-a-gram-redis
   env:
-    SPRING_PROFILES_ACTIVE: basic,cloud,production,s3
+    SPRING_PROFILES_ACTIVE: basic,cloud,production
 
 - name: spring-a-gram-backend
   memory: 1GB
