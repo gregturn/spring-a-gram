@@ -20,7 +20,7 @@ public class SecurityDetailsLoader {
 	@PostConstruct
 	public void init() throws IOException {
 
-		userRepository.findAll().forEach(userRepository::delete);
+		userRepository.deleteAll();
 
 		User greg = new User();
 		greg.setName("greg");

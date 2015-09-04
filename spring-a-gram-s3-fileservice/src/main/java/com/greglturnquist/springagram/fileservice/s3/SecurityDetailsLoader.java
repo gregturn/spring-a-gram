@@ -21,6 +21,8 @@ public class SecurityDetailsLoader {
 	@PostConstruct
 	public void init() throws IOException {
 
+		userRepository.deleteAll();
+
 		User greg = new User();
 		greg.setName("greg");
 		greg.setPassword("turnquist");
