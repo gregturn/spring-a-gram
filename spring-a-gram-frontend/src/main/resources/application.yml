@@ -5,6 +5,9 @@ spring:
     rest:
       basePath: /api
 
+multipart:
+  maxFileSize: 10Mb
+
 server:
   port: 8080
 

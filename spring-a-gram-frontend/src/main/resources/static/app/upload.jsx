@@ -8,10 +8,13 @@ define(function (require) {
 
 	var root = '/api';
 
+	var Spinner = require('jsx!app/spinner')
+
 	var FileForm = React.createClass({
 		handleSubmit: function (e) {
 			e.preventDefault();
 
+			this.props.spinner.showSpinner();
 			when.promise((resolve, reject) => {
 				var request = new XMLHttpRequest();
 
@@ -44,6 +47,7 @@ define(function (require) {
 				});
 			}).done(response => {
 				React.findDOMNode(this.refs.fileInput).value = null;
+				this.props.spinner.hideSpinner();
 			});
 		},
 		render: function () {
@@ -56,9 +60,6 @@ define(function (require) {
 		}
 	});
 
-	React.render(
-		<FileForm url="/api/items"/>,
-		document.getElementById('upload')
-	);
+	return FileForm;
 
 });

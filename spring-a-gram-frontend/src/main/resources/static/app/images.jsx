@@ -18,6 +18,9 @@ define(function (require) {
 
 	var root = '/api';
 
+	var FileForm = require('jsx!app/upload');
+	var Spinner = require('jsx!app/spinner');
+
 	var ItemContainer = React.createClass({
 
 		/**
@@ -356,8 +359,18 @@ define(function (require) {
 		}
 	})
 
+	var spinner = React.render(
+		<Spinner />,
+		document.getElementById('spinner')
+	);
+
 	React.render(
-		<ItemContainer />,
+		<FileForm url="/api/items" spinner={spinner} />,
+		document.getElementById('upload')
+	);
+
+	React.render(
+		<ItemContainer spinner={spinner} />,
 		document.getElementById('react')
 	);
 
