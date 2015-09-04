@@ -26,7 +26,7 @@ define(function (require) {
 				var selectedFile = React.findDOMNode(this.refs.fileInput).files[0];
 
 				var formData = new FormData();
-				formData.append("name", selectedFile.name);
+				formData.append("name", selectedFile.name + Date.now());
 				formData.append("file", selectedFile);
 
 				request.open('POST', '/files');
