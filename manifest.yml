@@ -12,6 +12,8 @@ applications:
   path: spring-a-gram-frontend/target/spring-a-gram-frontend-0.1.0.jar
   services:
   - spring-a-gram-redis
+  env:
+    SPRING_PROFILES_ACTIVE: basic,cloud,production
 
 - name: spring-a-gram-backend
   memory: 1GB
@@ -19,6 +21,9 @@ applications:
   path: spring-a-gram-backend/target/spring-a-gram-backend-0.1.0.jar
   services:
   - spring-a-gram-redis
+  - spring-a-gram-mysql
+  env:
+    SPRING_PROFILES_ACTIVE: cloud,production
 
 - name: spring-a-gram-mongodb-fileservice
   memory: 1GB
@@ -27,6 +32,8 @@ applications:
   services:
   - spring-a-gram-mongodb
   - spring-a-gram-redis
+  env:
+    SPRING_PROFILES_ACTIVE: cloud,production
 
 - name: spring-a-gram-s3-fileservice
   memory: 1GB
@@ -34,3 +41,5 @@ applications:
   path: spring-a-gram-s3-fileservice/target/spring-a-gram-s3-fileservice-0.1.0.jar
   services:
   - spring-a-gram-redis
+  env:
+    SPRING_PROFILES_ACTIVE: cloud,production

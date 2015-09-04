@@ -32,33 +32,17 @@ import org.springframework.stereotype.Service;
 @Profile("!production")
 public class DatabaseLoader {
 
-	private final UserRepository userRepository;
 	private final FileService fileService;
 	private final ApplicationContext ctx;
 
 	@Autowired
-	public DatabaseLoader(UserRepository userRepository, FileService fileService, ApplicationContext ctx) {
-		this.userRepository = userRepository;
+	public DatabaseLoader(FileService fileService, ApplicationContext ctx) {
 		this.fileService = fileService;
 		this.ctx = ctx;
 	}
 
 	@PostConstruct
 	public void init() throws IOException {
-
-		this.userRepository.deleteAll();
-
-		User greg = new User();
-		greg.setName("greg");
-		greg.setPassword("turnquist");
-		greg.setRoles(new String[]{"ROLE_USER"});
-		userRepository.save(greg);
-
-		User roy = new User();
-		roy.setName("roy");
-		roy.setPassword("clarkson");
-		roy.setRoles(new String[]{"ROLE_USER"});
-		userRepository.save(roy);
 
 		this.fileService.deleteAll();
 

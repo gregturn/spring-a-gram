@@ -31,3 +31,13 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://spring-a-gram-eureka-server.cfapps.io/eureka/
+
+---
+spring:
+  profiles: production
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver

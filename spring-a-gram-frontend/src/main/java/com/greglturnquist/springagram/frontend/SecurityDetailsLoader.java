@@ -5,18 +5,16 @@ import java.io.IOException;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
-@Profile("!production")
-public class DatabaseLoader {
+public class SecurityDetailsLoader {
 
 	private final UserRepository userRepository;
 
 	@Autowired
-	public DatabaseLoader(UserRepository userRepository) {
+	public SecurityDetailsLoader(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
