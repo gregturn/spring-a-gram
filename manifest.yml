@@ -1,16 +1,13 @@
 ---
 applications:
-- name: spring-a-gram-eureka-server
-  memory: 1GB
-  instances: 1
-  path: spring-a-gram-eureka-server/target/spring-a-gram-eureka-server-0.1.0.jar
-
 - name: spring-a-gram
   host: spring-a-gram
   memory: 1GB
   instances: 1
   path: spring-a-gram-frontend/target/spring-a-gram-frontend-0.1.0.jar
   services:
+  - spring-a-gram-service-registry
+  - spring-a-gram-circuit-breaker
   - spring-a-gram-redis
   env:
     SPRING_PROFILES_ACTIVE: basic,cloud,production
@@ -20,6 +17,7 @@ applications:
   instances: 1
   path: spring-a-gram-backend/target/spring-a-gram-backend-0.1.0.jar
   services:
+  - spring-a-gram-service-registry
   - spring-a-gram-redis
   - spring-a-gram-mysql
   env:
@@ -30,6 +28,7 @@ applications:
   instances: 1
   path: spring-a-gram-mongodb-fileservice/target/spring-a-gram-mongodb-fileservice-0.1.0.jar
   services:
+  - spring-a-gram-service-registry
   - spring-a-gram-mongodb
   - spring-a-gram-redis
   env:
@@ -40,6 +39,7 @@ applications:
   instances: 1
   path: spring-a-gram-s3-fileservice/target/spring-a-gram-s3-fileservice-0.1.0.jar
   services:
+  - spring-a-gram-service-registry
   - spring-a-gram-redis
   env:
     SPRING_PROFILES_ACTIVE: cloud,production

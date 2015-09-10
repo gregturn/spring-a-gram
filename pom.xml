@@ -17,9 +17,9 @@
 	<packaging>pom</packaging>
 
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.2.5.RELEASE</version>
+		<groupId>io.pivotal.spring.cloud</groupId>
+		<artifactId>spring-cloud-services-starter-parent</artifactId>
+		<version>1.0.0.M1</version>
 	</parent>
 
 	<dependencyManagement>
@@ -31,27 +31,18 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-starter-parent</artifactId>
-				<version>${spring-cloud-releasetrain.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<properties>
 		<java.version>1.8</java.version>
-
+		<spring-boot.version>1.2.5.RELEASE</spring-boot.version>
 		<spring-data-releasetrain.version>Gosling-RC1</spring-data-releasetrain.version>
-		<spring-cloud-releasetrain.version>Angel.SR3</spring-cloud-releasetrain.version>
-
 		<spring-security-oauth2.version>2.0.7.RELEASE</spring-security-oauth2.version>
 		<spring-hateoas.version>0.17.0.RELEASE</spring-hateoas.version>
 		<spring-session.version>1.0.1.RELEASE</spring-session.version>
+		<spring-cloud-connectors.version>1.2.0.RELEASE</spring-cloud-connectors.version>
 		<jedis.version>2.7.2</jedis.version>
-
 		<docker.image.prefix>gregturn</docker.image.prefix>
 	</properties>
 
@@ -95,7 +86,6 @@
 			<version>1.16.4</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

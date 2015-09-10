@@ -3,12 +3,13 @@ package com.greglturnquist.springagram.frontend;
 import java.io.IOException;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.websocket.WebSocketAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
-@SpringBootApplication
+@SpringBootApplication(exclude=WebSocketAutoConfiguration.class)
 @EnableDiscoveryClient
 @EnableZuulProxy
 @EnableCircuitBreaker
