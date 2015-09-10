@@ -8,8 +8,6 @@ define(function (require) {
 
 	var root = '/api';
 
-	var Spinner = require('jsx!app/spinner')
-
 	var FileForm = React.createClass({
 		handleSubmit: function (e) {
 			e.preventDefault();

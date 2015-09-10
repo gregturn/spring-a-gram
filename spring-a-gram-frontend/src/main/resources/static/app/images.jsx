@@ -19,7 +19,7 @@ define(function (require) {
 	var root = '/api';
 
 	var FileForm = require('jsx!app/upload');
-	var Spinner = require('jsx!app/spinner');
+	var spinner = require('app/spinner');
 
 	var ItemContainer = React.createClass({
 
@@ -90,7 +90,7 @@ define(function (require) {
 			});
 		},
 		registerTopics: function () {
-			return stompClient.register([
+			stompClient.register([
 				{route: '/topic/backend.newItem', callback: this.addItemToUnlinkedList},
 				{route: '/topic/backend.deleteItem', callback: this.removeItemFromUnlinkedList},
 				{route: '/topic/backend.removeItemFromGallery-item', callback: this.addItemToUnlinkedList},
@@ -98,6 +98,7 @@ define(function (require) {
 				{route: '/topic/backend.addItemToGallery-item', callback: this.removeItemFromUnlinkedList},
 				{route: '/topic/backend.addItemToGallery-gallery', callback: this.updateGallery}
 			]);
+			this.props.spinner.hideSpinner()
 		},
 
 		/**
@@ -358,11 +359,6 @@ define(function (require) {
 			)
 		}
 	})
-
-	var spinner = React.render(
-		<Spinner />,
-		document.getElementById('spinner')
-	);
 
 	React.render(
 		<FileForm url="/api/items" spinner={spinner} />,

@@ -148,6 +148,13 @@ $spinner7: $spring-antique-white;
   -ms-transform: translateZ(0);
   transform: translateZ(0);
 }
+
+.loader--responsive {
+  @include media-query(portable) {
+    left: 15%;
+  }
+}
+
 .loader:before {
   width: 50%;
   height: 50%;
