@@ -7,7 +7,7 @@ applications:
   path: spring-a-gram-frontend/target/spring-a-gram-frontend-0.1.0.jar
   services:
   - spring-a-gram-service-registry
-  - spring-a-gram-circuit-breaker
+  - spring-a-gram-circuit-breaker-dashboard
   - spring-a-gram-redis
   env:
     SPRING_PROFILES_ACTIVE: basic,cloud,production
