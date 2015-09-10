@@ -8,6 +8,7 @@ applications:
   services:
   - spring-a-gram-service-registry
   - spring-a-gram-circuit-breaker-dashboard
+  - spring-a-gram-config-server
   - spring-a-gram-redis
   env:
     SPRING_PROFILES_ACTIVE: basic,cloud,production

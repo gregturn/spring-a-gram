@@ -1,5 +1,8 @@
 package com.greglturnquist.springagram.frontend;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.TypeReferences;
@@ -9,16 +12,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-
 @Component
 public class ApplicationControllerHelper {
 
-	private static final String QUERY_PROJECTION_OWNER =  "?projection=owner";
-
-	private static final String FALLBACK_IMAGE_URL = "https://d1fto35gcfffzn.cloudfront.net/images/oss/oss-logo-spring.png";
+	private static final String QUERY_PROJECTION_OWNER = "?projection=owner";
 
 	private final RestTemplate rest = new RestTemplate();
+
+	@Value("${springagram.fallbackImageUrl:https://d1fto35gcfffzn.cloudfront.net/images/oss/oss-logo-spring.png}")
+	private String fallbackImageUrl;
 
 	@HystrixCommand(fallbackMethod = "getFallbackImageResource")
 	public Resource<Item> getImageResourceViaLink(String link, HttpEntity<String> httpEntity) {
@@ -31,7 +33,7 @@ public class ApplicationControllerHelper {
 
 	public Resource<Item> getFallbackImageResource(String link, HttpEntity<String> httpEntity) {
 		Item item = new Item();
-		item.setImage(FALLBACK_IMAGE_URL);
+		item.setImage(fallbackImageUrl);
 		User user = new User();
 		user.setName("fallback");
 		user.setRoles(new String[]{});

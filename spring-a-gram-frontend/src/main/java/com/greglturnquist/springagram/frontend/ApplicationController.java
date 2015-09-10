@@ -40,7 +40,7 @@ public class ApplicationController {
 	@Autowired
 	ApplicationControllerHelper helper;
 
-	@Value("${hashtag:#devnexus}")
+	@Value("${springagram.hashtag:#springagram}")
 	String hashtag;
 
 	@Value("${spring.data.rest.basePath}")
