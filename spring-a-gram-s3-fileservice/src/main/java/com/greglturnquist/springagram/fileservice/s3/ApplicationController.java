@@ -32,6 +32,8 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,10 +52,12 @@ public class ApplicationController {
 	private static final Logger log = LoggerFactory.getLogger(ApplicationController.class);
 
 	private final FileService fileService;
+	private final UserRepository userRepository;
 
 	@Autowired
-	public ApplicationController(FileService fileService) {
+	public ApplicationController(FileService fileService, UserRepository userRepository) {
 		this.fileService = fileService;
+		this.userRepository = userRepository;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/files")
@@ -108,6 +112,22 @@ public class ApplicationController {
 	public ResponseEntity<?> deleteFile(@PathVariable String filename) {
 
 		this.fileService.deleteOne(filename);
+
+		return ResponseEntity.noContent().build();
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(method = RequestMethod.POST, value = "/reset")
+	public ResponseEntity<?> reset(Authentication authentication) throws IOException {
+
+		log.warn("!!! Resetting entire system as requested by " + authentication.getName());
+		this.fileService.deleteAll();
+		try {
+			log.warn("!!! Reload user details as requested by " + authentication.getName());
+			new SecurityDetailsLoader(userRepository).init();
+		} catch (IOException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 
 		return ResponseEntity.noContent().build();
 	}

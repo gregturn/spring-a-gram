@@ -99,6 +99,7 @@ public class FileService {
 	public void deleteAll() throws IOException {
 
 		for (Resource resource : this.findAll()) {
+			log.info("About to delete " + resource.getFilename());
 			this.deleteOne(resource.getFilename());
 		}
 	}

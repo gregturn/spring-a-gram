@@ -43,17 +43,17 @@ public class DatabaseLoader {
 	@PostConstruct
 	public void init() throws IOException {
 
-		User reacher = new User();
-		reacher.setName("greg");
-		reacher.setPassword("turnquist");
-		reacher.setRoles(new String[]{"ROLE_USER", "ROLE_ADMIN"});
-		reacher = userRepository.save(reacher);
+		User greg = new User();
+		greg.setName("greg");
+		greg.setPassword("turnquist");
+		greg.setRoles(new String[]{"ROLE_USER", "ROLE_ADMIN"});
+		greg = userRepository.save(greg);
 
-		User strange = new User();
-		strange.setName("roy");
-		strange.setPassword("clarkson");
-		strange.setRoles(new String[]{"ROLE_USER"});
-		strange = userRepository.save(strange);
+		User roy = new User();
+		roy.setName("roy");
+		roy.setPassword("clarkson");
+		roy.setRoles(new String[]{"ROLE_USER"});
+		roy = userRepository.save(roy);
 
 		SecurityContextHolder.clearContext();
 
@@ -62,7 +62,7 @@ public class DatabaseLoader {
 //		Item cat = itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg"), strange));
 		//itemRepository.save(createItem(ctx.getResource("classpath:cat.jpg"), strange));
 
-		runAs(reacher.getName(), reacher.getPassword(), "ROLE_USER");
+		runAs(greg.getName(), greg.getPassword(), "ROLE_USER");
 
 //		Item caterpillar = itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg"), reacher));
 		//itemRepository.save(createItem(ctx.getResource("classpath:caterpillar.jpg"), reacher));

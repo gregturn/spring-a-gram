@@ -35,6 +35,12 @@ public class SecurityDetailsLoader {
 		roy.setRoles(new String[]{"ROLE_USER"});
 		userRepository.save(roy);
 
+		User admin = new User();
+		admin.setName("admin");
+		admin.setPassword("s2gx");
+		admin.setRoles(new String[]{"ROLE_ADMIN"});
+		userRepository.save(admin);
+
 		SecurityContextHolder.clearContext();
 	}
 
