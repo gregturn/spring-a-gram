@@ -70,7 +70,7 @@ define(function (require) {
 		fallbackDataLoad: function() {
 			this.setState({
 				data: [{
-					"image": "https://d1fto35gcfffzn.cloudfront.net/images/oss/oss-logo-spring.png",
+					"image": "http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/images/logo.png",
 					"user": {"name": "Spring-a-Gram"},
 					"_links": {
 						"self": {
