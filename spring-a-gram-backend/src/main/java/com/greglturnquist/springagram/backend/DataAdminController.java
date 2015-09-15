@@ -60,5 +60,4 @@ public class DataAdminController {
 		return ResponseEntity.noContent().build();
 	}
 
-
 }

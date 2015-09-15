@@ -1,5 +1,7 @@
 package com.greglturnquist.springagram.frontend;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+
 import java.net.URI;
 import java.util.Arrays;
 
@@ -16,16 +18,18 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * This is the web controller that contains web pages and other custom end points.
@@ -37,14 +41,21 @@ public class ApplicationController {
 
 	private final RestTemplate rest = new RestTemplate();
 
-	@Autowired
 	ApplicationControllerHelper helper;
+
+	RestTemplate restTemplate;
 
 	@Value("${hashtag:#devnexus}")
 	String hashtag;
 
 	@Value("${spring.data.rest.basePath}")
 	String basePath;
+
+	@Autowired
+	public ApplicationController(ApplicationControllerHelper helper, RestTemplate restTemplate) {
+		this.helper = helper;
+		this.restTemplate = restTemplate;
+	}
 
 	/**
 	 * Serve up the home page
@@ -93,5 +104,37 @@ public class ApplicationController {
 						new Link(link).withRel("HAL record")
 				));
 	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(method = RequestMethod.POST, value = "/reset")
+	public ResponseEntity<?> reset(Authentication authentication, HttpEntity<String> httpEntity) {
+
+		log.warn("!!! Resetting entire system as requested by " + authentication.getName());
+
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		headers.put(HttpHeaders.AUTHORIZATION, httpEntity.getHeaders().get(HttpHeaders.AUTHORIZATION));
+		HttpEntity<?> requestEntity = new HttpEntity<>(headers);
+
+//		try {
+//			restTemplate.exchange("http://spring-a-gram-backend/reset", HttpMethod.POST, requestEntity, String.class);
+//		} catch (RuntimeException e) {
+//			log.error(e.getMessage());
+//		}
+
+		try {
+			restTemplate.exchange("http://spring-a-gram-mongodb-fileservice/reset", HttpMethod.POST, requestEntity, Object.class);
+		} catch (RuntimeException e) {
+			log.error(e.getMessage());
+		}
+
+		try {
+			restTemplate.exchange("http://spring-a-gram-s3-fileservice/reset", HttpMethod.POST, requestEntity, String.class);
+		} catch (RuntimeException e) {
+			log.error(e.getMessage());
+		}
+
+		return ResponseEntity.noContent().build();
+	}
+
 
 }

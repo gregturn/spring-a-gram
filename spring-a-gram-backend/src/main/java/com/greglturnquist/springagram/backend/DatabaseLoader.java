@@ -55,6 +55,12 @@ public class DatabaseLoader {
 		roy.setRoles(new String[]{"ROLE_USER"});
 		roy = userRepository.save(roy);
 
+		User admin = new User();
+		admin.setName("admin");
+		admin.setPassword("s2gx");
+		admin.setRoles(new String[]{"ROLE_USER", "ROLE_ADMIN"});
+		admin = userRepository.save(greg);
+
 		SecurityContextHolder.clearContext();
 
 //		runAs(strange.getName(), strange.getPassword(), "ROLE_USER");
