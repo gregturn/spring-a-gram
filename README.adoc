@@ -2,6 +2,8 @@
 
 image:https://travis-ci.org/gregturn/spring-a-gram.svg["Build Status", link="https://travis-ci.org/gregturn/spring-a-gram"]
 
+NOTE: This snapshot copy is captured from SpringOne 2GX 2015 in Washingon, D.C.
+
 Spring-a-Gram is a demonstration of the Spring stack used to upload and view pictures.
 
 * http://projects.spring.io/spring-data-rest[Spring Data REST]
