@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ${vcap.application.name:spring-a-gram-backend}
+    name: spring-a-gram-backend
   data:
     rest:
       basePath: /api
