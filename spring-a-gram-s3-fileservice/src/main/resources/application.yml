@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ${vcap.application.name:spring-a-gram-s3-fileservice}
+    name: spring-a-gram-s3-fileservice
 
 multipart:
   maxFileSize: 10Mb
