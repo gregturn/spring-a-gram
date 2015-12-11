@@ -9,6 +9,9 @@ multipart:
   maxFileSize: 10Mb
 
 eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.address:localhost:8761}/eureka/
   instance:
     leaseRenewalIntervalInSeconds: 5
     hostname: ${vcap.application.uris[0]:localhost}
