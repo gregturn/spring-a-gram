@@ -13,26 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.greglturnquist.springagram.backend;
+package com.greglturnquist.springagram.fileservice.mongodb;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.session.data.redis.config.ConfigureRedisAction;
 
 /**
  * @author Greg Turnquist
  */
-// tag::code[]
 @Configuration
 public class RedisConfig {
-
-	@Bean
-	public StringRedisTemplate template(RedisConnectionFactory factory) {
-		return new StringRedisTemplate(factory);
-	}
 
 	@Bean
 	@Profile("cloud")
@@ -41,4 +33,3 @@ public class RedisConfig {
 	}
 
 }
-// end::code[]
